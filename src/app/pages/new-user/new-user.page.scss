@@ -1,3 +1,7 @@
+ion-content {
+  --ion-background-color: linear-gradient(rgba(0, 116, 252, 0), rgba(0, 116, 252, 0.29));
+  --padding-top: 32px;
+}
 .input-group {
   background: #fff;
   border-radius: 10px;
@@ -32,7 +36,8 @@
 }
 form {
   min-height: 320px;
-}
+  --ion-background-color: transparent;
+ }
 #username {
   text-transform: lowercase;
 }

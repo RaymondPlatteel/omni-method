@@ -1,3 +1,12 @@
+ion-content {
+  --ion-background-color: linear-gradient(rgba(0, 116, 252, 0), rgba(0, 116, 252, 0.29));
+  --padding-top: 32px;
+}
+
+ion-item {
+  --ion-background-color: transparent;
+}
+
 img.center {
   display: block;
   margin-left: auto;

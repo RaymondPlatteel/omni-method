@@ -171,4 +171,11 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.moreOpen = true;
     }
   }
+
+  handleRefresh(event) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
+  }
 }

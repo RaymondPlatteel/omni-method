@@ -1,4 +1,4 @@
-<ion-content color="default">
+<ion-content>
   <ion-header class="ion-no-border safe-area"> </ion-header>
  
   <form [formGroup]="formData" (ngSubmit)="onSubmit()">
@@ -74,9 +74,16 @@
           </div>
           <ion-item>
             <ion-radio-group formControlName="gender" value="other">
-              <ion-radio justify="start" value="Male" labelPlacement="end">Male</ion-radio>
-              <ion-radio justify="start" value="Female" labelPlacement="end">Female</ion-radio>
+              <ion-row>
+                <ion-col>
+                  <ion-radio justify="start" value="Male" labelPlacement="stacked">Male</ion-radio>
+                </ion-col>
+                <ion-col>
+                  <ion-radio justify="end" value="Female" labelPlacement="stacked">Female</ion-radio>
+                </ion-col>
+              </ion-row>
             </ion-radio-group>
+            
           </ion-item>
         </div>
         <!-- <div *ngIf="step == 3"> -->
