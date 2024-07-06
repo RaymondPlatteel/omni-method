@@ -24,6 +24,7 @@
 	},
 	"packageClassList": [
 		"InAppReviewPlugin",
+		"InAppReviewPlugin",
 		"AppPlugin",
 		"CAPCameraPlugin",
 		"HapticsPlugin",

@@ -23,7 +23,7 @@ import {InAppReview} from '@capacitor-community/in-app-review';
   styleUrls: ['./community.page.scss'],
 })
 export class CommunityPage implements OnInit {
-  public type: string = 'rankings';
+  public type: string = 'announcements';
   // public view: View = View.Rankings;
   public ranking$: Observable<User[]>;
   private curUserId: string;

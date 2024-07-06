@@ -10,7 +10,7 @@ import {Observable, from} from 'rxjs';
 * BUCKET_NAME.storage.googleapis.com
 */
 
-const ANNOUNCEMENTS_DIR = "/content/videos/announcements/";
+const ANNOUNCEMENTS_DIR = "content/videos/announcements/";
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log("loggingInterceptor", req.url);
@@ -34,10 +34,15 @@ export class StorageService {
   public getAnnouncements(): any {
     console.log("getAnnouncements");
 
-    const filePath = ANNOUNCEMENTS_DIR + "announcements.json";
+    let filePath = ANNOUNCEMENTS_DIR + "announcements.json";
+    console.log("filePath", filePath);
 
-    // const isNativePlatform = Capacitor.isNativePlatform();
-    // console.log("isNativePlatform", isNativePlatform);
+    const isNativePlatform = Capacitor.isNativePlatform();
+    console.log("isNativePlatform", isNativePlatform);
+    if (isNativePlatform) {
+      filePath = encodeURIComponent(filePath);
+      console.log("filePath", filePath);
+    }
 
     const fileRef = ref(this.storage, filePath);
     console.log("fileRef fullPath", fileRef.fullPath);
@@ -54,6 +59,22 @@ export class StorageService {
       return obj;
     }).catch((err) => {
       console.log("getBytes error", err);
+      // console.log("getDownloadURL json");
+      // const jsonResp = getDownloadURL(fileRef).then((url) => {
+      //   console.log("json URL", url);
+      //   this.http.get(url).subscribe((resp) => {
+      //     console.log("jsonResp", jsonResp);
+      //     this.getUrls(jsonResp);
+      //     return jsonResp;
+      //   },
+      //     (err) => {
+      //       console.log("http get error", err);
+      //       return undefined;
+      //     })
+      // }).catch((err) => {
+      //   console.log("getDownloadURL error", err);
+      //   return undefined;
+      // })
       return undefined;
     });
     return resp;
@@ -130,6 +151,12 @@ export class StorageService {
 
   getVideoUrl(filePath: string) {
     console.log("getVideoUrl", filePath);
+    const isNativePlatform = Capacitor.isNativePlatform();
+    console.log("isNativePlatform", isNativePlatform);
+    if (isNativePlatform) {
+      filePath = encodeURIComponent(filePath);
+      console.log("filePath", filePath);
+    }
     const storage = getStorage();
 
     return getDownloadURL(ref(storage, filePath)).then((url) => {
