@@ -8,7 +8,8 @@ import {Router} from '@angular/router';
 import {UserFirestoreService} from '../../services/user-firestore.service';
 import {AuthService} from '../../services/auth.service';
 import {Analytics, CustomParams, getAnalytics, setUserId, setUserProperties} from '@angular/fire/analytics';
-import {UserService} from 'src/app/services/user/user.service';
+import {UserService} from '../../services/user/user.service';
+import {NotificationsService} from '../../services/notifications/notifications.service';
 
 @Injectable()
 export class UserEffects {
@@ -19,7 +20,8 @@ export class UserEffects {
     private firestoreService: UserFirestoreService,
     private store: Store,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationsService: NotificationsService
   ) {
     this.analytics = getAnalytics();
   }
@@ -135,6 +137,7 @@ export class UserEffects {
         // tap(() => this.router.navigate(['home']))
         tap((newUser) => {
           console.log("route newUser to onboarding", newUser);
+          this.notificationsService.scheduleLocalNotification();
           this.router.navigate(['home']);
         })
       ),

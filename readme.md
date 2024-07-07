@@ -484,3 +484,18 @@ $ gcloud storage buckets update gs://<bucket-name>.appspot.com --cors-file cors_
   "_baseMessage":"Firebase Storage: An unknown error occurred, please check the error payload for server response. (storage/unknown)"
 }
 ```
+
+### attempt to fix issue
+
+<https://stackoverflow.com/questions/70052479/firebase-storage-an-unknown-error-occurred-please-check-the-error-payload-for>
+
+issue when running on a device or in simulator
+
+successfully loaded when testing in browser
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content%2Fvideos%2Fannouncements%2Fannouncements.json?alt=media>
+
+failed request from iOS client
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content/videos/announcements/announcements.json?alt=media>
+
+link from firebase console with token, worked from browser
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content%2Fvideos%2Fannouncements%2Fannouncements.json?alt=media&token=586f6985-8425-41b5-b57a-b53e2a263b7b>

@@ -3,11 +3,10 @@ import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {User} from '../../store/user/user.model';
 import {Observable} from 'rxjs';
 import {StatusBar, Style} from '@capacitor/status-bar';
-import {Capacitor, CapacitorHttp, HttpOptions, HttpResponse} from '@capacitor/core';
+import {Capacitor} from '@capacitor/core';
 import {CommunityService} from '../../services/community/community.service';
 import {Router} from '@angular/router';
-import {getBytes, getDownloadURL, getStorage, ref} from '@angular/fire/storage';
-import {HttpClient} from '@angular/common/http';
+import {getDownloadURL, getStorage, ref} from '@angular/fire/storage';
 import {StorageService} from '../../services/storage/storage.service';
 import {InAppReview} from '@capacitor-community/in-app-review';
 
@@ -76,6 +75,9 @@ export class CommunityPage implements OnInit {
     // InAppReview.requestReview();
 
     console.log("ngOnInit", JSON.stringify(this.announcements));
+
+    await Notification.requestPermission();
+    console.log("permission", Notification.permission);
   }
 
   ionViewWillEnter() {

@@ -18,6 +18,9 @@ const config: CapacitorConfig = {
         '164197842062-i2oqluboqhldepb0enpt0hlnmrongsvl.apps.googleusercontent.com',
       forceCodeForRefreshToken: true,
     },
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
     SplashScreen: {
       launchAutoHide: true,
       launchShowDuration: 4000,
