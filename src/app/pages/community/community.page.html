@@ -7,17 +7,18 @@
   <!-- <ion-header class="safe-area">
   </ion-header> -->
   <!-- (ionChange)="segmentChange($event)" -->
-  <ion-segment value="rankings"
-  [(ngModel)]="type"
-   color="primary">
-    <ion-segment-button value="rankings">
-      <ion-label>Rankings</ion-label>
+  <ion-segment value="rankings" [(ngModel)]="type" mode="md">
+    <!-- <ion-segment-button value="home">
+      <ion-icon name="home" size="large"></ion-icon>
+    </ion-segment-button> -->
+    <ion-segment-button value="rankings" aria-label="rankings">
+      <ion-icon name="trophy" size="large"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="announcements">
-      <ion-label>Announcements</ion-label>
+    <ion-segment-button value="announcements" aria-label="announcements">
+      <ion-icon name="megaphone" size="large"></ion-icon>
     </ion-segment-button>
     <!-- <ion-segment-button value="people">
-      <ion-label>People</ion-label>
+      <ion-icon name="people" size="large"></ion-icon>
     </ion-segment-button> -->
   </ion-segment>
   <ng-container [ngSwitch]="type">
@@ -66,13 +67,31 @@
       </ion-card>
     </ion-list>
     <ion-list *ngSwitchCase="'people'">
-      <ion-card>
+      <ion-item>
+        <ion-grid class="ion-text-center">
+          <ion-row>
+            <ion-col>
+              <ion-label>130</ion-label>
+              <ion-label>Friends</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>15</ion-label>
+              <ion-label>Followers</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>54</ion-label>
+              <ion-label>Folowing</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <!-- <ion-card>
         <ion-card-header>
           <ion-card-title></ion-card-title>
           <ion-card-subtitle>People</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>coming soon</ion-card-content>
-      </ion-card>
+      </ion-card> -->
     </ion-list>
   </ng-container>
 </ion-content>

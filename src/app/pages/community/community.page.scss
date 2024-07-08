@@ -6,10 +6,12 @@ ion-toolbar {
 }
 ion-segment {
   // --background: #b8dfff;
-  --background: white;
   margin: auto;
-    margin-top: 5px;
-    width: 97%;
+  margin-top: 5px;
+  width: 97%;
+}
+ion-segment-button {
+  --color-checked: var(--ion-color-primary);
 }
 .setting-button {
   border: 1px solid;
