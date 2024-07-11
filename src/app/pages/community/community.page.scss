@@ -1,6 +1,7 @@
 ion-toolbar {
-  --background: white;
+  // --background: var(--ion-color-dark);
   ion-title {
+    --color: var(--ion-color-dark);
     font-size: 24px;
   }
 }
