@@ -121,7 +121,7 @@ export class AssessmentChartComponent implements OnInit, OnDestroy {
           show: true,
           offsetY: 5,
           style: {
-            colors: Array(this.assessments.length).fill('white'),
+            colors: Array(this.assessments.length).fill('var(--ion-color-dark)'),
             fontSize: '12px'
           }
         }

@@ -1,6 +1,6 @@
 
 #omniScore {
-    color: #fff;
+    color: var(--ion-text-color);
     text-align: center;
     margin: auto;
     .omni-label {
@@ -18,10 +18,12 @@
 
 .exp-progress {
     --background: var(--ion-background-color);
-    // --progress-background: var(--ion-color-light);
-    // border: 2px solid var(--ion-color-light);
-    --progress-background: #fff;
-    border: 2px solid #fff;
+    --progress-background: var(--ion-color-dark);
+    border: 2px solid var(--ion-color-dark);
+    // --progress-background: var(--ion-text-color);
+    // border: 2px solid var(--ion-text-color);
+    // --progress-background: #fff;
+    // border: 2px solid #fff;
     height: 12px;
     // padding: 1px;
     width: 100%;

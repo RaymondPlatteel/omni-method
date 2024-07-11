@@ -99,7 +99,7 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
           show: true,
           offsetY: 5,
           style: {
-            colors: Array(this.categories.length).fill('white'),
+            colors: Array(this.categories.length).fill('var(--ion-color-dark)'),
             fontSize: '12px'
           }
         }
