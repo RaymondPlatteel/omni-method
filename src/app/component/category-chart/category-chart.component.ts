@@ -49,11 +49,12 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
     });
 
     // need to subscribe to current user to set these values dynamically
-    let stepSize = 100;
-    const maxScore: number = Object.values(this.user.categoryScore).reduce((a, b) => Math.max(a, b));
-    if (maxScore > 500) {
-      stepSize = 250;
-    }
+    // let stepSize = 100;
+    // const maxScore: number = Object.values(this.user.categoryScore).reduce((a, b) => Math.max(a, b));
+    // if (maxScore > 500) {
+    //   stepSize = 250;
+    // }
+    let stepSize = 250;
 
     this.chartOptions = {
       chart: {

@@ -25,8 +25,8 @@ import {ImageComponent} from '../image/image.component';
         padding-left: 0px;
         /* aspect-ratio: 1 / 1; */
         position:relative;
-        width: 64px;
-        height: 64px;
+        width: 96px;
+        height: 96px;
       }
       ion-avatar img {
         border-radius: 50%;
