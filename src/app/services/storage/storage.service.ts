@@ -58,7 +58,7 @@ export class StorageService {
       this.getUrls(obj);
       return obj;
     }).catch((err) => {
-      console.log("getBytes error", err);
+      console.log("StorageService getAnnouncements, getBytes error", err);
       // console.log("getDownloadURL json");
       // const jsonResp = getDownloadURL(fileRef).then((url) => {
       //   console.log("json URL", url);

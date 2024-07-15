@@ -68,6 +68,9 @@ export class CommunityPage implements OnInit {
     this.announcementService.getAnnouncements().subscribe(annuncements => {
       if (annuncements) {
         console.log("announcements", annuncements)
+        annuncements.forEach((a, i, arr) => {
+          this.getVideoLink(a.filename).then(u => a.url = u)
+        })
         this.announcements = annuncements;
       }
     })
@@ -103,7 +106,8 @@ export class CommunityPage implements OnInit {
   }
 
   getVideoLink(filename: string) {
-    const filePath = "/content/videos/announcements/" + filename;
+    const filePath = "content/videos/announcements/" + filename;
+    console.log("getVideoLink", filePath);
     return this.storageService.getVideoUrl(filePath);
   }
 

@@ -12,7 +12,8 @@ import {StatusBar, Style} from '@capacitor/status-bar';
 import {Capacitor} from '@capacitor/core';
 import {getStorage, getDownloadURL, ref} from '@angular/fire/storage';
 import {Analytics, logEvent} from '@angular/fire/analytics';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import {OmniScoreService} from '../../services/omni-score.service';
+import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-assessment-detail',
@@ -43,7 +44,8 @@ export class AssessmentDetailPage implements OnInit {
     private assessmentService: AssessmentService,
     private userService: UserService,
     private router: Router,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -144,15 +146,8 @@ export class AssessmentDetailPage implements OnInit {
         resolve(assessment.video);
       });
     }
-    const storage = getStorage();
 
-    return getDownloadURL(ref(storage, assessment.video)).then((url) => {
-      console.log("downloadURL", url);
-      return url;
-    }).catch((err) => {
-      console.log("err", err);
-      return undefined;
-    });
+    return this.storageService.getVideoUrl(assessment.video);
   }
 
   // toggleCheckItem(item) {
