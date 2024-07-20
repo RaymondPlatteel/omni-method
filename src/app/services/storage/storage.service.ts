@@ -145,12 +145,12 @@ export class StorageService {
   async getUrls(obj) {
     for (var entry of obj.videos) {
       console.log("getUrl for file", entry.filename);
-      entry.url = await this.getVideoUrl(ANNOUNCEMENTS_DIR + entry.filename);
+      entry.url = await this.getFileUrl(ANNOUNCEMENTS_DIR + entry.filename);
     }
   }
 
-  getVideoUrl(filePath: string) {
-    console.log("getVideoUrl", filePath);
+  getFileUrl(filePath: string) {
+    console.log("getFileUrl", filePath);
     const isNativePlatform = Capacitor.isNativePlatform();
     console.log("isNativePlatform", isNativePlatform);
     if (isNativePlatform) {

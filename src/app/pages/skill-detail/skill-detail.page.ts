@@ -8,6 +8,7 @@ import {UserService} from '../../services/user/user.service';
 import {Assessment} from '../../store/assessments/assessment.model';
 import {User} from 'src/app/store/user/user.model';
 import {getDownloadURL, getStorage, ref} from '@angular/fire/storage';
+import {StorageService} from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-skill-detail',
@@ -28,7 +29,8 @@ export class SkillDetailPage implements OnInit {
     private route: ActivatedRoute,
     private navController: NavController,
     private assessmentService: AssessmentService,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,8 @@ export class SkillDetailPage implements OnInit {
         console.log("skill detail ngOnInit skill", skill);
         if (skill.hasOwnProperty('video')) {
           console.log("video", skill['video']);
-          this.videoLink = this.getVideoUrl(skill['video']);
+          // this.videoLink = this.getVideoUrl(skill['video']);
+          this.videoLink = this.storageService.getFileUrl(skill['video']);
         }
       });
       // load current assessment score
@@ -90,18 +93,18 @@ export class SkillDetailPage implements OnInit {
     // this.goBack();
   }
 
-  getVideoUrl(videoPath: string) {
-    console.log("getVideoUrl", videoPath);
-    const storage = getStorage();
+  // getVideoUrl(videoPath: string) {
+  //   console.log("getVideoUrl", videoPath);
+  //   const storage = getStorage();
 
-    return getDownloadURL(ref(storage, videoPath)).then((url) => {
-      console.log("downloadURL", url);
-      return url;
-    }).catch((err) => {
-      console.log("getVideoUrl err", err);
-      return undefined;
-    });
-  }
+  //   return getDownloadURL(ref(storage, videoPath)).then((url) => {
+  //     console.log("downloadURL", url);
+  //     return url;
+  //   }).catch((err) => {
+  //     console.log("getVideoUrl err", err);
+  //     return undefined;
+  //   });
+  // }
 
   async createNewScore() {
     var newScore: Score;

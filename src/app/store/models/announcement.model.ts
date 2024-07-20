@@ -3,5 +3,6 @@ export interface Announcement {
     subtitle: string;
     description: string;
     filename: string;
+    thumbnail: string;
     url: string;
 }

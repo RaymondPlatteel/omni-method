@@ -57,13 +57,26 @@
         </ion-card-header>
         <ion-card-content>
           <!-- welcome video -->
-          <video class="video-content" controlsList="nodownload"
-          controls disablepictureinpicture muted preload="metadata">
+          <video class="video-content" controlsList="nodownload" poster="{{video.thumbnail}}"
+          controls disablepictureinpicture muted preload="metadata" *ngIf="video.thumbnail?.startsWith('http')">
             <source src="{{video.url}}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
+          <!-- object -->
+          <!-- <object
+          type="video/mp4"
+          width="100%"
+          height="100%"
+          style="min-height: 500px;"
+          [data]="sanitizedUrl"
+        >
+          <p>It appears your device doesn't support video.</p>
+        </object> -->
+        <!-- iframe -->
+        <!-- <iframe [src]="sanitizedUrl" allow="autoplay;" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
           <ion-text>{{video.description}}</ion-text>
-      </ion-card-content>
+        </ion-card-content>
       </ion-card>
     </ion-list>
     <ion-list *ngSwitchCase="'people'">

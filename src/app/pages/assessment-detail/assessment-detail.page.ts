@@ -35,6 +35,7 @@ export class AssessmentDetailPage implements OnInit {
   public curScore: Score;
   private checklistChanged: boolean = false;
   public videoLink: Promise<string>;
+  public thumbnailLink: Promise<string>;
   private analytics: Analytics = inject(Analytics);
 
   constructor(
@@ -65,6 +66,7 @@ export class AssessmentDetailPage implements OnInit {
       logEvent(this.analytics, "assessment_detail", {assessment_label: assessment.label});
       if (assessment.video) {
         this.videoLink = this.getVideoUrl(assessment);
+        this.thumbnailLink = this.storageService.getFileUrl(assessment.thumbnail);
       }
       this.score$ = this.userService.getCurrentScoreForAssessment(assessment.aid);
       this.score$.subscribe((score) => {
@@ -147,7 +149,7 @@ export class AssessmentDetailPage implements OnInit {
       });
     }
 
-    return this.storageService.getVideoUrl(assessment.video);
+    return this.storageService.getFileUrl(assessment.video);
   }
 
   // toggleCheckItem(item) {

@@ -10,6 +10,7 @@ import {getDownloadURL, getStorage, ref} from '@angular/fire/storage';
 import {StorageService} from '../../services/storage/storage.service';
 import {InAppReview} from '@capacitor-community/in-app-review';
 import {AnnouncementsService} from 'src/app/services/announcements/announcements.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 // export enum View {
 //   Rankings = 'Rankings',
@@ -27,35 +28,25 @@ export class CommunityPage implements OnInit {
   // public view: View = View.Rankings;
   public ranking$: Observable<User[]>;
   private curUserId: string;
+  public sanitizedUrl: SafeResourceUrl;
   public announcements = [
     {
       "title": "Big Buck Bunny",
       "subtitle": "By Blender Foundation",
       "description": "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org",
       "filename": undefined,
-      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    },
-    {
-      "title": "Elephant Dream",
-      "subtitle": "By Blender Foundation",
-      "description": "The first Blender Open Movie from 2006",
-      "filename": undefined,
-      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-    },
-    {
-      "title": "For Bigger Blazes",
-      "subtitle": "By Google",
-      "description": "HBO GO now works with Chromecast -- the easiest way to enjoy online video on your TV. For when you want to settle into your Iron Throne to watch the latest episodes. For $35.\nLearn how to use Chromecast with HBO GO and more at google.com/chromecast.",
-      "filename": undefined,
-      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      "thumbnail": undefined,
+      "url": undefined
     }
   ];
+  // "hide_url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 
   constructor(
     private communityService: CommunityService,
     private router: Router,
     private storageService: StorageService,
     private announcementService: AnnouncementsService,
+    private sanitizer: DomSanitizer
   ) {
     // loadAllUsers
     communityService.loadAllUsers();
@@ -68,8 +59,14 @@ export class CommunityPage implements OnInit {
     this.announcementService.getAnnouncements().subscribe(annuncements => {
       if (annuncements) {
         console.log("announcements", annuncements)
-        annuncements.forEach((a, i, arr) => {
-          this.getVideoLink(a.filename).then(u => a.url = u)
+        annuncements.forEach(async (a, i, arr) => {
+          await this.getVideoLink(a.filename).then(u => a.url = u);
+          console.log("videoLink", a.url);
+          const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(a.url);
+          console.log("sanitizedUrl", sanitizedUrl);
+          if (a.thumbnail) {
+            this.getVideoLink(a.thumbnail).then(u => a.thumbnail = u)
+          }
         })
         this.announcements = annuncements;
       }
@@ -108,7 +105,7 @@ export class CommunityPage implements OnInit {
   getVideoLink(filename: string) {
     const filePath = "content/videos/announcements/" + filename;
     console.log("getVideoLink", filePath);
-    return this.storageService.getVideoUrl(filePath);
+    return this.storageService.getFileUrl(filePath);
   }
 
 }

@@ -18,7 +18,7 @@
       <!-- <ion-item></ion-item> -->
       <div [ngSwitch]="true">
         <ion-item *ngSwitchCase="skill.hasOwnProperty('video')" lines="none">
-          <video class="header-content" controlsList="nodownload"
+          <video class="header-content" controlsList="nodownload" poster="{{skill['thumbnail']}}"
             controls disablepictureinpicture muted preload="metadata">
             <source src="{{videoLink | async}}" type="video/mp4">
             <!-- #t=0.1 -->
