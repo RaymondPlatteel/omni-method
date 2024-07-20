@@ -499,3 +499,11 @@ failed request from iOS client
 
 link from firebase console with token, worked from browser
 <https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content%2Fvideos%2Fannouncements%2Fannouncements.json?alt=media&token=586f6985-8425-41b5-b57a-b53e2a263b7b>
+
+## Add crashlytics and analytics July 2024
+
+<https://www.npmjs.com/package/@capacitor-firebase/crashlytics>
+
+<https://www.npmjs.com/package/@capacitor-firebase/analytics>
+
+configured for iOS may need further setup for Android

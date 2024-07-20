@@ -32,6 +32,10 @@
 	"packageClassList": [
 		"InAppReviewPlugin",
 		"InAppReviewPlugin",
+		"FirebaseAnalyticsPlugin",
+		"FirebaseAnalyticsPlugin",
+		"FirebaseCrashlyticsPlugin",
+		"FirebaseCrashlyticsPlugin",
 		"AppPlugin",
 		"CAPCameraPlugin",
 		"HapticsPlugin",
