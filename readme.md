@@ -507,3 +507,17 @@ link from firebase console with token, worked from browser
 <https://www.npmjs.com/package/@capacitor-firebase/analytics>
 
 configured for iOS may need further setup for Android
+
+## cocoapods error
+
+try updating cocoapods, may need to update Ruby
+
+```shell
+sudo gem install cocoapods
+```
+
+OR
+
+```shell
+sudo gem update
+```
