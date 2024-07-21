@@ -58,6 +58,7 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
 
     this.chartOptions = {
       chart: {
+        background: 'transparent',
         type: 'radar',
         height: 285,
         toolbar: {

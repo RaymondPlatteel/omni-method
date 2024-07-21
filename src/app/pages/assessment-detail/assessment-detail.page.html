@@ -71,11 +71,13 @@
             </ion-label>
           </ion-item>
           <ion-item lines="none">
-          <video class="video-content" controlsList="nodownload" poster="{{thumbnailLink | async}}"
-          playsinline controls disablepictureinpicture muted preload="auto">
+          <video class="video-content" controlsList="nodownload"
+            controls playsinline muted preload="auto" poster="{{thumbnailLink | async}}"
+            src="{{ videoLink | async }}">
+          <!--  disablepictureinpicture  -->
             <!-- <video class="video-content" controlsList="nodownload" poster="{{thumbnailLink | async}}"
             controls disablepictureinpicture muted preload="metadata"> -->
-              <source src="{{ videoLink | async }}" type="video/mp4">
+              <!-- <source src="{{ videoLink | async }}" type="video/mp4"/> -->
               <!-- #t=0.1 -->
               Your browser does not support the video tag.
             </video>

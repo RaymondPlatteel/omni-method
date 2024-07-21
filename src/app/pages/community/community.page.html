@@ -57,10 +57,11 @@
         </ion-card-header>
         <ion-card-content>
           <!-- welcome video -->
-          <video class="video-content" controlsList="nodownload" poster="{{video.thumbnail}}"
-          controls disablepictureinpicture muted preload="metadata" *ngIf="video.thumbnail?.startsWith('http')">
-            <source src="{{video.url}}" type="video/mp4">
-            Your browser does not support the video tag.
+          <video *ngIf="video.thumbnail?.startsWith('http')" class="video-content"
+            controlsList="nodownload" playsinline controls preload="auto"
+            poster="{{video.thumbnail}}" src="{{video.url}}">
+            <!-- <source src="{{video.url}}" type="video/mp4" /> -->
+            Your device does not support the video tag.
           </video>
           <!-- object -->
           <!-- <object
