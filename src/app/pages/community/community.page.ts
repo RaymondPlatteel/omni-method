@@ -6,13 +6,17 @@ import {StatusBar, Style} from '@capacitor/status-bar';
 import {Capacitor} from '@capacitor/core';
 import {CommunityService} from '../../services/community/community.service';
 import {Router} from '@angular/router';
-import {getBytes, getDownloadURL, getStorage, ref} from '@angular/fire/storage';
+import {getDownloadURL, getStorage, ref} from '@angular/fire/storage';
+import {StorageService} from '../../services/storage/storage.service';
+import {InAppReview} from '@capacitor-community/in-app-review';
+import {AnnouncementsService} from 'src/app/services/announcements/announcements.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
-export enum View {
-  Rankings = 'Rankings',
-  Updates = 'Updates',
-  People = 'People',
-}
+// export enum View {
+//   Rankings = 'Rankings',
+//   Announcements = 'Announcements',
+//   People = 'People',
+// }
 
 @Component({
   selector: 'app-community',
@@ -20,24 +24,29 @@ export enum View {
   styleUrls: ['./community.page.scss'],
 })
 export class CommunityPage implements OnInit {
-  public type: string = 'rankings';
-  // View = View;
-  public view: View = View.Rankings;
+  public type: string = 'announcements';
+  // public view: View = View.Rankings;
   public ranking$: Observable<User[]>;
-  // @ViewChild(IonModal) modal: IonModal;
   private curUserId: string;
-  public announcements = {
-    "videos": [
-      {
-        "title": "Error loading content",
-        "filename": undefined
-      }
-    ]
-  };
+  public sanitizedUrl: SafeResourceUrl;
+  public announcements = [
+    {
+      "title": "Big Buck Bunny",
+      "subtitle": "By Blender Foundation",
+      "description": "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org",
+      "filename": undefined,
+      "thumbnail": undefined,
+      "url": undefined
+    }
+  ];
+  // "hide_url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 
   constructor(
     private communityService: CommunityService,
     private router: Router,
+    private storageService: StorageService,
+    private announcementService: AnnouncementsService,
+    private sanitizer: DomSanitizer
   ) {
     // loadAllUsers
     communityService.loadAllUsers();
@@ -46,8 +55,29 @@ export class CommunityPage implements OnInit {
   async ngOnInit() {
     // getAllUsersByScore
     this.ranking$ = this.communityService.getAllUsersByScore();
-    await this.readAnnouncementsFile();
+
+    this.announcementService.getAnnouncements().subscribe(annuncements => {
+      if (annuncements) {
+        console.log("announcements", annuncements)
+        annuncements.forEach(async (a, i, arr) => {
+          await this.getVideoLink(a.filename).then(u => a.url = u);
+          console.log("videoLink", a.url);
+          const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(a.url);
+          console.log("sanitizedUrl", sanitizedUrl);
+          if (a.thumbnail) {
+            this.getVideoLink(a.thumbnail).then(u => a.thumbnail = u)
+          }
+        })
+        this.announcements = annuncements;
+      }
+    })
+
+    // InAppReview.requestReview();
+
     console.log("ngOnInit", JSON.stringify(this.announcements));
+
+    await Notification.requestPermission();
+    console.log("permission", Notification.permission);
   }
 
   ionViewWillEnter() {
@@ -72,31 +102,10 @@ export class CommunityPage implements OnInit {
     return Math.trunc(athlete.omniScore / 100);
   }
 
-  async readAnnouncementsFile() {
-    const filePath = "content/videos/announcements/announcements.json";
-    const storage = getStorage();
-
-    const fileRef = ref(storage, filePath);
-    console.log("fileRef fullPath", fileRef.fullPath);
-    console.log("fileRef name", fileRef.name);
-    getBytes(fileRef).then((arrBuf) => {
-      console.log("arrBuf", arrBuf);
-    }).catch((err) => {
-      console.log("getBytes err", err);
-      return undefined;
-    });
-    // getDownloadURL(fileRef).then((url) => {
-    //   console.log("announcements file URL", url);
-    //   fetch(url).then((response) => {
-    //     response.json().then((json) => {
-    //       console.log("file json", json);
-    //       this.announcements = json;
-    //     });
-    //   });
-    // }).catch((err) => {
-    //   console.log("readAnnouncements err", err);
-    //   return undefined;
-    // });
+  getVideoLink(filename: string) {
+    const filePath = "content/videos/announcements/" + filename;
+    console.log("getVideoLink", filePath);
+    return this.storageService.getFileUrl(filePath);
   }
 
 }

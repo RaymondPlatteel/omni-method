@@ -20,6 +20,7 @@ export interface Assessment {
   entryUnits?: string;
   scores?: Score[];
   video?: string;
+  thumbnail?: string;
   warning?: string;
   hideChecked?: boolean;
 }

@@ -12,7 +12,8 @@ import {StatusBar, Style} from '@capacitor/status-bar';
 import {Capacitor} from '@capacitor/core';
 import {getStorage, getDownloadURL, ref} from '@angular/fire/storage';
 import {Analytics, logEvent} from '@angular/fire/analytics';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import {OmniScoreService} from '../../services/omni-score.service';
+import {StorageService} from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-assessment-detail',
@@ -34,6 +35,7 @@ export class AssessmentDetailPage implements OnInit {
   public curScore: Score;
   private checklistChanged: boolean = false;
   public videoLink: Promise<string>;
+  public thumbnailLink: Promise<string>;
   private analytics: Analytics = inject(Analytics);
 
   constructor(
@@ -43,7 +45,8 @@ export class AssessmentDetailPage implements OnInit {
     private assessmentService: AssessmentService,
     private userService: UserService,
     private router: Router,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -63,6 +66,7 @@ export class AssessmentDetailPage implements OnInit {
       logEvent(this.analytics, "assessment_detail", {assessment_label: assessment.label});
       if (assessment.video) {
         this.videoLink = this.getVideoUrl(assessment);
+        this.thumbnailLink = this.storageService.getFileUrl(assessment.thumbnail);
       }
       this.score$ = this.userService.getCurrentScoreForAssessment(assessment.aid);
       this.score$.subscribe((score) => {
@@ -136,7 +140,6 @@ export class AssessmentDetailPage implements OnInit {
     return this.displayChecked.filter(item => item).length;
   }
 
-
   getVideoUrl(assessment: Assessment): Promise<string> {
     console.log("getVideoUrl", assessment.video);
     if (assessment.video.startsWith("http")) {
@@ -145,15 +148,8 @@ export class AssessmentDetailPage implements OnInit {
         resolve(assessment.video);
       });
     }
-    const storage = getStorage();
 
-    return getDownloadURL(ref(storage, assessment.video)).then((url) => {
-      console.log("downloadURL", url);
-      return url;
-    }).catch((err) => {
-      console.log("err", err);
-      return undefined;
-    });
+    return this.storageService.getFileUrl(assessment.video);
   }
 
   // toggleCheckItem(item) {

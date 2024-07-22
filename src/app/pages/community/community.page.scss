@@ -1,15 +1,18 @@
 ion-toolbar {
-  --background: white;
+  --background: var(--ion-color-light);
   ion-title {
+    --color: var(--ion-color-dark);
     font-size: 24px;
   }
 }
 ion-segment {
   // --background: #b8dfff;
-  --background: white;
   margin: auto;
-    margin-top: 5px;
-    width: 97%;
+  margin-top: 5px;
+  width: 97%;
+}
+ion-segment-button {
+  --color-checked: var(--ion-color-primary);
 }
 .setting-button {
   border: 1px solid;
@@ -47,3 +50,13 @@ ion-avatar {
 .score {
   color: var(--ion-color-secondary);
 }
+.video-content {
+  background: linear-gradient(#b8dfff, #5eb3f9);
+  border-radius: 20px;
+  border: 2px solid #8CA1B6;
+  margin-bottom: 5px;
+  max-width: 100%;
+}
+// video[poster] {
+//   object-fit: cover;
+// }

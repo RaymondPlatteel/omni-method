@@ -452,3 +452,72 @@ gcloud services enable certificatemanager.googleapis.com
 ```
 
 I am currently unable to see the Media CDN setup page, it is blank and doesn't appear in the side menu, it seems to be disabled and have been looking for a way to enable it.
+
+## firebase storage
+
+commands to set CORS settings using google cloud shell
+
+$ cat cors_file.json
+[
+    {
+      "origin": ["http://localhost:8100"],
+      "method": ["GET"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
+
+$ gcloud storage buckets update gs://<bucket-name>.appspot.com --cors-file cors_file.json
+
+## error reading files
+
+⚡️  [log] - getBytes error {"code":"storage/unknown","customData":{"serverResponse":""},"name":"FirebaseError","status_":400,"_baseMessage":"Firebase Storage: An unknown error occurred, please check the error payload for server response. (storage/unknown)"}
+
+```json
+{
+  "code":"storage/unknown",
+  "customData":{
+    "serverResponse":""
+    },
+  "name":"FirebaseError",
+  "status_":400,
+  "_baseMessage":"Firebase Storage: An unknown error occurred, please check the error payload for server response. (storage/unknown)"
+}
+```
+
+### attempt to fix issue
+
+<https://stackoverflow.com/questions/70052479/firebase-storage-an-unknown-error-occurred-please-check-the-error-payload-for>
+
+issue when running on a device or in simulator
+
+successfully loaded when testing in browser
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content%2Fvideos%2Fannouncements%2Fannouncements.json?alt=media>
+
+failed request from iOS client
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content/videos/announcements/announcements.json?alt=media>
+
+link from firebase console with token, worked from browser
+<https://firebasestorage.googleapis.com/v0/b/omni-login-63e9f.appspot.com/o/content%2Fvideos%2Fannouncements%2Fannouncements.json?alt=media&token=586f6985-8425-41b5-b57a-b53e2a263b7b>
+
+## Add crashlytics and analytics July 2024
+
+<https://www.npmjs.com/package/@capacitor-firebase/crashlytics>
+
+<https://www.npmjs.com/package/@capacitor-firebase/analytics>
+
+configured for iOS may need further setup for Android
+
+## cocoapods error
+
+try updating cocoapods, may need to update Ruby
+
+```shell
+sudo gem install cocoapods
+```
+
+OR
+
+```shell
+sudo gem update
+```

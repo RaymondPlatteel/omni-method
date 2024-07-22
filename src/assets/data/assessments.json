@@ -3,37 +3,37 @@
     {
       "cid": "STRG",
       "label": "Strength",
-      "abrv": "STR",
+      "abrv": "Strength",
       "seq": 0
     },
     {
       "cid": "ENDR",
       "label": "Endurance",
-      "abrv": "END",
+      "abrv": "Endurance",
       "seq": 1
     },
     {
       "cid": "POWR",
       "label": "Power",
-      "abrv": "PWR",
+      "abrv": "Power",
       "seq": 2
     },
     {
       "cid": "FLEX",
       "label": "Flexibility",
-      "abrv": "FLX",
+      "abrv": "Flexibility",
       "seq": 3
     },
     {
       "cid": "META",
       "label": "Cardiorespiratory",
-      "abrv": "CRD",
+      "abrv": "Cardio",
       "seq": 4
     },
     {
       "cid": "NEUR",
       "label": "Motor Skills",
-      "abrv": "MTR",
+      "abrv": "Motor Skills",
       "seq": 5
     }
   ],
@@ -66,6 +66,7 @@
         "Any stance allowed",
         "Must pause in top position for 1 second "
       ],
+      "thumbnail": "content/videos/assessment_demo/Deadlift.png",
       "video": "content/videos/assessment_demo/Deadlift.mp4"
     },
     {

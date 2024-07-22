@@ -15,7 +15,7 @@ import {UserAvatarComponent} from 'src/app/component/user-avatar/user-avatar.com
     FormsModule,
     IonicModule,
     CommunityPageRoutingModule,
-    UserAvatarComponent
+    UserAvatarComponent,
   ],
   declarations: [CommunityPage]
 })
