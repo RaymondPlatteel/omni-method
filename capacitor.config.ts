@@ -9,7 +9,7 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     CapacitorHttp: {
-      enabled: true
+      enabled: false
     },
     GoogleAuth: {
       scopes: ['profile', 'email'],

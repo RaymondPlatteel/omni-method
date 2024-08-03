@@ -153,10 +153,10 @@ export class StorageService {
     console.log("getFileUrl", filePath);
     const isNativePlatform = Capacitor.isNativePlatform();
     console.log("isNativePlatform", isNativePlatform);
-    if (isNativePlatform) {
-      filePath = encodeURIComponent(filePath);
-      console.log("filePath", filePath);
-    }
+    // if (isNativePlatform) {
+    //   filePath = encodeURIComponent(filePath);
+    //   console.log("filePath", filePath);
+    // }
     const storage = getStorage();
 
     return getDownloadURL(ref(storage, filePath)).then((url) => {
