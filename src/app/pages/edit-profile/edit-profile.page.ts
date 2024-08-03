@@ -472,20 +472,21 @@ export class EditProfilePage implements OnInit, OnDestroy {
     // image cropped event
     // write file to storage and get url
     const urlPromise = this.userService.saveAvatarFile(event.blob, "profilePicture.png");
-    console.log("urlPromise", urlPromise);
+    console.log("await urlPromise", urlPromise); // (4)
     await urlPromise.then(
       (url) => {
         this.imageUrl = url;
-        console.log("imageUrl", this.imageUrl);
+        console.log("urlPromise > imageUrl", this.imageUrl);
       },
       error => {
-        console.log("error", error);
+        console.log("urlPromise > error", error);
         this.imageUrl = null;
       });
+    console.log("got imageUrl", this.imageUrl);
     if (this.imageUrl) {
       // update user with new image url
       const user = this.profileForm.value as User;
-      console.log("saveImage", this.imageUrl);
+      console.log("save imageUrl", this.imageUrl);
       user.avatar = this.imageUrl;
       this.userService.updateUser(user);
     }
