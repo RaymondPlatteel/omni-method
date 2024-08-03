@@ -19,6 +19,7 @@ import {UserFirestoreService} from '../user-firestore.service';
 import {ModalController} from '@ionic/angular';
 import {EditProfilePage} from 'src/app/pages/edit-profile/edit-profile.page';
 import {UploadMetadata, UploadTask, getDownloadURL, getStorage, ref, uploadBytesResumable} from '@angular/fire/storage';
+import {Capacitor} from '@capacitor/core';
 
 export const usernameMinLength = 5;
 export const usernameMaxLength = 20;
@@ -46,24 +47,50 @@ export class UserService implements IUserService {
   }
 
   async saveAvatarFile(blob: Blob, filename: string): Promise<string> {
-    console.log("saveAvatarFile", blob);
+    console.log("saveAvatarFile blob.type", blob.type); // (1)
     const storage = getStorage();
     const metadata: UploadMetadata = {
       contentType: blob.type,
     }
-    let task: UploadTask;
+    let uploadTask: UploadTask;
     await this.getUser().pipe(take(1)).forEach((user) => {
-      task = uploadBytesResumable(ref(storage, "/users/" + user.id + "/" + filename), blob, metadata);
+      console.log("got user"); // (2)
+      let filePath = "users/" + user.id + "/" + filename;
+      // if (Capacitor.isNativePlatform()) {
+      //   filePath = encodeURIComponent(filePath);
+      // }
+      console.log("filePath", filePath); // (3)
+      const fileRef = ref(storage, filePath);
+      uploadTask = uploadBytesResumable(fileRef, blob, metadata);
     });
-    await task.then(
-      (snapshot) => {
-        console.log("onFulfilled snapshot", snapshot);
+    // console.log("await task"); // (5) -> error
+    // await task.then(
+    //   (snapshot) => {
+    //     console.log("task > onFulfilled snapshot", snapshot);
+    //   },
+    //   (error) => {
+    //     console.log("task > onRejected error", error);
+    //   });
+    console.log("register state_changed methods");
+    const unsubscribe = uploadTask.on("state_changed",
+      function (snap) {
+        console.log("TASK next snapshot", snap);
+        var percent = snap.bytesTransferred / snap.totalBytes * 100;
+        console.log(percent + "% done");
       },
-      (error) => {
-        console.log("onRejected error", error);
-      });
-    console.log("return getDownloadURL with storageRef", task.snapshot.ref);
-    return getDownloadURL(task.snapshot.ref);
+      function (err) {
+        console.log("TASK error", err);
+      },
+      function () {
+        console.log("TASK upload complete");
+        unsubscribe();
+      }
+    );
+    console.log("await uploadTask");
+    await uploadTask;
+
+    console.log("return getDownloadURL with storageRef", uploadTask.snapshot.ref);
+    return getDownloadURL(uploadTask.snapshot.ref);
   }
 
   isUsernameAvailable(username: string) {
