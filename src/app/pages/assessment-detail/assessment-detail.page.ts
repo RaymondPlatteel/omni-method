@@ -66,14 +66,30 @@ export class AssessmentDetailPage implements OnInit {
       logEvent(this.analytics, "assessment_detail", {assessment_label: assessment.label});
       if (assessment.video) {
         this.videoLink = this.getVideoUrl(assessment);
+      }
+      if (assessment.thumbnail) {
         this.thumbnailLink = this.storageService.getFileUrl(assessment.thumbnail);
       }
       this.score$ = this.userService.getCurrentScoreForAssessment(assessment.aid);
-      this.score$.subscribe((score) => {
-        this.curScore = score;
+      this.score$.subscribe(
+        (score) => {
+          console.log("getScores for assessment response", score);
+          this.curScore = score;
+        },
+        (err) => {
+          console.log("getScores for assessment error", err);
+        },
+        () => {
+          console.log("getScores for assessments complete");
+        });
+      // this.scores$ = this.userService.getScoresForAssessment(assessment.aid);
+    },
+      (err) => {
+        console.log("assessment error", err);
+      },
+      () => {
+        console.log("assessment complete");
       });
-      this.scores$ = this.userService.getScoresForAssessment(assessment.aid);
-    });
     this.user$
       .subscribe((value) => {
         this.user = value;
