@@ -163,7 +163,7 @@ export class StorageService {
       console.log("return downloadURL", url);
       return url;
     }).catch((err) => {
-      console.log("err", err);
+      console.log("getFileUrl error", err);
       return undefined;
     });
   }
