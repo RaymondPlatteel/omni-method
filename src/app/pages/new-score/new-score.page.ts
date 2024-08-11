@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {IonModal, LoadingController, ModalController} from '@ionic/angular';
 import {User} from '../../store/user/user.model';
 import {UserService} from '../../services/user/user.service';
 import {Assessment} from '../../store/assessments/assessment.model';
@@ -9,6 +9,7 @@ import {NumberPickerService} from 'src/app/services/number-picker.service';
 import {Pagination} from 'swiper/modules';
 import {Swiper} from 'swiper';
 import {SwiperOptions} from 'swiper/types';
+import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
 
 @Component({
   selector: 'app-new-score',
@@ -32,15 +33,14 @@ export class NewScorePage implements OnInit, OnDestroy {
   // rawScore: number;
   bodyWeight: number;
   numberPickerSubscription: Subscription;
-  // scorePickerColumns: PickerColumn[] = [];
-  // scorePickerButtons: PickerButton[] = [];
-  // weightPickerColumns: PickerColumn[] = [];
-  // weightPickerButtons: PickerButton[] = [];
+  @ViewChild('videoOption') avatarOptionModal: IonModal;
+  public isVideoOptionOpen = false;
+  public videoUrl: string;
 
   constructor(
     private modalCtrl: ModalController,
     private userService: UserService,
-    private numberPickerService: NumberPickerService,
+    private loadingCtrl: LoadingController,
   ) {}
 
   async ngOnInit() {
@@ -163,6 +163,44 @@ export class NewScorePage implements OnInit, OnDestroy {
       return 'text';
     }
     return 'decimal';
+  }
+
+  setVideoOptionOpen(isOpen: boolean) {
+    console.log("setVideoOptionOpen", isOpen);
+    this.isVideoOptionOpen = isOpen;
+  }
+
+  onDidDismiss(ev: Event) {
+    this.setVideoOptionOpen(false);
+  }
+
+  chooseFromLibrary() {
+    this.setVideoOptionOpen(false);
+    this.getPicture(CameraSource.Photos);
+  }
+
+
+  takeVideo() {
+    this.setVideoOptionOpen(false);
+    this.getPicture(CameraSource.Camera);
+  }
+
+  // camera plugin
+  getPicture = async (cameraSource: CameraSource) => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      direction: CameraDirection.Front,
+      allowEditing: true,
+      saveToGallery: true,
+      resultType: CameraResultType.DataUrl,
+      source: cameraSource
+    });
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    console.log("picture selected, open editor");
+    // this.isEditAvatarOpen = true;
+    this.videoUrl = image.dataUrl;
+    console.log("imageUrl", this.videoUrl);
   }
 
 }

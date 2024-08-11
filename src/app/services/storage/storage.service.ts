@@ -168,4 +168,16 @@ export class StorageService {
     });
   }
 
+  async uploadFile(f: FileEntry) {
+    const path: string;
+    const type = 
+  }
+
+  getMimeType(fileExt: string) {
+    if (fileExt == 'wav') return {type: 'audio/wav'};
+    else if (fileExt == 'jpg') return {type: 'image/jpg'};
+    else if (fileExt == 'mp4') return {type: 'video/mp4'};
+    else if (fileExt == 'MOV') return {type: 'video/quicktime'};
+  }
+
 }
