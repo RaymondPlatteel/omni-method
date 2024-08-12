@@ -29,6 +29,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {CommunityEffects} from './store/community/community.effect';
 import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
 import {loggingInterceptor} from './services/storage/storage.service';
+import {File} from '@awesome-cordova-plugins/file/ngx';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -105,6 +106,7 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
     DatePipe,
     ScreenTrackingService,
     provideHttpClient(withInterceptorsFromDi()),
+    File,
   ]
 })
 export class AppModule {}

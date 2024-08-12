@@ -4,6 +4,8 @@ import {FirebaseApp} from '@angular/fire/app';
 import {FirebaseStorage, getBytes, getDownloadURL, getStorage, ref} from '@angular/fire/storage';
 import {Capacitor, CapacitorHttp, HttpHeaders, HttpOptions} from '@capacitor/core';
 import {Observable, from} from 'rxjs';
+import {File} from '@awesome-cordova-plugins/file/ngx';
+import {Platform} from '@ionic/angular';
 
 /*
 * storage.googleapis.com/BUCKET_NAME
@@ -25,11 +27,26 @@ export class StorageService {
   private storage: FirebaseStorage;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
     // private afStorage: AngularFireS
+    private plt: Platform,
+    private file: File
   ) {
     this.storage = getStorage();
   }
+
+  // ngOnInit() {
+  //   this.plt.ready().then(() => {
+  //     let path = this.file.dataDirectory;
+  //     this.file.checkDir(path, "media_temp").then(() => {
+
+
+  //     }, err => {
+  //       this.file.createDir(path, "media_temp");
+  //     }
+
+  //   })
+  // }
 
   public getAnnouncements(): any {
     console.log("getAnnouncements");
@@ -59,87 +76,10 @@ export class StorageService {
       return obj;
     }).catch((err) => {
       console.log("StorageService getAnnouncements, getBytes error", err);
-      // console.log("getDownloadURL json");
-      // const jsonResp = getDownloadURL(fileRef).then((url) => {
-      //   console.log("json URL", url);
-      //   this.http.get(url).subscribe((resp) => {
-      //     console.log("jsonResp", jsonResp);
-      //     this.getUrls(jsonResp);
-      //     return jsonResp;
-      //   },
-      //     (err) => {
-      //       console.log("http get error", err);
-      //       return undefined;
-      //     })
-      // }).catch((err) => {
-      //   console.log("getDownloadURL error", err);
-      //   return undefined;
-      // })
       return undefined;
     });
+
     return resp;
-
-    // getDownloadURL(fileRef).then((url) => {
-    //   console.log("got url", url);
-
-    // retrieve with Angular HttpClient (CORS error)
-    // this.http.get(url).subscribe((resp) => {
-    //   console.log("get url response", resp);
-    // });
-
-    // read directly (CORS error)
-    // const xhr = new XMLHttpRequest();
-    // xhr.responseType = 'blob';
-    // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    // xhr.onload = (event) => {
-    //   console.log("onload event", event);
-    //   const blob = xhr.response;
-    //   console.log("blob", blob);
-    // };
-    // xhr.open('GET', url);
-    // xhr.send();
-
-    // firebase api (CORS error)
-    // getBytes(fileRef).then((resp) => {
-    //   console.log("getBytes response", resp);
-    //   var enc = new TextDecoder("utf-8");
-    //   const obj: Object = JSON.parse(enc.decode(resp));
-    //   console.log("resp obj", obj);
-    //   return obj;
-    // }).catch((err) => {
-    //   console.log("getBytes error", err);
-    //   return undefined;
-    // });
-
-    // capacitor http client (empy response)
-    // const headers: HttpHeaders = {
-    //   'Access-Control-Allow-Origin': '*'
-    // };
-    // const options: HttpOptions = {
-    //   url: url,
-    //   method: "GET",
-    //   headers: headers,
-    //   responseType: "json",
-    //   readTimeout: 2000,
-    //   connectTimeout: 2000,
-    //   webFetchExtra: {
-    //     mode: "no-cors"
-    //   }
-    // };
-    // console.log("CapacitorHttp get...");
-    // CapacitorHttp.get(options).then((resp) => {
-    //   console.log("response.status", resp.status);
-    //   console.log("response.data", resp.data);
-    //   console.log("response.url", resp.url);
-    //   console.log("response.headers", resp.headers);
-    // }).catch((err) => {
-    //   console.log("CapacitorHttp get error", err);
-    // });
-
-    // }).catch((err) => {
-    //   console.log("getAnnouncements error", err);
-    // });
-
   }
 
   async getUrls(obj) {
@@ -168,9 +108,9 @@ export class StorageService {
     });
   }
 
-  async uploadFile(f: FileEntry) {
-    const path: string;
-    const type = 
+  async uploadFile(f: File) {
+    // const path: string;
+    // const type = this.getMimeType();
   }
 
   getMimeType(fileExt: string) {
