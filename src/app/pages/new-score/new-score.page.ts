@@ -10,6 +10,7 @@ import {Pagination} from 'swiper/modules';
 import {Swiper} from 'swiper';
 import {SwiperOptions} from 'swiper/types';
 import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
+import {StorageService} from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-new-score',
@@ -41,6 +42,7 @@ export class NewScorePage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private userService: UserService,
     private loadingCtrl: LoadingController,
+    private storageService: StorageService,
   ) {}
 
   async ngOnInit() {
@@ -181,8 +183,9 @@ export class NewScorePage implements OnInit, OnDestroy {
 
 
   takeVideo() {
-    this.setVideoOptionOpen(false);
-    this.getPicture(CameraSource.Camera);
+    // this.setVideoOptionOpen(true);
+    // this.getPicture(CameraSource.Camera);
+    this.storageService.recordVideo();
   }
 
   // camera plugin

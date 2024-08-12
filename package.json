@@ -33,6 +33,7 @@
     "@angular/router": "^18.0.1",
     "@awesome-cordova-plugins/core": "^6.6.0",
     "@awesome-cordova-plugins/file": "^6.8.0",
+    "@awesome-cordova-plugins/media-capture": "^6.8.0",
     "@capacitor-community/in-app-review": "^6.0.0",
     "@capacitor-firebase/analytics": "^6.1.0",
     "@capacitor-firebase/crashlytics": "^6.1.0",

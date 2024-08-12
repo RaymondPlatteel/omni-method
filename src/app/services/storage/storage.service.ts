@@ -6,6 +6,7 @@ import {Capacitor, CapacitorHttp, HttpHeaders, HttpOptions} from '@capacitor/cor
 import {Observable, from} from 'rxjs';
 import {File} from '@awesome-cordova-plugins/file/ngx';
 import {Platform} from '@ionic/angular';
+import {CaptureError, MediaCapture, MediaFile} from '@awesome-cordova-plugins/media-capture/ngx';
 
 /*
 * storage.googleapis.com/BUCKET_NAME
@@ -30,7 +31,8 @@ export class StorageService {
     private http: HttpClient,
     // private afStorage: AngularFireS
     private plt: Platform,
-    private file: File
+    // private file: File
+    private mediaCapture: MediaCapture,
   ) {
     this.storage = getStorage();
   }
@@ -118,6 +120,21 @@ export class StorageService {
     else if (fileExt == 'jpg') return {type: 'image/jpg'};
     else if (fileExt == 'mp4') return {type: 'video/mp4'};
     else if (fileExt == 'MOV') return {type: 'video/quicktime'};
+  }
+
+  recordVideo() {
+    this.mediaCapture.captureVideo().then(
+      (data: MediaFile[]) => {
+        if (data.length > 0) {
+          this.copyFile(data[0].fullPath);
+        }
+      },
+      (err: CaptureError) => console.log("recordVideo capture err", err)
+    );
+  }
+
+  copyFile(path) {
+    console.log("copyFile path", path);
   }
 
 }

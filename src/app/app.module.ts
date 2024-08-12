@@ -30,6 +30,7 @@ import {CommunityEffects} from './store/community/community.effect';
 import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
 import {loggingInterceptor} from './services/storage/storage.service';
 import {File} from '@awesome-cordova-plugins/file/ngx';
+import {MediaCapture} from '@awesome-cordova-plugins/media-capture/ngx';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -107,6 +108,7 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
     ScreenTrackingService,
     provideHttpClient(withInterceptorsFromDi()),
     File,
+    MediaCapture,
   ]
 })
 export class AppModule {}
