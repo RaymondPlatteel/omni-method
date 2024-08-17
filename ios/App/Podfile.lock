@@ -8,6 +8,8 @@ PODS:
   - CapacitorCommunityInAppReview (6.0.0):
     - Capacitor
   - CapacitorCordova (6.1.1)
+  - CapacitorFilesystem (6.0.1):
+    - Capacitor
   - CapacitorFirebaseAnalytics (6.1.0):
     - Capacitor
     - CapacitorFirebaseAnalytics/Lite (= 6.1.0)
@@ -138,6 +140,7 @@ DEPENDENCIES:
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCommunityInAppReview (from `../../node_modules/@capacitor-community/in-app-review`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorFirebaseAnalytics (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorFirebaseAnalytics/Analytics (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorFirebaseCrashlytics (from `../../node_modules/@capacitor-firebase/crashlytics`)"
@@ -176,6 +179,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/in-app-review"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
   CapacitorFirebaseAnalytics:
     :path: "../../node_modules/@capacitor-firebase/analytics"
   CapacitorFirebaseCrashlytics:
@@ -199,6 +204,7 @@ SPEC CHECKSUMS:
   CapacitorCamera: 3b77b3e8311b98220de65e63445c0e4d0b30ce3a
   CapacitorCommunityInAppReview: c69a9392f39a10f28092d823cfa979637f4fa079
   CapacitorCordova: 8f2cc8d8d3619c566e9418fe8772064a94266106
+  CapacitorFilesystem: 37fb3aa5c945b4539ab11c74a5c57925a302bf24
   CapacitorFirebaseAnalytics: 522dfd536bf9c3965781e7620fa9c7db568ccd86
   CapacitorFirebaseCrashlytics: a4c495104fbe5cb28967ae24ba1364a35d3c1173
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
@@ -222,6 +228,6 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
 
-PODFILE CHECKSUM: 4fc63f2b9163df518c4fe39505b23cc9b46d4e15
+PODFILE CHECKSUM: 181a1108bb64698de58736c808f619ad28b57b33
 
 COCOAPODS: 1.15.2

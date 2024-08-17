@@ -35,6 +35,7 @@
 		"FirebaseCrashlyticsPlugin",
 		"AppPlugin",
 		"CAPCameraPlugin",
+		"FilesystemPlugin",
 		"HapticsPlugin",
 		"LocalNotificationsPlugin",
 		"CAPNetworkPlugin",

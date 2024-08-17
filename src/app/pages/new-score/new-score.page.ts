@@ -177,8 +177,10 @@ export class NewScorePage implements OnInit, OnDestroy {
   }
 
   chooseFromLibrary() {
+    // close modal draw
     this.setVideoOptionOpen(false);
-    this.getPicture(CameraSource.Photos);
+    // 
+    this.getVideo(CameraSource.Photos);
   }
 
 
@@ -189,12 +191,9 @@ export class NewScorePage implements OnInit, OnDestroy {
   }
 
   // camera plugin
-  getPicture = async (cameraSource: CameraSource) => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      direction: CameraDirection.Front,
-      allowEditing: true,
-      saveToGallery: true,
+  getVideo = async (cameraSource: CameraSource) => {
+    const video = await Camera.getPhoto({
+      quality: 50,
       resultType: CameraResultType.DataUrl,
       source: cameraSource
     });
@@ -202,8 +201,8 @@ export class NewScorePage implements OnInit, OnDestroy {
     await loading.present();
     console.log("picture selected, open editor");
     // this.isEditAvatarOpen = true;
-    this.videoUrl = image.dataUrl;
-    console.log("imageUrl", this.videoUrl);
+    this.videoUrl = video.dataUrl;
+    console.log("videoUrl", this.videoUrl);
   }
 
 }

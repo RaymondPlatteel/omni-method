@@ -4,9 +4,10 @@ import {FirebaseApp} from '@angular/fire/app';
 import {FirebaseStorage, getBytes, getDownloadURL, getStorage, ref} from '@angular/fire/storage';
 import {Capacitor, CapacitorHttp, HttpHeaders, HttpOptions} from '@capacitor/core';
 import {Observable, from} from 'rxjs';
-import {File} from '@awesome-cordova-plugins/file/ngx';
+import {Filesystem, Directory, Encoding} from '@capacitor/filesystem';
 import {Platform} from '@ionic/angular';
 import {CaptureError, MediaCapture, MediaFile} from '@awesome-cordova-plugins/media-capture/ngx';
+import {Camera} from '@capacitor/camera';
 
 /*
 * storage.googleapis.com/BUCKET_NAME
@@ -31,8 +32,7 @@ export class StorageService {
     private http: HttpClient,
     // private afStorage: AngularFireS
     private plt: Platform,
-    // private file: File
-    private mediaCapture: MediaCapture,
+    private mediaCapture: MediaCapture
   ) {
     this.storage = getStorage();
   }
@@ -111,6 +111,7 @@ export class StorageService {
   }
 
   async uploadFile(f: File) {
+    // await Filesystem.writeFile()
     // const path: string;
     // const type = this.getMimeType();
   }
