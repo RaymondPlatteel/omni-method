@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {IonModal, LoadingController, ModalController} from '@ionic/angular';
+import {Component, Input, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
+import {IonModal, LoadingController, ModalController, Platform} from '@ionic/angular';
 import {User} from '../../store/user/user.model';
 import {UserService} from '../../services/user/user.service';
 import {Assessment} from '../../store/assessments/assessment.model';
@@ -11,6 +11,8 @@ import {Swiper} from 'swiper';
 import {SwiperOptions} from 'swiper/types';
 import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
 import {StorageService} from 'src/app/services/storage/storage.service';
+import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType} from '@capacitor-community/media';
+import {Filesystem, FilesystemPlugin} from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-new-score',
@@ -43,6 +45,7 @@ export class NewScorePage implements OnInit, OnDestroy {
     private userService: UserService,
     private loadingCtrl: LoadingController,
     private storageService: StorageService,
+    private platform: Platform
   ) {}
 
   async ngOnInit() {
@@ -69,6 +72,17 @@ export class NewScorePage implements OnInit, OnDestroy {
     // subscribe to number picker value update
     // this.numberPickerSubscription = this.numberPickerService.currentValue
     //   .subscribe((val) => this.gotUpdate(val as Score));
+
+    this.platform.ready().then((val) => {
+      console.log("platform ready", val);
+      document.addEventListener("deviceready", this.onDeviceReady, false);
+
+    });
+
+  }
+
+  onDeviceReady() {
+    console.log("deviceready navigator.device.capture", (navigator as any).device?.capture);
   }
 
   ngOnDestroy(): void {
@@ -180,14 +194,32 @@ export class NewScorePage implements OnInit, OnDestroy {
     // close modal draw
     this.setVideoOptionOpen(false);
     // 
-    this.getVideo(CameraSource.Photos);
+    // this.getVideo(CameraSource.Photos);
+    Camera.getLimitedLibraryPhotos().then((photos) => {
+      console.log("getLimitedLibraryPhotos", photos.photos);
+    })
   }
 
 
   takeVideo() {
-    // this.setVideoOptionOpen(true);
-    // this.getPicture(CameraSource.Camera);
-    this.storageService.recordVideo();
+    Media.getAlbums().then((albums: MediaAlbumResponse) => {
+      console.log("albums", albums.albums);
+      for (let index = 0; index < albums.albums.length; index++) {
+        const album = albums.albums[index];
+        console.log(" album name", album.name, ", type", album.type);
+        console.log(" identifier", album.identifier);
+
+        // Media.getAlbumsPath(); // Android only
+        // Media.getMedias();  // iOS only
+        // Media.getMediaByIdentifier(); // iOS only
+
+        // Media.getMediaByIdentifier({identifier: album.identifier}).then((mediaPath) => {
+        //   console.log(" mediaPath.path", mediaPath.path);
+        // });
+      }
+    });
+
+    // this.storageService.recordVideo();
   }
 
   // camera plugin

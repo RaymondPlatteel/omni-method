@@ -29,7 +29,6 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {CommunityEffects} from './store/community/community.effect';
 import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
 import {loggingInterceptor} from './services/storage/storage.service';
-import {MediaCapture} from '@awesome-cordova-plugins/media-capture/ngx';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -105,8 +104,7 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
     provideAnalytics(() => getAnalytics()),
     DatePipe,
     ScreenTrackingService,
-    provideHttpClient(withInterceptorsFromDi()),
-    MediaCapture,
+    provideHttpClient(withInterceptorsFromDi())
   ]
 })
 export class AppModule {}
