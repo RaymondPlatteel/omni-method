@@ -190,40 +190,56 @@ export class NewScorePage implements OnInit, OnDestroy {
     this.setVideoOptionOpen(false);
   }
 
-  chooseFromLibrary() {
+
+  // camera plugin
+  checkPermissions() {
+    console.log("call Camera.checkPermissions");
+    Camera.checkPermissions().then((status) => {
+      console.log("Camera.checkPermissions status.camera", status.camera);
+      console.log("Camera.checkPermissions status.photos", status.photos);
+      switch (status.camera) {
+        case 'prompt':
+          console.log("Camera state prompt");
+          break;
+
+        case 'limited':
+          console.log("Camera state limited");
+          break;
+
+        case 'granted':
+          console.log("Camera state granted");
+          break;
+
+        case 'denied':
+          console.log("Camera state denied");
+          break;
+
+        default:
+          console.log("Camera state unhandled: ", status.camera);
+          break;
+      }
+    });
+  }
+
+  requestPermissions() {
+    console.log("call Camera.requestPermissions");
+    Camera.requestPermissions().then((status) => {
+      console.log("Camera.requestPermissions status.camera", status.camera);
+      console.log("Camera.requestPermissions status.photos", status.photos);
+    });
+  }
+
+  getLimitedLibraryPhotos() {
     // close modal draw
     this.setVideoOptionOpen(false);
     // 
-    // this.getVideo(CameraSource.Photos);
+    // this.getPhoto(CameraSource.Photos);
     Camera.getLimitedLibraryPhotos().then((photos) => {
       console.log("getLimitedLibraryPhotos", photos.photos);
     })
   }
 
-
-  takeVideo() {
-    Media.getAlbums().then((albums: MediaAlbumResponse) => {
-      console.log("albums", albums.albums);
-      for (let index = 0; index < albums.albums.length; index++) {
-        const album = albums.albums[index];
-        console.log(" album name", album.name, ", type", album.type);
-        console.log(" identifier", album.identifier);
-
-        // Media.getAlbumsPath(); // Android only
-        // Media.getMedias();  // iOS only
-        // Media.getMediaByIdentifier(); // iOS only
-
-        // Media.getMediaByIdentifier({identifier: album.identifier}).then((mediaPath) => {
-        //   console.log(" mediaPath.path", mediaPath.path);
-        // });
-      }
-    });
-
-    // this.storageService.recordVideo();
-  }
-
-  // camera plugin
-  getVideo = async (cameraSource: CameraSource) => {
+  async getPhoto(cameraSource: CameraSource = CameraSource.Photos) {
     const video = await Camera.getPhoto({
       quality: 50,
       resultType: CameraResultType.DataUrl,
@@ -236,5 +252,37 @@ export class NewScorePage implements OnInit, OnDestroy {
     this.videoUrl = video.dataUrl;
     console.log("videoUrl", this.videoUrl);
   }
+
+  // Media.getAlbumsPath(); // Android only
+  // Media.getMedias();  // iOS only
+  // Media.getMediaByIdentifier(); // iOS only
+
+  getAlbums() {
+    Media.getAlbums().then((albums: MediaAlbumResponse) => {
+      // console.log("albums", albums.albums);
+      for (let index = 0; index < albums.albums.length; index++) {
+        const album = albums.albums[index];
+        console.log(" album name", album.name, ", type", album.type, " identifier", album.identifier);
+      }
+
+    });
+  }
+
+  getMedias() {
+    // Media.getMedias({quantity: 1, types: "videos"}).then((medias) => {
+    Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
+      console.log("medias", medias);
+      Media.getMediaByIdentifier({identifier: medias[0].identifier}).then((path) => {
+        console.log("video path", path);
+      });
+    });
+
+    // this.storageService.recordVideo();
+  }
+
+  // Media.getMediaByIdentifier({identifier: album.identifier}).then((mediaPath) => {
+  //   console.log(" mediaPath.path", mediaPath.path);
+  // });
+
 
 }
