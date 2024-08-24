@@ -12,7 +12,7 @@ import {SwiperOptions} from 'swiper/types';
 import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
 import {StorageService} from 'src/app/services/storage/storage.service';
 import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType} from '@capacitor-community/media';
-import {Filesystem, FilesystemPlugin} from '@capacitor/filesystem';
+import {Filesystem} from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-new-score',
@@ -45,7 +45,8 @@ export class NewScorePage implements OnInit, OnDestroy {
     private userService: UserService,
     private loadingCtrl: LoadingController,
     private storageService: StorageService,
-    private platform: Platform
+    private platform: Platform,
+    // private fileChooser: FileChooser
   ) {}
 
   async ngOnInit() {
@@ -190,6 +191,10 @@ export class NewScorePage implements OnInit, OnDestroy {
     this.setVideoOptionOpen(false);
   }
 
+  chooseVideo() {
+    this.checkPermissions();
+    // this.setVideoOptionOpen(true);
+  }
 
   // camera plugin
   checkPermissions() {
@@ -197,25 +202,27 @@ export class NewScorePage implements OnInit, OnDestroy {
     Camera.checkPermissions().then((status) => {
       console.log("Camera.checkPermissions status.camera", status.camera);
       console.log("Camera.checkPermissions status.photos", status.photos);
-      switch (status.camera) {
+      switch (status.photos) {
         case 'prompt':
-          console.log("Camera state prompt");
+          console.log("Photos state prompt");
+          this.requestPermissions();
           break;
 
         case 'limited':
-          console.log("Camera state limited");
+          console.log("Photos state limited");
           break;
 
         case 'granted':
-          console.log("Camera state granted");
+          console.log("Photos state granted");
           break;
 
         case 'denied':
-          console.log("Camera state denied");
+          console.log("Photos state denied");
+          alert("Please update settings to allow access to photos and videos from Omni Method");
           break;
 
         default:
-          console.log("Camera state unhandled: ", status.camera);
+          console.log("Photos state unhandled: ", status.photos);
           break;
       }
     });
