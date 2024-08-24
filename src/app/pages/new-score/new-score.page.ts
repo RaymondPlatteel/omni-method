@@ -276,12 +276,19 @@ export class NewScorePage implements OnInit, OnDestroy {
   }
 
   getMedias() {
-    // Media.getMedias({quantity: 1, types: "videos"}).then((medias) => {
-    Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
-      console.log("medias", medias);
+    console.log("call Media.getMedias()");
+    Media.getMedias({quantity: 3, types: "videos"}).then((medias) => {
+      // Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
+      console.log("got medias", medias);
+      console.log("medias.medias.length", medias.medias.length);
+      console.log("medias.medias[0].location", medias.medias[0].location);
+      console.log("medias.medias[0].location", medias.medias[0].fullHeight, ", width", medias.medias[0].fullWidth);
       Media.getMediaByIdentifier({identifier: medias[0].identifier}).then((path) => {
         console.log("video path", path);
+      }, (err) => {
+        console.log("getMediaByIdentifier error", err);
       });
+      console.log("done");
     });
 
     // this.storageService.recordVideo();
