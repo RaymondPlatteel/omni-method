@@ -47,7 +47,9 @@ export class RankingDetailPage implements OnInit {
   }
 
   scoreClass(scoreDate: string): string {
-    return OmniScoreService.scoreClass(scoreDate);
+    // removed expired style on community tab for now
+    // return OmniScoreService.scoreClass(scoreDate);
+    return;
   }
 
   getScore(scores: Score[], aid: string) {

@@ -46,6 +46,6 @@ export class VideoPickerPage implements OnInit {
     //     console.log("getMediaByIdentifier error", err);
     //   }
     // );
-    // this.pickerValueChange.emit(video);
+    this.pickerValueChange.emit(video);
   }
 }

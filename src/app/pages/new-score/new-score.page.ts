@@ -77,21 +77,6 @@ export class NewScorePage implements OnInit, OnDestroy {
     //   document.addEventListener("deviceready", this.onDeviceReady, false);
     // });
 
-    this.videoThumbnail.then((video) => {
-      console.log("selected video", video.identifier);
-
-      Media.getMediaByIdentifier({identifier: video.identifier}).then(
-        (mediaPath) => {
-          console.log("localVideoPath", mediaPath.path);
-          this.localVideoPath = mediaPath.path;
-        },
-        (err) => {
-          console.log("getMediaByIdentifile error", err);
-        }
-      );
-
-    })
-
   }
 
   // onDeviceReady() {
@@ -212,6 +197,20 @@ export class NewScorePage implements OnInit, OnDestroy {
     // this.storageService.openVideoPicker().then((result) => {
     //   console.log("videoThumbnail result", result);
     // });
+    this.videoThumbnail.then((mediaAsset) => {
+      console.log("selected video", mediaAsset.identifier);
+
+      Media.getMediaByIdentifier({identifier: mediaAsset.identifier}).then(
+        (mediaPath) => {
+          console.log("localVideoPath", mediaPath.path);
+          this.localVideoPath = mediaPath.path;
+        },
+        (err) => {
+          console.log("getMediaByIdentifile error", err);
+        }
+      );
+
+    })
   }
 
   // camera plugin
