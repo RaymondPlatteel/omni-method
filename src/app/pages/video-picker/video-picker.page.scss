@@ -1,0 +1,11 @@
+ion-grid {
+    --ion-grid-column-padding: 2px;
+}
+ion-img::part(image) {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+ion-content {
+    --padding-start: 0;
+    --padding-end: 0;  
+}

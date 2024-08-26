@@ -11,7 +11,7 @@ import {Swiper} from 'swiper';
 import {SwiperOptions} from 'swiper/types';
 import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
 import {StorageService} from 'src/app/services/storage/storage.service';
-import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType} from '@capacitor-community/media';
+import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType, MediaAsset} from '@capacitor-community/media';
 import {Filesystem} from '@capacitor/filesystem';
 
 @Component({
@@ -39,12 +39,14 @@ export class NewScorePage implements OnInit, OnDestroy {
   @ViewChild('videoOption') avatarOptionModal: IonModal;
   public isVideoOptionOpen = false;
   public videoUrl: string;
+  public videoThumbnail: Promise<MediaAsset> = undefined;
+  private localVideoPath: string = undefined;
 
   constructor(
     private modalCtrl: ModalController,
     private userService: UserService,
     private loadingCtrl: LoadingController,
-    private storageService: StorageService,
+    public storageService: StorageService,
     private platform: Platform,
     // private fileChooser: FileChooser
   ) {}
@@ -70,21 +72,31 @@ export class NewScorePage implements OnInit, OnDestroy {
         } as Score;
       }).unsubscribe();
 
-    // subscribe to number picker value update
-    // this.numberPickerSubscription = this.numberPickerService.currentValue
-    //   .subscribe((val) => this.gotUpdate(val as Score));
+    // this.platform.ready().then((val) => {
+    //   console.log("platform ready", val);
+    //   document.addEventListener("deviceready", this.onDeviceReady, false);
+    // });
 
-    this.platform.ready().then((val) => {
-      console.log("platform ready", val);
-      document.addEventListener("deviceready", this.onDeviceReady, false);
+    this.videoThumbnail.then((video) => {
+      console.log("selected video", video.identifier);
 
-    });
+      Media.getMediaByIdentifier({identifier: video.identifier}).then(
+        (mediaPath) => {
+          console.log("localVideoPath", mediaPath.path);
+          this.localVideoPath = mediaPath.path;
+        },
+        (err) => {
+          console.log("getMediaByIdentifile error", err);
+        }
+      );
+
+    })
 
   }
 
-  onDeviceReady() {
-    console.log("deviceready navigator.device.capture", (navigator as any).device?.capture);
-  }
+  // onDeviceReady() {
+  //   console.log("deviceready navigator.device.capture", (navigator as any).device?.capture);
+  // }
 
   ngOnDestroy(): void {
     if (this.numberPickerSubscription) {
@@ -194,6 +206,12 @@ export class NewScorePage implements OnInit, OnDestroy {
   chooseVideo() {
     this.checkPermissions();
     // this.setVideoOptionOpen(true);
+    console.log("newScorePage openVideoPicker");
+    this.videoThumbnail = this.storageService.openVideoPicker();
+    console.log("newScorePage videoPicker done");
+    // this.storageService.openVideoPicker().then((result) => {
+    //   console.log("videoThumbnail result", result);
+    // });
   }
 
   // camera plugin
@@ -291,12 +309,7 @@ export class NewScorePage implements OnInit, OnDestroy {
       console.log("done");
     });
 
-    // this.storageService.recordVideo();
   }
-
-  // Media.getMediaByIdentifier({identifier: album.identifier}).then((mediaPath) => {
-  //   console.log(" mediaPath.path", mediaPath.path);
-  // });
 
 
 }

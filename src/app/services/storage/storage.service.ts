@@ -5,8 +5,10 @@ import {FirebaseStorage, getBytes, getDownloadURL, getStorage, ref} from '@angul
 import {Capacitor, CapacitorHttp, HttpHeaders, HttpOptions} from '@capacitor/core';
 import {Observable, from} from 'rxjs';
 import {Filesystem, Directory, Encoding} from '@capacitor/filesystem';
-import {Platform} from '@ionic/angular';
+import {ModalController, Platform} from '@ionic/angular';
 import {Camera} from '@capacitor/camera';
+import {VideoPickerPage} from '../../pages/video-picker/video-picker.page';
+import {MediaAsset} from '@capacitor-community/media';
 
 /*
 * storage.googleapis.com/BUCKET_NAME
@@ -30,7 +32,8 @@ export class StorageService {
   constructor(
     private http: HttpClient,
     // private afStorage: AngularFireS
-    private plt: Platform
+    private plt: Platform,
+    private modalCtrl: ModalController
   ) {
     this.storage = getStorage();
   }
@@ -134,6 +137,32 @@ export class StorageService {
 
   copyFile(path) {
     console.log("copyFile path", path);
+  }
+
+  async openVideoPicker(): Promise<MediaAsset> {
+    const modal = await this.modalCtrl.create({
+      component: VideoPickerPage,
+      componentProps: {
+      },
+      cssClass: '',
+      canDismiss: true,
+    });
+
+    modal.present();
+
+    const {data, role} = await modal.onWillDismiss();
+    // console.log("willDismiss role", role);
+    // console.log("willDismiss data", data);
+    return data;
+    // if (role === 'confirm') {
+    //   console.log("modal willDismiss", data, role);
+    //   // this.message = `Hello, ${data}!`;
+    // }
+
+    // modal.onDidDismiss().then(() => {
+    //   console.log("storageService video picker dismissed");
+    // });
+
   }
 
 }

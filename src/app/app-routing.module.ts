@@ -71,6 +71,10 @@ const routes: Routes = [
     title: 'Onboarding',
     loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
   },
+  {
+    path: 'video-picker',
+    loadChildren: () => import('./pages/video-picker/video-picker.module').then( m => m.VideoPickerPageModule)
+  },
 ];
 @NgModule({
   imports: [

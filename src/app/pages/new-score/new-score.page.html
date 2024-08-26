@@ -88,23 +88,23 @@
     </swiper-container>
   </div>
 
-  <ion-grid class="input-group">
+  <ion-grid>
     <ion-row>
       <ion-col>
         <!-- video thumbnail preview -->
+        <ion-img class="thumbnail" *ngIf="videoThumbnail"
+          src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
+          ></ion-img>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-button (click)="chooseVideo()" shape="round" size="small">Choose Video</ion-button>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="setVideoOptionOpen(true)" shape="round" size="small">Open Video Options</ion-button>
-      </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid class="input-group" [fixed]="true">
+  <ion-grid [fixed]="true">
     <ion-row>
       <ion-col size="12">
         <ion-textarea
@@ -120,13 +120,13 @@
     </ion-row>
   </ion-grid>
 
-  <ion-toolbar color="default">
+  <!-- <ion-toolbar color="default">
     <ion-button type="submit" color="primary" shape="round" expand="block" (click)="onSubmit()">
       Submit
     </ion-button>
-  </ion-toolbar>
+  </ion-toolbar> -->
 
-  <ion-modal id="videoOption"
+  <!-- <ion-modal id="videoOption"
     [isOpen]="isVideoOptionOpen"
     (ionModalDidDismiss)="onDidDismiss($event)"
     [initialBreakpoint]="1" [breakpoints]="[0, 1]">
@@ -134,9 +134,6 @@
       <ion-header>
         <ion-toolbar color="default">
           <ion-title>Select option</ion-title>
-          <!-- <ion-buttons slot="end">
-            <ion-button (click)="setVideoOptionOpen(false)">cancel</ion-button>
-          </ion-buttons> -->
         </ion-toolbar>
       </ion-header>
       <ion-list>
@@ -167,8 +164,14 @@
       </ion-list>
       <div class="bottom-padding"></div>
     </ng-template>
-  </ion-modal>
+  </ion-modal> -->
 
+  <div class="bottom-padding"></div>
 
 </ion-content>
 
+<ion-fab class="footer" vertical="bottom" horizontal="center" slot="fixed">
+  <ion-button type="submit" color="primary" shape="round" expand="block" (click)="onSubmit()">
+    Submit
+  </ion-button>
+</ion-fab>
