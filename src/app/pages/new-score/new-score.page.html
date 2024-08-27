@@ -12,11 +12,45 @@
       <ion-icon name="close"></ion-icon>
     </ion-button>
   </ion-fab>
+
   <div class="ion-text-center">
     <ion-card-title class="center" style="padding: 20px 0;"
       >{{assessment.label}}</ion-card-title
     >
   </div>
+
+  <!-- video thumbnail preview -->
+  <div class="video-select">
+    <ion-img class="thumbnail" *ngIf="videoThumbnail"
+      src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
+    ></ion-img>
+    <div *ngIf="!videoThumbnail">
+      <ion-button (click)="chooseVideo()" shape="circle" size="default">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+      <br/>
+      <ion-text>Choose Video</ion-text>
+    </div>
+  </div>
+<!-- <ion-grid class="video-select">
+    <ion-row *ngIf="videoThumbnail">
+      <ion-col>
+        <ion-img class="thumbnail"
+          src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
+          ></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!videoThumbnail">
+      <ion-col size="12">
+        <ion-button (click)="chooseVideo()" shape="circle" size="default">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-text>Choose Video</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 
   <ion-grid>
     <ion-row>
@@ -87,22 +121,6 @@
       </swiper-slide>
     </swiper-container>
   </div>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <!-- video thumbnail preview -->
-        <ion-img class="thumbnail" *ngIf="videoThumbnail"
-          src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
-          ></ion-img>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="chooseVideo()" shape="round" size="small">Choose Video</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
   <ion-grid [fixed]="true">
     <ion-row>

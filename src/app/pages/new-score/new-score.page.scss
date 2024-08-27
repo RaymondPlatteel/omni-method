@@ -90,8 +90,23 @@ ion-img.thumbnail::part(image) {
   border-radius: 20px;
   border: 2px solid #8CA1B6;
   margin: auto;
+  // max-width: 70%;
+}
+.video-select {
+  background-color: var(--ion-color-light);
+  border-radius: 17px;
+  height: 200px;
+  margin: auto;
   margin-bottom: 5px;
-  max-width: 70%;
+  width: 90%;
+  * {
+    vertical-align: middle;
+    text-align: center;
+    margin: auto;
+  }
+  div {
+    padding-top: 75px;
+  }
 }
 ion-fab.footer {
   padding-bottom: var(--ion-safe-area-bottom, 0);
