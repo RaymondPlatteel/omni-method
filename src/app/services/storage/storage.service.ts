@@ -1,7 +1,7 @@
 import {HttpClient, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {FirebaseApp} from '@angular/fire/app';
-import {FirebaseStorage, getBytes, getDownloadURL, getStorage, ref} from '@angular/fire/storage';
+import {FirebaseStorage, getBytes, getDownloadURL, getStorage, ref, uploadBytes, UploadMetadata, uploadString} from '@angular/fire/storage';
 import {Capacitor, CapacitorHttp, HttpHeaders, HttpOptions} from '@capacitor/core';
 import {Observable, from} from 'rxjs';
 import {Filesystem, Directory, Encoding} from '@capacitor/filesystem';
@@ -100,9 +100,9 @@ export class StorageService {
     //   filePath = encodeURIComponent(filePath);
     //   console.log("filePath", filePath);
     // }
-    const storage = getStorage();
+    // const storage = getStorage();
 
-    return getDownloadURL(ref(storage, filePath)).then((url) => {
+    return getDownloadURL(ref(this.storage, filePath)).then((url) => {
       console.log("return downloadURL", url);
       return url;
     }).catch((err) => {
@@ -111,10 +111,41 @@ export class StorageService {
     });
   }
 
-  async uploadFile(f: File) {
-    // await Filesystem.writeFile()
-    // const path: string;
-    // const type = this.getMimeType();
+  async uploadFile(loaclPath: string, destPath: string) {
+    console.log("uploadFile localPath", loaclPath);
+    console.log("uploadFile destPath", destPath);
+
+    const destFileRef = ref(this.storage, destPath);
+    console.log("destFileRef fullPath", destFileRef.fullPath);
+    console.log("destFileRef name", destFileRef.name);
+    console.log("destFileRef bucket", destFileRef.bucket);
+
+    file: File
+
+    const metadata: UploadMetadata = {
+      contentType: 'video/mp4'
+    };
+
+    await Filesystem.readFile({path: loaclPath}).then(async (readResult) => {
+      await uploadString(destFileRef, readResult.data.toString(), 'base64', metadata)
+        .then(
+          (snapshot) => {
+            console.log("upload result", snapshot.ref.fullPath);
+          },
+          (err) => {
+            console.log("upload video failed", err);
+          }
+        )
+    })
+
+    return getDownloadURL(ref(this.storage, destPath)).then((url) => {
+      console.log("return downloadURL", url);
+      return url;
+    }).catch((err) => {
+      console.log("getFileUrl error", err);
+      return undefined;
+    });
+
   }
 
   getMimeType(fileExt: string) {

@@ -13,6 +13,8 @@ import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacito
 import {StorageService} from 'src/app/services/storage/storage.service';
 import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType, MediaAsset} from '@capacitor-community/media';
 import {Filesystem} from '@capacitor/filesystem';
+import {UserFirestoreService} from 'src/app/services/user-firestore.service';
+import {OmniScoreService} from 'src/app/services/omni-score.service';
 
 @Component({
   selector: 'app-new-score',
@@ -47,8 +49,7 @@ export class NewScorePage implements OnInit, OnDestroy {
     private userService: UserService,
     private loadingCtrl: LoadingController,
     public storageService: StorageService,
-    private platform: Platform,
-    // private fileChooser: FileChooser
+    private platform: Platform
   ) {}
 
   async ngOnInit() {
@@ -164,11 +165,33 @@ export class NewScorePage implements OnInit, OnDestroy {
     this.modalCtrl.dismiss();
   }
 
-  onSubmit() {
+  async onSubmit() {
     console.log('this.assessment.aid: ' + this.assessment.aid);
     console.log('this.user.id: ' + this.user.id);
-    console.log('save new score: ', this.newScore);
+    const scoreDate = OmniScoreService.scoreDate(this.newScore.scoreDate);
+    console.log('save scoreDate: ', scoreDate);
+
+    // show loading
+    const loading = await this.loadingCtrl.create({
+      message: 'Dismissing after 3 seconds...',
+      duration: 3000,
+    });
+    // await loading.present();
+
+    // upload file and get video link
+    if (this.localVideoPath) {
+      console.log("Upload video");
+      const dest = `users/${this.user.id}/${this.assessment.aid}-${scoreDate}.mp4`;
+      await this.storageService.uploadFile(this.localVideoPath, dest).then((url) => {
+        console.log("uploadFile return download url", url);
+        this.newScore.videoUrl = url;
+      });
+    }
+
+    // save score with video link
+    console.log("save new score with videoUrl", this.newScore.videoUrl);
     this.userService.saveScore(this.newScore);
+
     this.dismiss();
   }
 

@@ -19,6 +19,7 @@ import {User} from '../store/user/user.model';
 import {Observable, from, of} from 'rxjs';
 import {Score} from '../store/models/score.model';
 import {take} from 'rxjs/operators';
+import {OmniScoreService} from './omni-score.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +30,14 @@ export class UserFirestoreService {
 
   constructor() {}
 
-  scoreDate(score: Score): string {
-    let d = new Date(score.scoreDate);
-    let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-    let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
-    let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
-    const scoreDate = `${ye}-${mo}-${da}`;
-    return scoreDate;
-  }
+  // scoreDate(score: Score): string {
+  //   let d = new Date(score.scoreDate);
+  //   let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+  //   let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
+  //   let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
+  //   const scoreDate = `${ye}-${mo}-${da}`;
+  //   return scoreDate;
+  // }
 
   getUserById(id: string): Observable<User> {
     console.log('getUser from firestore ', id);
@@ -150,7 +151,8 @@ export class UserFirestoreService {
         'user',
         `${score.uid}`,
         'score',
-        `${score.aid}#${this.scoreDate(score)}`
+        // `${score.aid}#${this.scoreDate(score)}`
+        `${score.aid}#${OmniScoreService.scoreDate(score.scoreDate)}`
       ),
       score
     );
@@ -165,7 +167,8 @@ export class UserFirestoreService {
         'user',
         `${score.uid}`,
         'score',
-        `${score.aid}#${this.scoreDate(score)}`
+        // `${score.aid}#${this.scoreDate(score)}`
+        `${score.aid}#${OmniScoreService.scoreDate(score.scoreDate)}`
       )
     );
     return of(score);
