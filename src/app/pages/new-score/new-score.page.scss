@@ -91,11 +91,12 @@ ion-img.thumbnail::part(image) {
   border: 2px solid #8CA1B6;
   margin: auto;
   // max-width: 70%;
+  max-height: 200px;
 }
 .video-select {
   background-color: var(--ion-color-light);
   border-radius: 17px;
-  height: 200px;
+  min-height: 120px;
   margin: auto;
   margin-bottom: 5px;
   width: 90%;
@@ -105,8 +106,11 @@ ion-img.thumbnail::part(image) {
     margin: auto;
   }
   div {
-    padding-top: 75px;
+    padding-top: 38px;
   }
+  // ion-button:part(native) {
+  //   padding: 6px;
+  // }
 }
 ion-fab.footer {
   padding-bottom: var(--ion-safe-area-bottom, 0);

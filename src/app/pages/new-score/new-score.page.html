@@ -25,8 +25,8 @@
       src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
     ></ion-img>
     <div *ngIf="!videoThumbnail">
-      <ion-button (click)="chooseVideo()" shape="circle" size="default">
-        <ion-icon name="add"></ion-icon>
+      <ion-button (click)="chooseVideo()" shape="round" size="small">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
       <br/>
       <ion-text>Choose Video</ion-text>
@@ -52,44 +52,46 @@
     </ion-row>
   </ion-grid> -->
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4">
-        <div id="scoreDate" class="rounded-tab" [ngClass]="tabClass('scoreDate')" lines="none" (click)="activate('scoreDate')">
-          <ion-label position="stacked">Score Date</ion-label>
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <div id="scoreDate" class="rounded-tab" [ngClass]="tabClass('scoreDate')" lines="none" (click)="activate('scoreDate')">
+            <ion-label position="stacked">Score Date</ion-label>
+            <ion-input
+              #scoreDate
+              placeholder="YYYY-MM-DD"
+              value="{{newScore.scoreDate | date}}"
+              [readonly]="true"
+            ></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="3">
+          <div id="rawScore" class="rounded-tab" [ngClass]="tabClass('score')" lines="none" (click)="activate('score')">
+          <ion-label position="stacked">Score</ion-label>
           <ion-input
-            #scoreDate
-            placeholder="YYYY-MM-DD"
-            value="{{newScore.scoreDate | date}}"
+            placeholder="{{assessment.units}}"
             [readonly]="true"
+            [value]="newScore.rawScore"
           ></ion-input>
-        </div>
-      </ion-col>
-      <ion-col size="3">
-        <div id="rawScore" class="rounded-tab" [ngClass]="tabClass('score')" lines="none" (click)="activate('score')">
-        <ion-label position="stacked">Score</ion-label>
-        <ion-input
-          placeholder="{{assessment.units}}"
-          [readonly]="true"
-          [value]="newScore.rawScore"
-        ></ion-input>
-        </div>
-      </ion-col>
-      <ion-col size="5">
-        <div class="rounded-tab" [ngClass]="tabClass('bodyWeight')" lines="none" (click)="activate('bodyWeight')">
-          <ion-label position="stacked">Body Weight</ion-label>
-          <ion-input
-            #currentWeight
-            type="number"
-            inputmode="numeric"
-            value="{{newScore.currentWeight}}"
-            [readonly]="true"
-            [(ngModel)]="newScore.currentWeight"
-          ></ion-input>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          </div>
+        </ion-col>
+        <ion-col size="5">
+          <div class="rounded-tab" [ngClass]="tabClass('bodyWeight')" lines="none" (click)="activate('bodyWeight')">
+            <ion-label position="stacked">Body Weight</ion-label>
+            <ion-input
+              #currentWeight
+              type="number"
+              inputmode="numeric"
+              value="{{newScore.currentWeight}}"
+              [readonly]="true"
+              [(ngModel)]="newScore.currentWeight"
+            ></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <div style="padding-top: 30px;">
     <swiper-container #inputSwiper class="input-swiper"
