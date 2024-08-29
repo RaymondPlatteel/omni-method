@@ -9,6 +9,9 @@ import {ModalController, Platform} from '@ionic/angular';
 import {Camera} from '@capacitor/camera';
 import {VideoPickerPage} from '../../pages/video-picker/video-picker.page';
 import {MediaAsset} from '@capacitor-community/media';
+import {OmniScoreService} from '../omni-score.service';
+import {Score} from '../../store/models/score.model';
+import {deleteObject} from 'firebase/storage';
 
 /*
 * storage.googleapis.com/BUCKET_NAME
@@ -111,16 +114,29 @@ export class StorageService {
     });
   }
 
+  public remoteScoreVideoPath(score: Score) {
+    const scoreDate = OmniScoreService.scoreDate(score.scoreDate);
+    const dest = `users/${score.uid}/${score.aid}-${scoreDate}.mp4`;
+    return dest;
+  }
+
+  deleteFile(remotePath: string) {
+    console.log("deleteFile", remotePath);
+    const fileRef = ref(this.storage, remotePath);
+    deleteObject(fileRef).then(
+      () => {
+        console.log("file deleted", remotePath);
+      }, (err) => {
+        console.log("failed to delete file", err);
+      }
+    )
+  }
+
   async uploadFile(loaclPath: string, destPath: string) {
     console.log("uploadFile localPath", loaclPath);
     console.log("uploadFile destPath", destPath);
 
     const destFileRef = ref(this.storage, destPath);
-    console.log("destFileRef fullPath", destFileRef.fullPath);
-    console.log("destFileRef name", destFileRef.name);
-    console.log("destFileRef bucket", destFileRef.bucket);
-
-    file: File
 
     const metadata: UploadMetadata = {
       contentType: 'video/mp4'
@@ -182,17 +198,8 @@ export class StorageService {
     modal.present();
 
     const {data, role} = await modal.onWillDismiss();
-    // console.log("willDismiss role", role);
-    // console.log("willDismiss data", data);
-    return data;
-    // if (role === 'confirm') {
-    //   console.log("modal willDismiss", data, role);
-    //   // this.message = `Hello, ${data}!`;
-    // }
 
-    // modal.onDidDismiss().then(() => {
-    //   console.log("storageService video picker dismissed");
-    // });
+    return data;
 
   }
 

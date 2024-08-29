@@ -166,25 +166,23 @@ export class NewScorePage implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    console.log('this.assessment.aid: ' + this.assessment.aid);
-    console.log('this.user.id: ' + this.user.id);
-    const scoreDate = OmniScoreService.scoreDate(this.newScore.scoreDate);
-    console.log('save scoreDate: ', scoreDate);
+    // const scoreDate = OmniScoreService.scoreDate(this.newScore.scoreDate);
+    // console.log('save scoreDate: ', scoreDate);
 
     // show loading
     const loading = await this.loadingCtrl.create({
-      message: 'Dismissing after 3 seconds...',
-      duration: 3000,
+      message: 'Uploading video...'
     });
-    // await loading.present();
 
     // upload file and get video link
     if (this.localVideoPath) {
-      console.log("Upload video");
-      const dest = `users/${this.user.id}/${this.assessment.aid}-${scoreDate}.mp4`;
+      await loading.present();
+      const dest = this.storageService.remoteScoreVideoPath(this.newScore);
+      // const dest = `users/${this.user.id}/${this.assessment.aid}-${scoreDate}.mp4`;
       await this.storageService.uploadFile(this.localVideoPath, dest).then((url) => {
         console.log("uploadFile return download url", url);
         this.newScore.videoUrl = url;
+        loading.dismiss();
       });
     }
 

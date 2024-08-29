@@ -9,6 +9,7 @@ import {Score} from '../../store/models/score.model';
 import {UserService} from '../../services/user/user.service';
 import {OmniScoreService} from '../../services/omni-score.service';
 import {NewScorePage} from '../new-score/new-score.page';
+import {StorageService} from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-assessment-scores',
@@ -35,6 +36,7 @@ export class AssessmentScoresPage implements OnInit {
     private assessmentService: AssessmentService,
     private userService: UserService,
     private modalCtrl: ModalController,
+    private storageService: StorageService,
     // private routerOutlet: IonRouterOutlet
   ) {}
 
@@ -65,6 +67,11 @@ export class AssessmentScoresPage implements OnInit {
 
   deleteScore(score: Score) {
     console.log('dispatch deleteAssessmentScore ' + score.scoreDate);
+    if (score.videoUrl) {
+      // score.uid, score.aid, score.scoreDate
+      const remotePath = this.storageService.remoteScoreVideoPath(score);
+      this.storageService.deleteFile(remotePath);
+    }
     this.userService.deleteScore(score);
     // this.navController.back();
   }

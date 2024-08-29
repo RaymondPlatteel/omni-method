@@ -25,7 +25,7 @@ export class VideoPickerPage implements OnInit {
 
   getMedias() {
     console.log("call Media.getMedias()");
-    Media.getMedias({quantity: 300, types: "videos"}).then((medias) => {
+    Media.getMedias({quantity: 240, types: "videos"}).then((medias) => {
       // Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
       // console.log("got medias", medias);
       this.medias = medias.medias;
