@@ -20,12 +20,12 @@
   </div>
 
   <!-- video thumbnail preview -->
-  <div class="video-select">
+  <div class="video-select" (click)="chooseVideo()">
     <ion-img class="thumbnail" *ngIf="videoThumbnail"
       src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
     ></ion-img>
     <div *ngIf="!videoThumbnail">
-      <ion-button (click)="chooseVideo()" shape="round" size="small">
+      <ion-button shape="round" size="small">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
       <br/>
