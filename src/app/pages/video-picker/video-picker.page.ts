@@ -25,11 +25,28 @@ export class VideoPickerPage implements OnInit {
 
   getMedias() {
     console.log("call Media.getMedias()");
-    Media.getMedias({quantity: 240, types: "videos"}).then((medias) => {
+    Media.getMedias({
+      quantity: 36, types: "videos",
+      sort: "creationDate"
+      // sort: 
+      //   [
+      //     {key: "isFavorite", ascending: false},
+      //     {key: "creationDate", ascending: false}
+      //   ]
+    }).then((medias) => {
       // Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
       // console.log("got medias", medias);
       this.medias = medias.medias;
       console.log("got medias.length", this.medias.length);
+      if (this.medias.length == 0) {
+        // no videos available
+        alert("No videos found on device.");
+        this.cancel();
+      } else {
+        // get video lengths
+        console.log("video identifier", this.medias[0].identifier);
+
+      }
     });
 
     // this.storageService.recordVideo();

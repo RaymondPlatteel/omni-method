@@ -214,7 +214,7 @@ export class NewScorePage implements OnInit, OnDestroy {
     // this.setVideoOptionOpen(true);
     console.log("newScorePage openVideoPicker");
     this.videoThumbnail = this.storageService.openVideoPicker();
-    console.log("newScorePage videoPicker done");
+    console.log("newScorePage videoPicker done", this.videoThumbnail);
     // this.storageService.openVideoPicker().then((result) => {
     //   console.log("videoThumbnail result", result);
     // });
