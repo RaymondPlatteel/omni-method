@@ -35,6 +35,7 @@
 		"FirebaseAnalyticsPlugin",
 		"FirebaseCrashlyticsPlugin",
 		"AppPlugin",
+		"CAPBrowserPlugin",
 		"CAPCameraPlugin",
 		"FilesystemPlugin",
 		"HapticsPlugin",

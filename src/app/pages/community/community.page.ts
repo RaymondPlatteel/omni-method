@@ -11,6 +11,7 @@ import {StorageService} from '../../services/storage/storage.service';
 import {InAppReview} from '@capacitor-community/in-app-review';
 import {AnnouncementsService} from 'src/app/services/announcements/announcements.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {Browser} from '@capacitor/browser';
 
 // export enum View {
 //   Rankings = 'Rankings',
@@ -108,4 +109,7 @@ export class CommunityPage implements OnInit {
     return this.storageService.getFileUrl(filePath);
   }
 
+  async openDiscord() {
+    await Browser.open({url: 'http://discord.gg/RRbzVXf6Bu'});
+  }
 }

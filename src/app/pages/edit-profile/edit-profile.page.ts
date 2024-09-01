@@ -20,6 +20,7 @@ import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacito
 import {Capacitor} from '@capacitor/core';
 import {ImageCroppedEvent, ImageCropperComponent, ImageTransform} from 'ngx-image-cropper';
 import {ShowToastService} from 'src/app/services/show-toast.service';
+import {Browser} from '@capacitor/browser';
 
 @Component({
   selector: 'edit-profile-page',

@@ -209,8 +209,10 @@ export class NewScorePage implements OnInit, OnDestroy {
     this.setVideoOptionOpen(false);
   }
 
-  chooseVideo() {
-    this.checkPermissions();
+  async chooseVideo() {
+    if (!await this.checkPermissions()) {
+      alert("Access to videos blocked");
+    }
     // this.setVideoOptionOpen(true);
     console.log("newScorePage openVideoPicker");
     this.videoThumbnail = this.storageService.openVideoPicker();
@@ -237,7 +239,7 @@ export class NewScorePage implements OnInit, OnDestroy {
   // camera plugin
   checkPermissions() {
     console.log("call Camera.checkPermissions");
-    Camera.checkPermissions().then((status) => {
+    return Camera.checkPermissions().then((status) => {
       console.log("Camera.checkPermissions status.camera", status.camera);
       console.log("Camera.checkPermissions status.photos", status.photos);
       switch (status.photos) {
@@ -257,12 +259,14 @@ export class NewScorePage implements OnInit, OnDestroy {
         case 'denied':
           console.log("Photos state denied");
           alert("Please update settings to allow access to photos and videos from Omni Method");
+          return false;
           break;
 
         default:
           console.log("Photos state unhandled: ", status.photos);
           break;
       }
+      return true;
     });
   }
 
