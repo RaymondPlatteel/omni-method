@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Media, MediaAsset} from '@capacitor-community/media';
 import {ModalController} from '@ionic/angular';
+import {OmniScoreService} from 'src/app/services/omni-score.service';
 
 @Component({
   selector: 'app-video-picker',
@@ -45,7 +46,7 @@ export class VideoPickerPage implements OnInit {
       } else {
         // get video lengths
         console.log("video identifier", this.medias[0].identifier);
-
+        console.log("video creation date", OmniScoreService.scoreDate(this.medias[0].creationDate));
       }
     });
 

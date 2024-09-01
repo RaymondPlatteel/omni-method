@@ -18,9 +18,9 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let video of medias" (click)="selectVideo(video)" size="4">
+      <ion-col class="thumbnail-container" *ngFor="let video of medias" (click)="selectVideo(video)" size="4">
           <ion-img id="{{video.identifier}}" src="data:image/jpeg;base64,{{video.data}}"/>
-           <!-- <ion-text>{{video.identifier}}</ion-text> -->
+          <ion-text class="video-overlay">{{video.creationDate | date}}</ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
