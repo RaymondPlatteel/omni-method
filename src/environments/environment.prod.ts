@@ -2,6 +2,7 @@ import {UserService} from 'src/app/services/user/user.service';
 // import { UserService as MockUserService } from "src/app/api/user/user.mock.service";
 
 export const environment = {
+  discordLink: 'http://discord.gg/RRbzVXf6Bu',
   firebase: {
     projectId: "omni-method",
     appId: "1:93730997469:web:ebe8daccb9dd7c6ae88734",

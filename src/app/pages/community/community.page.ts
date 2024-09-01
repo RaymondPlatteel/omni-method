@@ -12,6 +12,7 @@ import {InAppReview} from '@capacitor-community/in-app-review';
 import {AnnouncementsService} from 'src/app/services/announcements/announcements.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Browser} from '@capacitor/browser';
+import {environment} from '../../../environments/environment';
 
 // export enum View {
 //   Rankings = 'Rankings',
@@ -110,6 +111,6 @@ export class CommunityPage implements OnInit {
   }
 
   async openDiscord() {
-    await Browser.open({url: 'http://discord.gg/RRbzVXf6Bu'});
+    await Browser.open({url: environment.discordLink});
   }
 }
