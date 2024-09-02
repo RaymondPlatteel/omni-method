@@ -42,61 +42,13 @@
         </ion-item>
         <ng-container *ngFor="let assessment of getCategoryAssessments(data.assessments, category.cid)">
           <ng-container *ngIf="getScore(data.scores, assessment.aid) as score; else zeroScore">
-            <!-- assessment score card -->
-            <ion-card class="assessment-summary">
-              <ion-item lines="none" style="--inner-border-width: 0">
-                <!-- start -->
-                <ion-thumbnail slot="start">
-                  <ion-img *ngIf="!showVideo" class="fit-thumbnail"
-                    src="{{assessment.icon}}"></ion-img>
-                  <div *ngIf="showVideo" style="height: 100%;overflow: hidden;">
-                    <video *ngIf="score.videoUrl" src="{{score.videoUrl}}" style="width: 100%;"
-                    ></video>
-                    <ion-button *ngIf="!score.videoUrl" color="medium" class="add-video-button">
-                      <!-- <ion-icon slot="icon-only" name="add-circle"></ion-icon> -->
-                      <ion-icon slot="icon-only" name="videocam-off"></ion-icon>
-                    </ion-button>
-                  </div>
-                </ion-thumbnail>
-                <!-- main -->
-                <ion-label>
-                  <h2>{{assessment.label}}</h2>
-                  <p>{{score.rawScore}} {{assessment.entryUnits}}</p>
-                </ion-label>
-                <!-- end -->
-                <!-- <ion-label color="primary" position="fixed" slot="end">
-                  <div class="score" style="text-align: right;">Lvl {{ score.calculatedScore/10 | number:'1.0-0' }}</div>
-                </ion-label> -->
-                <div slot="end">
-                  <span class="units">Lvl {{ score.calculatedScore/10 | number:'1.0-0' }}</span>
-                  <!-- <br />
-                    <ion-badge
-                      class="score"
-                      ngClass="{{scoreClass(score.scoreDate)}}"
-                      slot="end"
-                      >{{score.rawScore}}</ion-badge
-                    > -->
-                </div>
-              </ion-item>
-            </ion-card>
+            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)"
+              [score]="(score)" (cardClicked)="playVideo($event)" (thumbnailClicked)="playVideo($event)">
+            </app-score-card>
           </ng-container>
           <ng-template #zeroScore>
-            <ion-card class="assessment-summary">
-              <ion-item lines="none">
-                <!-- start -->
-                <ion-thumbnail slot="start">
-                  <ion-img class="fit-thumbnail"
-                    src="{{assessment.icon}}"></ion-img>
-                </ion-thumbnail>
-                <!-- main -->
-                <ion-label>
-                  <h2>{{assessment.label}}</h2>
-                </ion-label>
-                  <ion-badge class="score" slot="end">0</ion-badge>
-              </ion-item>
-            </ion-card>
+            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)"></app-score-card>
           </ng-template>
-
         </ng-container>
       </ng-container>
 

@@ -71,4 +71,10 @@ export class RankingDetailPage implements OnInit {
     // this.navController.back();
   }
 
+  playVideo(s: Score) {
+    if (s.videoUrl) {
+      console.log("rankingDetail playVideo", s.videoUrl);
+    }
+  }
+
 }

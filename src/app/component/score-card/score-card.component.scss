@@ -1,0 +1,25 @@
+ion-card {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+ion-thumbnail[slot="start"] {
+    // default is 16px
+    margin-inline-start: -13px;
+}
+.video-block {
+    border-radius: 8px;
+    height: 90%;
+    overflow: hidden;
+    video {
+        width: 100%;
+    }
+}
+.add-video-button {
+    aspect-ratio: 2 / 1;
+    margin: 14px 5px;
+    width: 90%;
+}
+.fit-thumbnail::part(image) {
+    border-radius: 5px;
+    object-fit: contain;
+}

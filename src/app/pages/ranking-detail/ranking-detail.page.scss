@@ -1,10 +1,6 @@
 ion-card-header {
     padding: 0px 0px 0px 8px;
 }
-ion-thumbnail[slot="start"] {
-    // default is 16px
-    margin-inline-start: -13px;
-}
 ion-header ion-toolbar ion-list ion-item {
     text-align: center;
 }
@@ -53,18 +49,6 @@ ion-badge {
 }
 .stale {
     background-color: #f12323;
-}
-// .assessment-summary {
-//     margin-left: 0;
-// }
-.fit-thumbnail::part(image) {
-    border-radius: 5px;
-    object-fit: contain;
-}
-.add-video-button {
-    aspect-ratio: 2 / 1;
-    margin: 14px 5px;
-    width: 90%;
 }
 .cat-header {
     border-top: 0.5px solid lightgray;
