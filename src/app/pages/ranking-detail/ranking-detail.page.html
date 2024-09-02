@@ -41,9 +41,9 @@
           </ion-text>
         </ion-item>
         <ng-container *ngFor="let assessment of getCategoryAssessments(data.assessments, category.cid)">
-          <!-- assessment score card -->
-          <ion-card class="assessment-summary">
-            <ng-container *ngIf="getScore(data.scores, assessment.aid) as score; else zeroScore">
+          <ng-container *ngIf="getScore(data.scores, assessment.aid) as score; else zeroScore">
+            <!-- assessment score card -->
+            <ion-card class="assessment-summary">
               <ion-item lines="none" style="--inner-border-width: 0">
                 <!-- start -->
                 <ion-thumbnail slot="start">
@@ -78,20 +78,24 @@
                     > -->
                 </div>
               </ion-item>
-            </ng-container>
-            <ng-template #zeroScore>
-                <ion-item>
-                  <ion-thumbnail slot="start">
-                    <ion-img class="fit-thumbnail"
-                      src="{{assessment.icon}}"></ion-img>
-                  </ion-thumbnail>
-                    <ion-label>
-                    <h2>{{assessment.label}}</h2>
-                  </ion-label>
-                    <ion-badge class="score" slot="end">0</ion-badge>
-                </ion-item>
-            </ng-template>
-          </ion-card>
+            </ion-card>
+          </ng-container>
+          <ng-template #zeroScore>
+            <ion-card class="assessment-summary">
+              <ion-item lines="none">
+                <!-- start -->
+                <ion-thumbnail slot="start">
+                  <ion-img class="fit-thumbnail"
+                    src="{{assessment.icon}}"></ion-img>
+                </ion-thumbnail>
+                <!-- main -->
+                <ion-label>
+                  <h2>{{assessment.label}}</h2>
+                </ion-label>
+                  <ion-badge class="score" slot="end">0</ion-badge>
+              </ion-item>
+            </ion-card>
+          </ng-template>
 
         </ng-container>
       </ng-container>
