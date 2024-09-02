@@ -222,7 +222,7 @@ export class NewScorePage implements OnInit, OnDestroy {
     // });
     this.videoThumbnail.then((mediaAsset) => {
       console.log("selected video", mediaAsset.identifier);
-
+      this.newScore.scoreDate = mediaAsset.creationDate;
       Media.getMediaByIdentifier({identifier: mediaAsset.identifier}).then(
         (mediaPath) => {
           console.log("localVideoPath", mediaPath.path);
