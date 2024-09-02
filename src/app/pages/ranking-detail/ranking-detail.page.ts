@@ -4,11 +4,12 @@ import {ModalController, NavController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {filter, map, take, tap} from 'rxjs/operators';
 import {AssessmentService} from 'src/app/services/assessments/assessment.service';
-import {CommunityService} from 'src/app/services/community/community.service';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import {CommunityService} from '../../services/community/community.service';
+import {OmniScoreService} from '../../services/omni-score.service';
 import {Assessment} from '../../store/assessments/assessment.model';
-import {Score} from 'src/app/store/models/score.model';
+import {Score} from '../../store/models/score.model';
 import {Analytics, logEvent} from '@angular/fire/analytics';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
   selector: 'app-ranking-detail',
@@ -17,17 +18,20 @@ import {Analytics, logEvent} from '@angular/fire/analytics';
 })
 export class RankingDetailPage implements OnInit {
   private analytics: Analytics = inject(Analytics);
+  private curUser$ = this.userService.getUser();
   public athlete$ = this.communityService.getSelectedUser();
   public categories$ = this.assessmentService.getAllCategories();
   public assessments$ = this.assessmentService.getAllAssessments();
   public isLoading$ = this.communityService.isLoading();
   public scores$ = this.communityService.getSelectedUserScores();
-  showChart = false;
+  // showChart = false; // toggle chart in profile header
+  showVideo = false;
 
   constructor(
     private assessmentService: AssessmentService,
     private communityService: CommunityService,
     private navController: NavController,
+    private userService: UserService
   ) {}
 
   async ngOnInit() {
@@ -40,6 +44,9 @@ export class RankingDetailPage implements OnInit {
         // log analytics event
         logEvent(this.analytics, "view_athlete", {username: athlete.username})
       });
+    this.curUser$.subscribe((usr) => {
+      this.showVideo = UserService.getAge(usr) >= 13;
+    })
   }
 
   getCategoryAssessments(assessments: Assessment[], cid: string) {

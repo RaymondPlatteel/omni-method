@@ -23,10 +23,9 @@
     <ion-item lines="none">
       <ion-card-title>All Assessments</ion-card-title>
     </ion-item>
-    <ng-container
-      class="card cardStyle"
-      *ngFor="let category of categories$ | async"
-    >
+
+    <ng-container class="card cardStyle"
+      *ngFor="let category of categories$ | async">
       <ion-item class="cat-header" lines="none">
         <ion-text>
           {{category.label}}
@@ -35,13 +34,12 @@
           Level: {{(user$ | async)?.categoryScore[category.cid] / 10 | number:'1.0-0'}}
         </ion-text>
       </ion-item>
+
       <ng-container *ngFor="let assessment of assessments$ | async">
         <ng-container *ngIf="assessment.cid == category.cid">
-          <ion-item
-            (click)="openDetails(assessment)"
-            button
-            style="--inner-border-width: 0"
-          >
+          <!-- assesment score card -->
+          <ion-item (click)="openDetails(assessment)" button
+            style="--inner-border-width: 0">
             <ion-thumbnail slot="start">
               <ion-img
                 class="fit-thumbnail"
@@ -52,9 +50,7 @@
             <div slot="end">
               <span class="units">{{assessment.units}}</span>
               <br />
-              <span
-                *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore"
-              >
+              <span *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
                 <ion-badge
                   class="score"
                   ngClass="{{scoreClass(score.scoreDate)}}"
@@ -64,15 +60,13 @@
                 >
               </span>
               <ng-template #zeroScore>
-                <ion-badge
-                  class="score"
-                  slot="end"
+                <ion-badge class="score" slot="end"
                   (click)="openNewScore($event, assessment, user, 0)"
-                  >0</ion-badge
-                >
+                  >0</ion-badge>
               </ng-template>
             </div>
           </ion-item>
+          
         </ng-container>
       </ng-container>
     </ng-container>

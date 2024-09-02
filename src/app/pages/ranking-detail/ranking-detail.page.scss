@@ -54,9 +54,17 @@ ion-badge {
 .stale {
     background-color: #f12323;
 }
+// .assessment-summary {
+//     margin-left: 0;
+// }
 .fit-thumbnail::part(image) {
     border-radius: 5px;
     object-fit: contain;
+}
+.add-video-button {
+    aspect-ratio: 2 / 1;
+    margin: 14px 5px;
+    width: 90%;
 }
 .cat-header {
     border-top: 0.5px solid lightgray;
