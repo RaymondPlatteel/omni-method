@@ -37,8 +37,18 @@
 
       <ng-container *ngFor="let assessment of assessments$ | async">
         <ng-container *ngIf="assessment.cid == category.cid">
+        <ng-container *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
+          <app-score-card [showVideo]="(true)" [assessment]="(assessment)" [score]="(score)"
+            (cardClicked)="openDetails(assessment)" (thumbnailClicked)="playVideo(score)">
+          </app-score-card>
+        </ng-container>
+        <ng-template #zeroScore>
+          <app-score-card [showVideo]="(true)" [assessment]="(assessment)"
+            (cardClicked)="openDetails(assessment)" (thumbnailClicked)="openDetails(assessment)">
+          </app-score-card>
+        </ng-template>
           <!-- assesment score card -->
-          <ion-item (click)="openDetails(assessment)" button
+          <!-- <ion-item (click)="openDetails(assessment)" button
             style="--inner-border-width: 0">
             <ion-thumbnail slot="start">
               <ion-img
@@ -65,7 +75,7 @@
                   >0</ion-badge>
               </ng-template>
             </div>
-          </ion-item>
+          </ion-item> -->
           
         </ng-container>
       </ng-container>

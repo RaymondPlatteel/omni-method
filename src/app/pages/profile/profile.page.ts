@@ -18,6 +18,7 @@ import {delay, filter, tap} from 'rxjs/operators';
 import {OmniScoreService, oneDay} from '../../services/omni-score.service';
 import {UserService} from '../../services/user/user.service';
 import {Capacitor} from '@capacitor/core';
+import {Browser} from '@capacitor/browser';
 // import {Analytics, logEvent} from '@angular/fire/analytics';
 // import {AssessmentDetailPage} from '../assessment-detail/assessment-detail.page';
 
@@ -186,6 +187,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     } else {
       nativeEl.value = 'moreProfile';
       this.moreOpen = true;
+    }
+  }
+
+  async playVideo(s: Score) {
+    if (s.videoUrl) {
+      console.log("rankingDetail playVideo", s.videoUrl);
+      await Browser.open({url: s.videoUrl});
     }
   }
 }

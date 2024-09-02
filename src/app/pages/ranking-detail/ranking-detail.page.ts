@@ -10,6 +10,7 @@ import {Assessment} from '../../store/assessments/assessment.model';
 import {Score} from '../../store/models/score.model';
 import {Analytics, logEvent} from '@angular/fire/analytics';
 import {UserService} from '../../services/user/user.service';
+import {Browser} from '@capacitor/browser';
 
 @Component({
   selector: 'app-ranking-detail',
@@ -71,9 +72,10 @@ export class RankingDetailPage implements OnInit {
     // this.navController.back();
   }
 
-  playVideo(s: Score) {
+  async playVideo(s: Score) {
     if (s.videoUrl) {
       console.log("rankingDetail playVideo", s.videoUrl);
+      await Browser.open({url: s.videoUrl});
     }
   }
 
