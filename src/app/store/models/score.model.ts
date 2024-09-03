@@ -9,5 +9,6 @@ export interface Score {
   calculatedScore?: number;
   currentWeight?: number;
   notes?: string;
+  videoThumbnailUrl?: string;
   videoUrl?: string;
 }

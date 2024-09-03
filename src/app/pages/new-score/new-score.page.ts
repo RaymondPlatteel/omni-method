@@ -41,7 +41,8 @@ export class NewScorePage implements OnInit, OnDestroy {
   @ViewChild('videoOption') avatarOptionModal: IonModal;
   public isVideoOptionOpen = false;
   public videoUrl: string;
-  public videoThumbnail: Promise<MediaAsset> = undefined;
+  public videoThumbnailPromise: Promise<MediaAsset> = undefined;
+  public videoThumbnailUrl: string = undefined;
   private localVideoPath: string = undefined;
 
   constructor(
@@ -177,6 +178,13 @@ export class NewScorePage implements OnInit, OnDestroy {
     // upload file and get video link
     if (this.localVideoPath) {
       await loading.present();
+      // save thumbnail
+      const thumbDest = this.storageService.remoteScoreVideoPath(this.newScore, 'jpg');
+      await this.storageService.uploadFile(this.videoThumbnailUrl, thumbDest, 'image/jpg').then((url) => {
+        console.log("upload thumbnail return url", url);
+        this.newScore.videoThumbnailUrl = url;
+      });
+      // save video
       const dest = this.storageService.remoteScoreVideoPath(this.newScore);
       // const dest = `users/${this.user.id}/${this.assessment.aid}-${scoreDate}.mp4`;
       await this.storageService.uploadFile(this.localVideoPath, dest).then((url) => {
@@ -215,13 +223,13 @@ export class NewScorePage implements OnInit, OnDestroy {
     }
     // this.setVideoOptionOpen(true);
     console.log("newScorePage openVideoPicker");
-    this.videoThumbnail = this.storageService.openVideoPicker();
-    console.log("newScorePage videoPicker done", this.videoThumbnail);
-    // this.storageService.openVideoPicker().then((result) => {
-    //   console.log("videoThumbnail result", result);
-    // });
-    this.videoThumbnail.then((mediaAsset) => {
+    this.videoThumbnailPromise = this.storageService.openVideoPicker();
+    console.log("newScorePage videoPicker done", this.videoThumbnailPromise);
+    this.videoThumbnailPromise.then((mediaAsset) => {
       console.log("selected video", mediaAsset.identifier);
+      // save thumbnail 
+      this.videoThumbnailUrl = "data:image/jpeg;base64," + mediaAsset.data;
+      // console.log("videoThumbnailUrl", this.videoThumbnailUrl);
       this.newScore.scoreDate = mediaAsset.creationDate;
       Media.getMediaByIdentifier({identifier: mediaAsset.identifier}).then(
         (mediaPath) => {

@@ -114,9 +114,9 @@ export class StorageService {
     });
   }
 
-  public remoteScoreVideoPath(score: Score) {
+  public remoteScoreVideoPath(score: Score, ext: string = 'mp4') {
     const scoreDate = OmniScoreService.scoreDate(score.scoreDate);
-    const dest = `users/${score.uid}/${score.aid}-${scoreDate}.mp4`;
+    const dest = `users/${score.uid}/${score.aid}-${scoreDate}.${ext}`;
     return dest;
   }
 
@@ -132,14 +132,14 @@ export class StorageService {
     )
   }
 
-  async uploadFile(loaclPath: string, destPath: string) {
+  async uploadFile(loaclPath: string, destPath: string, contentType: string = 'video/mp4') {
     console.log("uploadFile localPath", loaclPath);
     console.log("uploadFile destPath", destPath);
 
     const destFileRef = ref(this.storage, destPath);
 
     const metadata: UploadMetadata = {
-      contentType: 'video/mp4'
+      contentType: contentType
     };
 
     await Filesystem.readFile({path: loaclPath}).then(async (readResult) => {

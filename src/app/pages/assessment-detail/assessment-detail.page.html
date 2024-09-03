@@ -29,7 +29,7 @@
     <div class="header-video">
       <video *ngIf="curScore?.videoUrl"
         controlsList="nodownload" controls playsinline muted preload="auto" 
-        src="{{curScore.videoUrl}}"></video>
+        src="{{curScore.videoUrl}}" poster="{{curScore.videoThumbnailUrl}}"></video>
       <ion-img *ngIf="!curScore?.videoUrl" class="header-img" src="{{assessment.icon}}"></ion-img>
     </div>
 

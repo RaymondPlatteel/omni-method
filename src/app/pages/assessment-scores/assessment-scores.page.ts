@@ -65,12 +65,15 @@ export class AssessmentScoresPage implements OnInit {
     return daysToExpire === 0 ? 'Expired' : `Expires in ${daysToExpire} days`;
   }
 
-  deleteScore(score: Score) {
+  async deleteScore(score: Score) {
     console.log('dispatch deleteAssessmentScore ' + score.scoreDate);
-    if (score.videoUrl) {
-      // score.uid, score.aid, score.scoreDate
-      const remotePath = this.storageService.remoteScoreVideoPath(score);
+    if (score.videoThumbnailUrl) {
+      const remotePath = this.storageService.remoteScoreVideoPath(score, 'jpg');
       this.storageService.deleteFile(remotePath);
+    }
+    if (score.videoUrl) {
+      const remotePath = this.storageService.remoteScoreVideoPath(score);
+      await this.storageService.deleteFile(remotePath);
     }
     this.userService.deleteScore(score);
     // this.navController.back();
