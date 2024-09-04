@@ -75,6 +75,10 @@ const routes: Routes = [
     path: 'video-picker',
     loadChildren: () => import('./pages/video-picker/video-picker.module').then( m => m.VideoPickerPageModule)
   },
+  {
+    path: 'video-review',
+    loadChildren: () => import('./pages/video-review/video-review.module').then( m => m.VideoReviewPageModule)
+  },
 ];
 @NgModule({
   imports: [

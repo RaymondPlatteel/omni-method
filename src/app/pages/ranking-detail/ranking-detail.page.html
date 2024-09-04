@@ -43,7 +43,7 @@
         <ng-container *ngFor="let assessment of getCategoryAssessments(data.assessments, category.cid)">
           <ng-container *ngIf="getScore(data.scores, assessment.aid) as score; else zeroScore">
             <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)"
-              [score]="(score)" (cardClicked)="playVideo($event)" (thumbnailClicked)="playVideo($event)">
+              [score]="(score)" (cardClicked)="reviewVideo($event)" (thumbnailClicked)="reviewVideo($event)">
             </app-score-card>
           </ng-container>
           <ng-template #zeroScore>

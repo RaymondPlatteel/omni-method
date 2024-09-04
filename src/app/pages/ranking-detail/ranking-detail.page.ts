@@ -11,6 +11,7 @@ import {Score} from '../../store/models/score.model';
 import {Analytics, logEvent} from '@angular/fire/analytics';
 import {UserService} from '../../services/user/user.service';
 import {Browser} from '@capacitor/browser';
+import {LocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-ranking-detail',
@@ -32,7 +33,8 @@ export class RankingDetailPage implements OnInit {
     private assessmentService: AssessmentService,
     private communityService: CommunityService,
     private navController: NavController,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {}
 
   async ngOnInit() {
@@ -72,10 +74,11 @@ export class RankingDetailPage implements OnInit {
     // this.navController.back();
   }
 
-  async playVideo(s: Score) {
-    if (s.videoUrl) {
+  async reviewVideo(s: Score) {
+    if (this.showVideo && s.videoUrl) {
       console.log("rankingDetail playVideo", s.videoUrl);
-      await Browser.open({url: s.videoUrl});
+      // await Browser.open({url: s.videoUrl});
+      this.router.navigate(['/home/community/athlete/review']);
     }
   }
 
