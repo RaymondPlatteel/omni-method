@@ -38,7 +38,7 @@ export class RankingDetailPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    console.log("RankingDetailPage.ngOnInit athlete$", this.athlete$);
+    // console.log("RankingDetailPage.ngOnInit athlete$", this.athlete$);
     this.athlete$
       .pipe(filter(usr => usr !== undefined))
       .pipe(take(1))
@@ -47,6 +47,7 @@ export class RankingDetailPage implements OnInit {
         // log analytics event
         logEvent(this.analytics, "view_athlete", {username: athlete.username})
       });
+    // check current user's age
     this.curUser$.subscribe((usr) => {
       this.showVideo = UserService.getAge(usr) >= 13;
     })

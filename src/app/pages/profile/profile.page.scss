@@ -1,7 +1,8 @@
 .contentCard {
   --background: transparent;
   box-shadow: none;
-  margin-bottom: 0;
+  // margin-bottom: 0;
+  margin: 0;
 }
 span {
   // color: white;
@@ -16,6 +17,7 @@ ion-header {
 //   flex-direction: column;
 // }
 ion-content {
+  --background: transparent;
   --offset-top: 0px;
   position: absolute;
 }
