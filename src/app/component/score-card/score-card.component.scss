@@ -2,34 +2,46 @@ ion-card {
     margin-top: 0;
     margin-bottom: 8px;
 }
-ion-thumbnail[slot="start"] {
-    // default is 16px
-    margin-inline-start: -8px;
-}
-.video-block {
-    height: 90%;
+// ion-thumbnail[slot="start"] {
+//     // default is 16px
+//     margin-inline-start: -8px;
+// }
+.thumbnail-container {
+    // aspect-ratio: 4/5;
+    border-radius: 5px;
     overflow: hidden;
-    // position: absolute;
-    ion-img::part(image) {
-        border-radius: 8px;
-        margin: 14px 0;
+    height: 48px;
+    width: 64px;
+    ion-img {
+        height: 100%;
         width: 100%;
-    }
-    ion-icon {
-        position: relative;
-
+        object-fit: cover;
     }
 }
+.fit-thumbnail::part(image) {
+    border-radius: 5px;
+    object-fit: contain;
+}
+// .video-block {
+//     height: 90%;
+//     overflow: hidden;
+//     // position: absolute;
+//     ion-img::part(image) {
+//         border-radius: 8px;
+//         margin: 14px 0;
+//         width: 100%;
+//     }
+// }
 // .overlay-icon {
 //     position: relative;
 //     bottom: 5px;
 // }
 .add-video-button {
     aspect-ratio: 2 / 1;
-    margin: 14px 5px;
-    width: 90%;
+    margin-top: 8px;
+    width: 95%;
 }
-.fit-thumbnail::part(image) {
-    border-radius: 5px;
-    object-fit: contain;
-}
+// .video-thumbnail::part(image) {
+//     border-radius: 5px;
+//     object-fit: contain;
+// }
