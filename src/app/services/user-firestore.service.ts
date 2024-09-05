@@ -10,6 +10,8 @@ import {
   doc,
   docData,
   getDocs,
+  limit,
+  orderBy,
   query,
   setDoc,
   updateDoc,
@@ -109,12 +111,26 @@ export class UserFirestoreService {
     return collectionData(scoresCollection) as Observable<Score[]>;
   }
 
-  async getUserAssessmentScores(id: string, aid: string) {
+  // Under Construction
+  getUserLatestScores(id: string, aid: string): Observable<Score[]> {
+    console.log("getUserLatestScores");
+    const scoresCollection = collection(
+      this.firestore,
+      'user',
+      `${id}`,
+      'score'
+    );
+    // TODO: filter only latest from each assessment
+    const q = query(scoresCollection, where("aid", "==", aid));
+    return collectionData(scoresCollection) as Observable<Score[]>;
+  }
+
+  async getUserAssessmentScore(id: string, aid: string) {
     let res = null;
-    console.log("getUserAssessmentScores from firestore", id, aid);
+    console.log("getUserAssessmentScore from firestore", id, aid);
     const scoresCollection = collection(this.firestore, 'user', `${id}`, 'score');
     console.log("collection", scoresCollection);
-    const scoreQuery = query(scoresCollection, where("aid", "==", aid));
+    const scoreQuery = query(scoresCollection, where("aid", "==", aid), orderBy("scoreDate"), limit(1));
     console.log("scoreQuery", scoreQuery);
     let querySnapshot;
     try {

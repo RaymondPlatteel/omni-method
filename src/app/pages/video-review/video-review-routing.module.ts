@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { VideoReviewPage } from './video-review.page';
+import {VideoReviewPage} from './video-review.page';
 
 const routes: Routes = [
   {

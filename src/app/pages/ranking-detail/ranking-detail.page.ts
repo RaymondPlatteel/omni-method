@@ -79,7 +79,9 @@ export class RankingDetailPage implements OnInit {
     if (this.showVideo && s.videoUrl) {
       console.log("rankingDetail playVideo", s.videoUrl);
       // await Browser.open({url: s.videoUrl});
-      this.router.navigate(['/home/community/athlete/review']);
+      this.router.navigate(
+        ['/home/community/athlete/review'],
+        {queryParams: {uid: s.uid, aid: s.aid}});
     }
   }
 
