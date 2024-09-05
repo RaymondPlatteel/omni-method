@@ -18,7 +18,6 @@ import {delay, filter, tap} from 'rxjs/operators';
 import {OmniScoreService, oneDay} from '../../services/omni-score.service';
 import {UserService} from '../../services/user/user.service';
 import {Capacitor} from '@capacitor/core';
-import {Browser} from '@capacitor/browser';
 // import {Analytics, logEvent} from '@angular/fire/analytics';
 // import {AssessmentDetailPage} from '../assessment-detail/assessment-detail.page';
 
@@ -139,8 +138,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     return age;
   }
 
-  async openNewScore(e, assessment, user, curScore) {
-    e.stopPropagation();
+  async openNewScore(assessment, user, curScore) {
+
     if (assessment.checklist) {
       return this.openDetails(assessment);
     }
@@ -160,40 +159,4 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
   }
 
-  // async openEditProfile(e, user) {
-  //   e.stopPropagation();
-  //   const modal = await this.modalCtrl.create({
-  //     component: EditProfilePage,
-  //     componentProps: {
-  //       user: user,
-  //     },
-  //     cssClass: 'edit-user-modal',
-  //     presentingElement: document.querySelector('ion-router-outlet'),
-  //     canDismiss: true,
-  //   });
-  //   await modal.present();
-  //   modal.onDidDismiss().then(() => {
-  //     // this.loadUserData();
-  //   });
-  // }
-
-  toggleAccordion(event) {
-    const nativeEl = this.accordionGroup;
-    console.log(nativeEl);
-    console.log(event.target);
-    if (nativeEl.value === 'moreProfile') {
-      nativeEl.value = undefined;
-      this.moreOpen = false;
-    } else {
-      nativeEl.value = 'moreProfile';
-      this.moreOpen = true;
-    }
-  }
-
-  async playVideo(s: Score) {
-    if (s.videoUrl) {
-      console.log("rankingDetail playVideo", s.videoUrl);
-      await Browser.open({url: s.videoUrl});
-    }
-  }
 }

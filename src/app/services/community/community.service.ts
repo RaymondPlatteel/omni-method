@@ -5,7 +5,13 @@ import {UserFirestoreService} from '../user-firestore.service';
 import {Observable, map} from 'rxjs';
 import {User} from '../../store/user/user.model';
 import * as CommunityActions from '../../store/community/community.actions';
-import {selectAllUsers, getSelectedUser, getIsLoading, getSelectedUserScores} from '../../store/community/community.selectors';
+import {
+  selectAllUsers,
+  getSelectedUser,
+  getIsLoading,
+  getSelectedUserScores,
+  getSelectedScore
+} from '../../store/community/community.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +49,10 @@ export class CommunityService {
 
   getSelectedUserScores() {
     return this.store.select(getSelectedUserScores);
+  }
+
+  getSelectedScore(aid: string) {
+    return this.store.select(getSelectedScore(aid));
   }
 
 }

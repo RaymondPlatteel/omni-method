@@ -1,12 +1,12 @@
 import {LocationStrategy} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {from, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {CommunityService} from '../../services/community/community.service';
 import {User} from '../../store/user/user.model';
-import {UserAvatarComponent} from 'src/app/component/user-avatar/user-avatar.component';
-import {Score} from 'src/app/store/models/score.model';
-import {UserFirestoreService} from 'src/app/services/user-firestore.service';
+import {Score} from '../../store/models/score.model';
+import {Assessment} from '../../store/assessments/assessment.model';
+import {AssessmentService} from 'src/app/services/assessments/assessment.service';
 
 @Component({
   selector: 'app-video-review',
@@ -18,12 +18,13 @@ export class VideoReviewPage implements OnInit {
   private aid: string;
   public user$: Observable<User>;
   public curScore$: Observable<Score>;
+  public assessment$: Observable<Assessment>;
 
   constructor(
     private route: ActivatedRoute,
     private locationStrategy: LocationStrategy,
     private communityService: CommunityService,
-    private userFirestoreService: UserFirestoreService
+    private assessmentService: AssessmentService
   ) {}
 
   ngOnInit() {
@@ -31,11 +32,9 @@ export class VideoReviewPage implements OnInit {
       console.log("videoReviewPage.ngOnInit", params);
       this.uid = params.uid;
       this.aid = params.aid;
-      // this.category$ = this.assessmentService.getCategoryById(params.cid);
-      // this.assessment$ = this.assessmentService.getAssessmentById(params.aid);
-      // this.checklist$ = this.assessmentService.getChecklist(params.aid);
-      // this.routerOutlet.swipeGesture = true;
-      this.curScore$ = from(this.userFirestoreService.getUserAssessmentScore(this.uid, this.aid));
+      // read score object from ngrx store
+      this.curScore$ = this.communityService.getSelectedScore(this.aid);
+      this.assessment$ = this.assessmentService.getAssessmentById(this.aid);
     });
     this.user$ = this.communityService.getSelectedUser();
   }

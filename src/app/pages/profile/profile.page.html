@@ -37,9 +37,10 @@
 
       <ng-container *ngFor="let assessment of assessments$ | async">
         <ng-container *ngIf="assessment.cid == category.cid">
-        <ng-container *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
+          <!-- assesment score card -->
+          <ng-container *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
           <app-score-card [showVideo]="(true)" [assessment]="(assessment)" [score]="(score)"
-            (cardClicked)="openDetails(assessment)" (thumbnailClicked)="playVideo(score)">
+            (cardClicked)="openDetails(assessment)" (thumbnailClicked)="openNewScore(assessment, user, score)">
           </app-score-card>
         </ng-container>
         <ng-template #zeroScore>
@@ -47,36 +48,6 @@
             (cardClicked)="openDetails(assessment)" (thumbnailClicked)="openDetails(assessment)">
           </app-score-card>
         </ng-template>
-          <!-- assesment score card -->
-          <!-- <ion-item (click)="openDetails(assessment)" button
-            style="--inner-border-width: 0">
-            <ion-thumbnail slot="start">
-              <ion-img
-                class="fit-thumbnail"
-                src="{{assessment.icon}}"
-              ></ion-img>
-            </ion-thumbnail>
-            <ion-label>{{assessment.label}}</ion-label>
-            <div slot="end">
-              <span class="units">{{assessment.units}}</span>
-              <br />
-              <span *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
-                <ion-badge
-                  class="score"
-                  ngClass="{{scoreClass(score.scoreDate)}}"
-                  slot="end"
-                  (click)="openNewScore($event, assessment, user, score)"
-                  >{{score.rawScore || 0}}</ion-badge
-                >
-              </span>
-              <ng-template #zeroScore>
-                <ion-badge class="score" slot="end"
-                  (click)="openNewScore($event, assessment, user, 0)"
-                  >0</ion-badge>
-              </ng-template>
-            </div>
-          </ion-item> -->
-          
         </ng-container>
       </ng-container>
     </ng-container>

@@ -30,3 +30,11 @@ export const getSelectedUserScores = createSelector(
     selectCommunityState,
     (communityState: CommunityState) => communityState.selectedUserScores
 );
+
+export const getSelectedScore = (aid: string) => createSelector(
+    selectCommunityState,
+    (communityState: CommunityState) => communityState.selectedUserScores
+        .filter((s) => s.aid === aid).sort(function (a, b) {
+            return Date.parse(b.scoreDate) - Date.parse(a.scoreDate);
+        }).shift()
+);
