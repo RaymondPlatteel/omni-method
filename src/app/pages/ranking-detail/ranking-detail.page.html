@@ -42,12 +42,12 @@
         </ion-item>
         <ng-container *ngFor="let assessment of getCategoryAssessments(data.assessments, category.cid)">
           <ng-container *ngIf="getScore(data.scores, assessment.aid) as score; else zeroScore">
-            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)"
+            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)" buttonIcon="videocam-off"
               [score]="(score)" (cardClicked)="reviewVideo($event)" (thumbnailClicked)="reviewVideo($event)">
             </app-score-card>
           </ng-container>
           <ng-template #zeroScore>
-            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)"></app-score-card>
+            <app-score-card [showVideo]="(showVideo)" [assessment]="(assessment)" buttonIcon="videocam-off"></app-score-card>
           </ng-template>
         </ng-container>
       </ng-container>

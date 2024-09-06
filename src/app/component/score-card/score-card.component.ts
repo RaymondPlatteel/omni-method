@@ -16,6 +16,7 @@ export class ScoreCardComponent implements OnInit {
   @Input() showVideo = false;
   @Input() assessment: Assessment = undefined;
   @Input() score: Score = undefined;
+  @Input() buttonIcon: string;
   @Output() thumbnailClicked = new EventEmitter<Score>();
   @Output() cardClicked = new EventEmitter<Score>();
 
@@ -28,10 +29,8 @@ export class ScoreCardComponent implements OnInit {
   }
 
   thumbnailClick(e) {
-    if (this.showVideo && this.score?.videoUrl) {
-      this.thumbnailClicked.emit(this.score);
-      e.stopPropagation();
-    }
+    e.stopPropagation();
+    this.thumbnailClicked.emit(this.score);
   }
 
 }

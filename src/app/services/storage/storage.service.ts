@@ -190,6 +190,7 @@ export class StorageService {
     const modal = await this.modalCtrl.create({
       component: VideoPickerPage,
       componentProps: {
+
       },
       cssClass: '',
       canDismiss: true,

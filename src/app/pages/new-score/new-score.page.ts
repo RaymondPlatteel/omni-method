@@ -43,7 +43,7 @@ export class NewScorePage implements OnInit, OnDestroy {
   public videoUrl: string;
   public videoThumbnailPromise: Promise<MediaAsset> = undefined;
   public videoThumbnailUrl: string = undefined;
-  private localVideoPath: string = undefined;
+  public localVideoPath: string = undefined;
 
   constructor(
     private modalCtrl: ModalController,
@@ -221,23 +221,23 @@ export class NewScorePage implements OnInit, OnDestroy {
     if (!await this.checkPermissions()) {
       alert("Access to videos blocked");
     }
-    // this.setVideoOptionOpen(true);
-    console.log("newScorePage openVideoPicker");
     this.videoThumbnailPromise = this.storageService.openVideoPicker();
     console.log("newScorePage videoPicker done", this.videoThumbnailPromise);
-    this.videoThumbnailPromise.then((mediaAsset) => {
+    await this.videoThumbnailPromise.then(async (mediaAsset) => {
       console.log("selected video", mediaAsset.identifier);
       // save thumbnail 
       this.videoThumbnailUrl = "data:image/jpeg;base64," + mediaAsset.data;
-      // console.log("videoThumbnailUrl", this.videoThumbnailUrl);
+      // default score date to video creation date
       this.newScore.scoreDate = mediaAsset.creationDate;
-      Media.getMediaByIdentifier({identifier: mediaAsset.identifier}).then(
+      // get video local path
+      await Media.getMediaByIdentifier({identifier: mediaAsset.identifier}).then(
         (mediaPath) => {
           console.log("localVideoPath", mediaPath.path);
           this.localVideoPath = mediaPath.path;
         },
         (err) => {
           console.log("getMediaByIdentifile error", err);
+          console.log("Unable to get video, ", err);
         }
       );
 

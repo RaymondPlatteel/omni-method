@@ -27,16 +27,11 @@ export class VideoPickerPage implements OnInit {
   getMedias() {
     console.log("call Media.getMedias()");
     Media.getMedias({
-      quantity: 36, types: "videos",
+      quantity: 36,
+      thumbnailQuality: 60,
+      types: "videos",
       sort: "creationDate"
-      // sort: 
-      //   [
-      //     {key: "isFavorite", ascending: false},
-      //     {key: "creationDate", ascending: false}
-      //   ]
     }).then((medias) => {
-      // Media.getMedias({quantity: 1, types: "photos"}).then((medias) => {
-      // console.log("got medias", medias);
       this.medias = medias.medias;
       console.log("got medias.length", this.medias.length);
       if (this.medias.length == 0) {

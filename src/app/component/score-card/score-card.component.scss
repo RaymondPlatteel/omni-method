@@ -1,7 +1,6 @@
 .score-card {
-    // --background: rgba(250, 250, 250, 1);
-    
     // border: 1px solid gray;
+    --background: var(--ion-color-step-800);
     border-radius: 16px;
     box-shadow: 0 1px 8px rgba(var(--ion-color-light-contrast-rgb), 0.25);
     margin-top: 8px;
@@ -9,7 +8,7 @@
     margin-left: 16px;
     margin-right: 16px;
     ion-item::part(native) {
-        --background: var(--ion-color-step-850);
+        background-color: var(--ion-color-step-800);
     }
     ion-label {
         min-height: 64px;
@@ -35,26 +34,12 @@
     border-radius: 5px;
     object-fit: contain;
 }
-// .video-block {
-//     height: 90%;
-//     overflow: hidden;
-//     // position: absolute;
-//     ion-img::part(image) {
-//         border-radius: 8px;
-//         margin: 14px 0;
-//         width: 100%;
-//     }
-// }
-// .overlay-icon {
-//     position: relative;
-//     bottom: 5px;
-// }
-.add-video-button {
-    aspect-ratio: 2 / 1;
+.video-button {
+    // aspect-ratio: 2 / 1;
     margin-top: 8px;
+    height: 36px;
     width: 95%;
+    ion-icon {
+        font-size: 20px;
+    }
 }
-// .video-thumbnail::part(image) {
-//     border-radius: 5px;
-//     object-fit: contain;
-// }

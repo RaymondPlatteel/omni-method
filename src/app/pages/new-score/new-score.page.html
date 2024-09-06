@@ -20,11 +20,16 @@
   </div>
 
   <!-- video thumbnail preview -->
-  <div class="video-select" (click)="chooseVideo()">
-    <ion-img class="thumbnail" *ngIf="videoThumbnailUrl" [src]="videoThumbnailUrl">
+  <div *ngIf="videoThumbnailUrl" class="video-select" (click)="chooseVideo()">
+    <ion-img class="thumbnail" [src]="videoThumbnailUrl">
     </ion-img>
-    <!-- src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}" -->
-    <div *ngIf="!videoThumbnailUrl">
+    <!-- <video  *ngIf="videoThumbnailUrl"
+      controlsList="nodownload" controls playsinline muted preload="auto" 
+      [src]="localVideoPath" [poster]="videoThumbnailUrl">
+    </video> -->
+  </div>
+  <div *ngIf="!videoThumbnailUrl" class="icon-select" (click)="chooseVideo()">
+    <div>
       <ion-button shape="round" size="small">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
@@ -32,25 +37,6 @@
       <ion-text>Choose Video</ion-text>
     </div>
   </div>
-<!-- <ion-grid class="video-select">
-    <ion-row *ngIf="videoThumbnail">
-      <ion-col>
-        <ion-img class="thumbnail"
-          src="data:image/jpeg;base64,{{(videoThumbnail | async)?.data}}"
-          ></ion-img>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="!videoThumbnail">
-      <ion-col size="12">
-        <ion-button (click)="chooseVideo()" shape="circle" size="default">
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col size="12">
-        <ion-text>Choose Video</ion-text>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
 
   <div>
     <ion-grid>
@@ -139,52 +125,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!-- <ion-toolbar color="default">
-    <ion-button type="submit" color="primary" shape="round" expand="block" (click)="onSubmit()">
-      Submit
-    </ion-button>
-  </ion-toolbar> -->
-
-  <!-- <ion-modal id="videoOption"
-    [isOpen]="isVideoOptionOpen"
-    (ionModalDidDismiss)="onDidDismiss($event)"
-    [initialBreakpoint]="1" [breakpoints]="[0, 1]">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar color="default">
-          <ion-title>Select option</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-list>
-        <ion-item lines="none" (click)="checkPermissions()">
-          <ion-icon name="image-outline" slot="start"></ion-icon>
-          <ion-label>Check Permissions</ion-label>
-        </ion-item>
-        <ion-item lines="none" (click)="requestPermissions()">
-          <ion-icon name="image-outline" slot="start"></ion-icon>
-          <ion-label>Request Permissions</ion-label>
-        </ion-item>
-        <ion-item lines="none" (click)="getLimitedLibraryPhotos()">
-          <ion-icon name="image-outline" slot="start"></ion-icon>
-          <ion-label>Get Limited Library Photos</ion-label>
-        </ion-item>
-        <ion-item lines="none" (click)="getPhoto()">
-          <ion-icon name="image-outline" slot="start"></ion-icon>
-          <ion-label>Get Photo</ion-label>
-        </ion-item>
-        <ion-item lines="none" (click)="getAlbums()">
-          <ion-icon name="camera-outline" slot="start"></ion-icon>
-          <ion-label>Get Albums</ion-label>
-        </ion-item>
-        <ion-item lines="none" (click)="getMedias()">
-          <ion-icon name="camera-outline" slot="start"></ion-icon>
-          <ion-label>Get Medias (1 photo)</ion-label>
-        </ion-item>
-      </ion-list>
-      <div class="bottom-padding"></div>
-    </ng-template>
-  </ion-modal> -->
 
   <div class="bottom-padding"></div>
 
