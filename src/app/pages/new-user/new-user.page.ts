@@ -97,18 +97,7 @@ export class NewUserPage implements OnInit, OnDestroy {
       ]),
       // fitnessLevel: new FormControl('none', [Validators.required]),
     });
-    // this.formData.patchValue(this.newUser);
   }
-
-  // async openPicker(targetProperty: string) {
-  //   await this.numberPickerService.openProfilePicker(this.formData.value, targetProperty);
-  // }
-  // async openWeightPicker() {
-  //   this.numberPickerService.openWeightPicker(this.formData.value as User);
-  // }
-  // async openHeightPicker() {
-  //   this.numberPickerService.openHeightPicker(this.formData.value as User);
-  // }
 
   setFitnessLevel(ev) {
     this.fitnessLevel = ev.target.value;
@@ -196,11 +185,5 @@ export class NewUserPage implements OnInit, OnDestroy {
   get weight() {
     return this.formData.get('weight');
   }
-
-  // async openPicker() {
-  //   let maxDate = new Date(); //.setFullYear(2006);
-  //   let curYear = maxDate.getFullYear();
-  //   maxDate.setFullYear(curYear - 2);
-  // }
 
 }

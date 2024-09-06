@@ -44,7 +44,8 @@ ion-fab[vertical="top"] {
 }
 ion-button[shape="circle"] {
   --border-radius: 50%;
-  // --box-shadow: -1px 11px 13px -6px rgb(87, 86, 86);
+  // --box-shadow: 1px 1px 12px -6px rgb(87, 86, 86);
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
   // width: 44px;
   height: 44px;
 }
