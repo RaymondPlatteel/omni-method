@@ -28,10 +28,12 @@
       *ngFor="let category of categories$ | async">
       <ion-item class="cat-header" lines="none">
         <ion-text>
-          {{category.label}}
+          <h6>{{category.label}}</h6>
         </ion-text>
         <ion-text slot="end">
-          Level: {{(user$ | async)?.categoryScore[category.cid] / 10 | number:'1.0-0'}}
+          <h6>
+            Level: {{(user$ | async)?.categoryScore[category.cid] / 10 | number:'1.0-0'}}
+          </h6>
         </ion-text>
       </ion-item>
 
