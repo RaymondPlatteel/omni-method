@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,14 @@ import {Component} from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("home page router navigation extras",
+      this.router.getCurrentNavigation().extras);
+    // getCurrentNavigation
+  }
 
 }

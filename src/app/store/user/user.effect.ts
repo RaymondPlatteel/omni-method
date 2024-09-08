@@ -115,7 +115,7 @@ export class UserEffects {
   newUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.newUser),
-      tap(console.log),
+      // tap(console.log),
       switchMap(({payload}) => {
         console.log('newUser effect calling firestoreService addUser');
         return this.firestoreService.addUser(payload).pipe(
@@ -136,9 +136,9 @@ export class UserEffects {
         tap(console.log),
         // tap(() => this.router.navigate(['home']))
         tap((newUser) => {
-          console.log("route newUser to onboarding", newUser);
+          console.log("route newUser to home page", newUser);
           this.notificationsService.scheduleLocalNotification();
-          this.router.navigate(['home']);
+          this.router.navigate(['home'], {info: {newUser: true}});
         })
       ),
     {dispatch: false}
