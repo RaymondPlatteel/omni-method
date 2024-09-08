@@ -119,7 +119,7 @@ export class UserEffects {
       switchMap(({payload}) => {
         console.log('newUser effect calling firestoreService addUser');
         return this.firestoreService.addUser(payload).pipe(
-          tap(console.log),
+          // tap(console.log),
           map((data) => UserActions.newUserSuccess({payload: data})),
           catchError((error) => of(UserActions.newUserFailure({error}))),
           finalize(() => console.log('addUser finalize'))
@@ -133,7 +133,7 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActions.newUserSuccess),
-        tap(console.log),
+        // tap(console.log),
         // tap(() => this.router.navigate(['home']))
         tap((newUser) => {
           console.log("route newUser to home page", newUser);
@@ -186,9 +186,12 @@ export class UserEffects {
           console.log("loadUserSuccess router.url", this.router.url);
           // user loaded test if exist
           if (data.payload) {
+            console.log("loadUserSuccess home page");
+            /*
             if (!this.router.url.startsWith('/home')) {
               this.router.navigate(['home']);
             }
+              */
             // if (data.payload.omniScore) {
             //   // go to home page
             //   if (this.router.url !== "/onboarding") {
