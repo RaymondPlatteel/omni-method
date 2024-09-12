@@ -65,7 +65,7 @@
 <ion-alert
   [isOpen]="newUser"
   header="Welcome to Omni Method"
-  message="While we create some estimated assessmnts and generate a starting level for you, cosider configuring a profile picture."
+  [message]="newUserGreeting"
   [buttons]="alertButtons"
 ></ion-alert>
 <!-- subHeader="A Sub Header Is Optional" -->

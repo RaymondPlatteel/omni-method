@@ -36,8 +36,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   scores: Score[];
   omniScore: number = 0;
   unadjustedScore: number = 0;
-  // new user greeting
-  public newUser: boolean = false;
+
+  public newUserGreeting = "Your scores are being estimated based on the information you provided during your account setup. Please consider configuring a profile picture.";
+  public newUser: boolean = true;
   alertButtons = [
     {
       text: 'Edit Profile',
