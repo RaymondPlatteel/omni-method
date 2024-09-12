@@ -13,13 +13,13 @@ export class HomePage {
   ) {}
 
   ngOnInit(): void {
-    const info = this.router.getCurrentNavigation().extras.info;
-    console.log("home page router navigation extras",
+    // const info = this.router.getCurrentNavigation().extras.info;
+    console.log("homePage ngOnInit navigation extras",
       this.router.getCurrentNavigation().extras);
-    if (Object.keys(info).includes("newUser")) {
-      console.log("home page newUser");
-      alert("Welcome consider adding profile picture");
-    }
+    // if (Object.keys(info).includes("newUser")) {
+    //   console.log("home page newUser");
+    //   alert("Welcome consider adding profile picture");
+    // }
   }
 
 }

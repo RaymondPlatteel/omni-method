@@ -61,7 +61,7 @@ export class ProfileHeaderComponent implements OnInit {
         })
     })
     this.user$ = this.athlete$;
-    console.log("profile header ngOnInit scores$", this.scores$);
+    // console.log("profile header ngOnInit scores$", this.scores$);
   }
 
 

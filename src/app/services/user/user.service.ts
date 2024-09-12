@@ -11,6 +11,7 @@ import * as UserActions from '../../store/user/user.actions';
 import {
   assessmentScores,
   currentScore,
+  loadingStatus,
   selectAuthUser,
   selectUser,
 } from '../../store/user/user.selectors';
@@ -44,6 +45,10 @@ export class UserService implements IUserService {
     this.store.select(selectAuthUser).subscribe((authUser) => {
       this.store.dispatch(UserActions.loadUserAction({uid: authUser?.user.uid}));
     });
+  }
+
+  getLoadingStatus() {
+    return this.store.select(loadingStatus);
   }
 
   async saveAvatarFile(blob: Blob, filename: string): Promise<string> {
@@ -169,7 +174,7 @@ export class UserService implements IUserService {
   }
 
   async openEditProfile(event, user) {
-    event.stopPropagation();
+    event?.stopPropagation();
     const modal = await this.modalCtrl.create({
       component: EditProfilePage,
       componentProps: {

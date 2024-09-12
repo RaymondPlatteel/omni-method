@@ -62,7 +62,7 @@ export class AuthService implements OnDestroy {
         console.log("auth.service onAuthStateChanged User is signed out");
         this.currUserId = this.currUserEmail = undefined;
         console.log("auth.service onAuthStateChanged check user saved", this.currUserId, this.currUserEmail);
-        // this.router.navigate(['/welcome']);
+        this.router.navigate(['/welcome']);
       }
     })
   }

@@ -56,7 +56,7 @@ export class UserEffects {
         console.log('userAuthenticated effect', JSON.stringify(payload));
       }),
       map((payload) => {
-        const props = {uid: payload.payload.user.uid};
+        const props = {uid: payload.payload.user?.uid};
         console.log("loadUserAction", props);
         return UserActions.loadUserAction(props);
       })
@@ -138,7 +138,8 @@ export class UserEffects {
         tap((newUser) => {
           console.log("route newUser to home page", newUser);
           this.notificationsService.scheduleLocalNotification();
-          this.router.navigate(['home'], {info: {newUser: true}});
+          const extras = {info: {newUser: true}};
+          this.router.navigate(['home'], extras);
         })
       ),
     {dispatch: false}
@@ -186,12 +187,16 @@ export class UserEffects {
           console.log("loadUserSuccess router.url", this.router.url);
           // user loaded test if exist
           if (data.payload) {
-            console.log("loadUserSuccess home page");
-            /*
-            if (!this.router.url.startsWith('/home')) {
-              this.router.navigate(['home']);
+            let extras = {};
+            // console.log("loadUserSuccess home page");
+            if (this.router.url == '/new-user') {
+              extras = {info: {newUser: true}};
+              console.log("loadUserSuccess send newUser extras")
             }
-              */
+            if (!this.router.url.startsWith('/home')) {
+              this.router.navigate(['home'], extras);
+            }
+
             // if (data.payload.omniScore) {
             //   // go to home page
             //   if (this.router.url !== "/onboarding") {
@@ -212,7 +217,7 @@ export class UserEffects {
     {dispatch: false}
   );
 
-  // new user effect
+  // UserActions.loadUserFailure
   newUserEffect$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -265,7 +270,7 @@ export class UserEffects {
     {dispatch: false}
   );
 
-  // UserActions.deleteAssessmentScore
+  // UserActions.deleteUser
   deleteUserEffect$ = createEffect(
     () =>
       this.actions$.pipe(

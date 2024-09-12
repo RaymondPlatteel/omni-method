@@ -7,6 +7,7 @@ import {User} from '../../store/user/user.model';
 import {AssessmentService} from 'src/app/services/assessments/assessment.service';
 import {ShowToastService} from 'src/app/services/show-toast.service';
 import {Subscription} from 'rxjs';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-new-user',
@@ -18,7 +19,7 @@ export class NewUserPage implements OnInit, OnDestroy {
   userEmail: string;
   formData: FormGroup;// = new FormGroup({});
   userHeight: FormGroup;
-  numberPickerSubscription: Subscription;
+  // numberPickerSubscription: Subscription;
   initDob: string;
   fitnessLevel: string = 'none';
   scoreDate = new Date().toISOString().split('T')[0];
@@ -26,6 +27,8 @@ export class NewUserPage implements OnInit, OnDestroy {
   // isApp = false;
   usernameMinLength = usernameMinLength;
   usernameMaxLength = usernameMaxLength;
+  private loading: HTMLIonLoadingElement;
+  private userLoadingSubscription: Subscription;
 
   constructor(
     private userService: UserService,
@@ -33,6 +36,7 @@ export class NewUserPage implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private assessmentService: AssessmentService,
     private showToastService: ShowToastService,
+    private loadingCtrl: LoadingController
   ) {
     let calcDate = new Date();
     let curYear = calcDate.getFullYear();
@@ -44,7 +48,7 @@ export class NewUserPage implements OnInit, OnDestroy {
     this.userEmail = this.auth.currUserEmail;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("newUser ngOnInit", this.userId, this.userEmail);
 
     this.initFormData();
@@ -53,10 +57,36 @@ export class NewUserPage implements OnInit, OnDestroy {
       this.formData.get('username').setValue(event.toLowerCase(), {emitEvent: false});
     });
 
+    this.loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+    });
+
   }
 
   ngOnDestroy(): void {
-    this.numberPickerSubscription.unsubscribe();
+    console.log("newUserPage ngOnDestroy unsubscribe");
+    // this.numberPickerSubscription.unsubscribe();
+    this.userLoadingSubscription.unsubscribe();
+  }
+
+  ionViewWillEnter() {
+    console.log("newUserPage ionViewWillEnter subscribe");
+
+    this.userLoadingSubscription = this.userService.getLoadingStatus().subscribe((loading) => {
+      if (loading) {
+        console.log("newUserPage show loading");
+        this.loading?.present();
+      } else {
+        console.log("newUserPage hide loading hidePopover");
+        this.loading?.dismiss();
+      }
+    });
+  }
+
+  ionViewWillLeave() {
+    console.log("newUserPage ionViewWillLeave unsubscribe");
+    // this.numberPickerSubscription.unsubscribe();
+    this.userLoadingSubscription.unsubscribe();
   }
 
   private initFormData() {

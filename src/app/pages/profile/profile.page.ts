@@ -27,7 +27,7 @@ import {Capacitor} from '@capacitor/core';
   styleUrls: ['profile.page.scss'],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  @ViewChild('accordionGroup') accordionGroup: IonAccordionGroup;
+  // @ViewChild('accordionGroup') accordionGroup: IonAccordionGroup;
   // private analytics: Analytics = inject(Analytics);
   moreOpen: boolean = false;
   userSubscription: Subscription;
@@ -36,6 +36,21 @@ export class ProfilePage implements OnInit, OnDestroy {
   scores: Score[];
   omniScore: number = 0;
   unadjustedScore: number = 0;
+  // new user greeting
+  public newUser: boolean = false;
+  alertButtons = [
+    {
+      text: 'Edit Profile',
+      handler: () => {
+        console.log('Edit profile');
+        this.userService.openEditProfile(undefined, this.user)
+      },
+    },
+    {
+      text: 'Continue',
+      role: 'cancel',
+    }
+  ];
 
   // using global ngrx store
   public categories$ = this.store.select(selectAllCategories);
@@ -53,9 +68,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log("profile page scores$", this.scores$);
+    // console.log("profile page scores$", this.scores$);
     this.userSubscription = this.user$
-      // .pipe(filter(usr => usr !== null))
+      .pipe(filter(usr => usr !== null))
       .subscribe({
         next(user) {
           console.log("user$ next", user);
@@ -70,6 +85,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     //   firebase_screen: "profile_page",
     //   firebase_screen_class: "ProfilePage"
     // });
+
+    console.log("ngOnInit profilePage navigation extras",
+      this.router.getCurrentNavigation()?.extras);
+    const info = this.router.getCurrentNavigation().extras?.info;
+    if (info && Object.keys(info).includes("newUser")) {
+      this.newUser = true;
+    }
   }
 
   ngOnDestroy(): void {
