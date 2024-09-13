@@ -79,6 +79,10 @@ const routes: Routes = [
     path: 'video-review',
     loadChildren: () => import('./pages/video-review/video-review.module').then( m => m.VideoReviewPageModule)
   },
+  {
+    path: 'announcements',
+    loadChildren: () => import('./pages/announcements/announcements.module').then( m => m.AnnouncementsPageModule)
+  },
 ];
 @NgModule({
   imports: [

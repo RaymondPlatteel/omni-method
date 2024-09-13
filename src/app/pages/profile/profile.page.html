@@ -5,16 +5,18 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-button
-      type="button"
-      size="default"
-      shape="circle"
-      color="light"
-      (click)="userService.openEditProfile($event, user)"
-    >
-      <ion-icon name="settings-sharp"></ion-icon>
-    </ion-button>
+  <ion-fab slot="fixed" vertical="top" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="ellipsis-horizontal"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button (click)="userService.openEditProfile($event, user)">
+        <ion-icon name="settings-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="announcementService.openAnnouncements($event, user)">
+        <ion-icon name="megaphone"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 
   <app-profile-header [athlete$]="user$" [scores$]="scores$"></app-profile-header>

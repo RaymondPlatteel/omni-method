@@ -59,6 +59,13 @@
         <ion-text><p>{{data.curScore.scoreDate | date}}</p></ion-text>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="data.curScore.notes">
+      <ion-col>
+        <ion-text>
+          <p>{{data.curScore.notes}}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ng-content>
 

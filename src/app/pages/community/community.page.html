@@ -8,24 +8,38 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- <ion-fab slot="fixed" vertical="top" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="ellipsis-horizontal"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button (click)="userService.openEditProfile($event, userService.getUser())">
+      <ion-icon name="settings-sharp"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="announcementService.openAnnouncements($event, userService.getUser())">
+      <ion-icon name="megaphone"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab> -->
+
 <ion-content [fullscreen]="false">
   <!-- <ion-header class="safe-area">
   </ion-header> -->
   <!-- (ionChange)="segmentChange($event)" -->
-  <ion-segment value="rankings" [(ngModel)]="type" mode="md">
-    <!-- <ion-segment-button value="home">
+  <!-- <ion-segment value="rankings" [(ngModel)]="type" mode="md">
+    <ion-segment-button value="home">
       <ion-icon name="home" size="large"></ion-icon>
-    </ion-segment-button> -->
+    </ion-segment-button>
     <ion-segment-button value="rankings" aria-label="rankings">
       <ion-icon name="trophy" size="large"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="announcements" aria-label="announcements">
       <ion-icon name="megaphone" size="large"></ion-icon>
     </ion-segment-button>
-    <!-- <ion-segment-button value="people">
+    <ion-segment-button value="people">
       <ion-icon name="people" size="large"></ion-icon>
-    </ion-segment-button> -->
-  </ion-segment>
+    </ion-segment-button>
+  </ion-segment> -->
   <ng-container [ngSwitch]="type">
     <ion-list style="margin: 8px;" *ngSwitchCase="'rankings'">
       <!-- <ion-list-header>
@@ -54,37 +68,22 @@
         <ion-text class="score" slot="end">{{userLevel(athlete) | number}}</ion-text>
       </ion-item>
     </ion-list>
-    <ion-list *ngSwitchCase="'announcements'">
+    <!-- <ion-list *ngSwitchCase="'announcements'">
       <ion-card *ngFor="let video of announcements">
         <ion-card-header>
           <ion-card-title>{{video.title}}</ion-card-title>
           <ion-card-subtitle>{{video.subtitle}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          <!-- welcome video -->
           <video *ngIf="video.thumbnail?.startsWith('http')" class="video-content"
             controlsList="nodownload" playsinline controls preload="auto"
             poster="{{video.thumbnail}}" src="{{video.url}}">
-            <!-- <source src="{{video.url}}" type="video/mp4" /> -->
             Your device does not support the video tag.
           </video>
-          <!-- object -->
-          <!-- <object
-          type="video/mp4"
-          width="100%"
-          height="100%"
-          style="min-height: 500px;"
-          [data]="sanitizedUrl"
-        >
-          <p>It appears your device doesn't support video.</p>
-        </object> -->
-        <!-- iframe -->
-        <!-- <iframe [src]="sanitizedUrl" allow="autoplay;" frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
           <ion-text>{{video.description}}</ion-text>
         </ion-card-content>
       </ion-card>
-    </ion-list>
+    </ion-list> -->
     <ion-list *ngSwitchCase="'people'">
       <ion-item>
         <ion-grid class="ion-text-center">

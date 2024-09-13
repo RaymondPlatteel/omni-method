@@ -18,6 +18,7 @@ import {delay, filter, tap} from 'rxjs/operators';
 import {OmniScoreService, oneDay} from '../../services/omni-score.service';
 import {UserService} from '../../services/user/user.service';
 import {Capacitor} from '@capacitor/core';
+import {AnnouncementsService} from '../../services/announcements/announcements.service';
 // import {Analytics, logEvent} from '@angular/fire/analytics';
 // import {AssessmentDetailPage} from '../assessment-detail/assessment-detail.page';
 
@@ -38,7 +39,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   unadjustedScore: number = 0;
 
   public newUserGreeting = "Your scores are being estimated based on the information you provided during your account setup. Please consider configuring a profile picture.";
-  public newUser: boolean = true;
+  public newUser: boolean = false;
   alertButtons = [
     {
       text: 'Edit Profile',
@@ -65,6 +66,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     private router: Router,
     private modalCtrl: ModalController,
     public userService: UserService,
+    public announcementService: AnnouncementsService,
     private routerOutlet: IonRouterOutlet
   ) {}
 

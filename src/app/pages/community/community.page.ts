@@ -13,6 +13,7 @@ import {AnnouncementsService} from 'src/app/services/announcements/announcements
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Browser} from '@capacitor/browser';
 import {environment} from '../../../environments/environment';
+import {UserService} from 'src/app/services/user/user.service';
 
 // export enum View {
 //   Rankings = 'Rankings',
@@ -26,7 +27,7 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./community.page.scss'],
 })
 export class CommunityPage implements OnInit {
-  public type: string = 'announcements';
+  public type: string = 'rankings';
   // public view: View = View.Rankings;
   public ranking$: Observable<User[]>;
   private curUserId: string;
@@ -37,7 +38,8 @@ export class CommunityPage implements OnInit {
     private communityService: CommunityService,
     private router: Router,
     private storageService: StorageService,
-    private announcementService: AnnouncementsService,
+    public userService: UserService,
+    public announcementService: AnnouncementsService,
     private sanitizer: DomSanitizer
   ) {
     // loadAllUsers

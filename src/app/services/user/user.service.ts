@@ -18,7 +18,7 @@ import {
 import {Assessment} from '../../store/assessments/assessment.model';
 import {UserFirestoreService} from '../user-firestore.service';
 import {ModalController} from '@ionic/angular';
-import {EditProfilePage} from 'src/app/pages/edit-profile/edit-profile.page';
+import {EditProfilePage} from '../../pages/edit-profile/edit-profile.page';
 import {UploadMetadata, UploadTask, getDownloadURL, getStorage, ref, uploadBytesResumable} from '@angular/fire/storage';
 import {Capacitor} from '@capacitor/core';
 
