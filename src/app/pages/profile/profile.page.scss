@@ -20,7 +20,8 @@ ion-header {
 //   flex-direction: column;
 // }
 ion-content {
-  --background: transparent;
+  // --background: transparent;
+  --background: var(--ion-color-light);
   --offset-top: 0px;
   position: absolute;
 }
