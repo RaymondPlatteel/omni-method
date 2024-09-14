@@ -54,16 +54,19 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-text><p>{{data.curScore.scoreDate | date}}</p></ion-text>
+    <ion-row *ngIf="data.curScore.notes">
+      <ion-col offset="1" size="10">
+        <ion-text>
+          <p>
+            <b>&#64;{{data.user.username}}</b>
+            {{data.curScore.notes}}
+          </p>
+        </ion-text>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="data.curScore.notes">
-      <ion-col>
-        <ion-text>
-          <p>{{data.curScore.notes}}</p>
-        </ion-text>
+    <ion-row>
+      <ion-col offset="1">
+        <ion-text><p>{{data.curScore.scoreDate | date}}</p></ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
