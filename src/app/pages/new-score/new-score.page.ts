@@ -5,16 +5,12 @@ import {UserService} from '../../services/user/user.service';
 import {Assessment} from '../../store/assessments/assessment.model';
 import {Score} from '../../store/models/score.model';
 import {Subscription} from 'rxjs';
-import {NumberPickerService} from 'src/app/services/number-picker.service';
 import {Pagination} from 'swiper/modules';
 import {Swiper} from 'swiper';
 import {SwiperOptions} from 'swiper/types';
-import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
+import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 import {StorageService} from 'src/app/services/storage/storage.service';
-import {Media, MediaAlbum, MediaAlbumResponse, MediaAlbumType, MediaAsset} from '@capacitor-community/media';
-import {Filesystem} from '@capacitor/filesystem';
-import {UserFirestoreService} from 'src/app/services/user-firestore.service';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import {Media, MediaAlbumResponse, MediaAsset} from '@capacitor-community/media';
 
 @Component({
   selector: 'app-new-score',
@@ -154,14 +150,6 @@ export class NewScorePage implements OnInit, OnDestroy {
     return false;
   }
 
-  // ionViewDidEnter() {
-  //   console.log("newScore ionViewDidEnter scoreInput", this.scoreInput);
-  //   setTimeout(() => {
-  //     console.log("set form focus");
-  //     this.scoreInput?.setFocus();
-  //   }, 150);
-  // }
-
   dismiss() {
     this.modalCtrl.dismiss();
   }
@@ -177,16 +165,17 @@ export class NewScorePage implements OnInit, OnDestroy {
 
     // upload file and get video link
     if (this.localVideoPath) {
-      await loading.present();
+      loading.present();
       // save thumbnail
       const thumbDest = this.storageService.remoteScoreVideoPath(this.newScore, 'jpg');
+      // wait for thumbnail url
       await this.storageService.uploadFile(this.videoThumbnailUrl, thumbDest, 'image/jpg').then((url) => {
         console.log("upload thumbnail return url", url);
         this.newScore.videoThumbnailUrl = url;
       });
       // save video
       const dest = this.storageService.remoteScoreVideoPath(this.newScore);
-      // const dest = `users/${this.user.id}/${this.assessment.aid}-${scoreDate}.mp4`;
+      // wait for video url
       await this.storageService.uploadFile(this.localVideoPath, dest).then((url) => {
         console.log("uploadFile return download url", url);
         this.newScore.videoUrl = url;
