@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
-import {IonAccordionGroup, IonRouterOutlet, ModalController, isPlatform} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {Assessment} from '../../store/assessments/assessment.model';
 import {Router} from '@angular/router';
 import {StatusBar, Style} from '@capacitor/status-bar';
@@ -18,9 +18,6 @@ import {delay, filter, tap} from 'rxjs/operators';
 import {OmniScoreService, oneDay} from '../../services/omni-score.service';
 import {UserService} from '../../services/user/user.service';
 import {Capacitor} from '@capacitor/core';
-import {AnnouncementsService} from '../../services/announcements/announcements.service';
-// import {Analytics, logEvent} from '@angular/fire/analytics';
-// import {AssessmentDetailPage} from '../assessment-detail/assessment-detail.page';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +27,6 @@ import {AnnouncementsService} from '../../services/announcements/announcements.s
 export class ProfilePage implements OnInit, OnDestroy {
   // @ViewChild('accordionGroup') accordionGroup: IonAccordionGroup;
   // private analytics: Analytics = inject(Analytics);
-  moreOpen: boolean = false;
   userSubscription: Subscription;
   userId: string;
   user: User;
@@ -59,15 +55,13 @@ export class ProfilePage implements OnInit, OnDestroy {
   public assessments$ = this.store.select(selectAllAssessments);
   public user$ = this.store.select(UserSelectors.selectUser); //.pipe(delay(5000));
   public scores$ = this.store.select(UserSelectors.userScores);
-  // public omniScore$ = this.store.select(selectOmniScore);
 
   constructor(
     private store: Store,
     private router: Router,
     private modalCtrl: ModalController,
-    public userService: UserService,
-    public announcementService: AnnouncementsService,
-    private routerOutlet: IonRouterOutlet
+    private userService: UserService,
+    // private routerOutlet: IonRouterOutlet
   ) {}
 
   ngOnInit(): void {
@@ -150,17 +144,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   // scoreClass(date: Date): string {
   scoreClass(scoreDate: string): string {
     return OmniScoreService.scoreClass(scoreDate);
-  }
-
-  getAge(user: User) {
-    var today = new Date();
-    var birthDate = new Date(user.dob);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
   }
 
   async openNewScore(assessment, user, curScore) {

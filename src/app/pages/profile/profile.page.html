@@ -5,24 +5,8 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <!-- <app-floating-menu slot="fixed" vertical="top" horizontal="end" [user]="user"></app-floating-menu> -->
-  <!-- <ion-fab slot="fixed" vertical="top" horizontal="end">
-    <ion-fab-button>
-      <ion-icon name="ellipsis-horizontal"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="bottom">
-      <ion-fab-button (click)="userService.openEditProfile($event, user)">
-        <ion-icon name="settings-sharp"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="announcementService.openAnnouncements($event, user)">
-        <ion-icon name="megaphone"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="announcementService.openDiscord()">
-        <ion-img color="dark" src="assets/icon/logo-discord.png"></ion-img>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab> -->
-
+  <app-floating-menu></app-floating-menu>
+  
   <app-profile-header [athlete$]="user$" [scores$]="scores$"></app-profile-header>
 
   <div class="contentCard">
@@ -45,9 +29,7 @@
 
       <ng-container *ngFor="let assessment of assessments$ | async">
         <ng-container *ngIf="assessment.cid == category.cid">
-          <!-- assesment score card -->
           <ng-container *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
-
             <app-score-card [showVideo]="(true)" [assessment]="(assessment)" [score]="(score)"
               buttonIcon="add-circle"
               (cardClicked)="openDetails(assessment)"
@@ -71,8 +53,7 @@
 <ion-alert
   [isOpen]="newUser"
   header="Welcome to Omni Method"
+  subHeader=""
   [message]="newUserGreeting"
   [buttons]="alertButtons"
 ></ion-alert>
-<!-- subHeader="A Sub Header Is Optional" -->
-<!-- (didDismiss)="setOpen(false)" -->

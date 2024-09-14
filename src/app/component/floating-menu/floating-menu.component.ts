@@ -4,6 +4,7 @@ import {IonicModule} from '@ionic/angular';
 import {AnnouncementsService} from '../../services/announcements/announcements.service';
 import {UserService} from '../../services/user/user.service';
 import {User} from '../../store/user/user.model';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-floating-menu',
@@ -18,6 +19,7 @@ export class FloatingMenuComponent implements OnInit {
   constructor(
     public userService: UserService,
     public announcementService: AnnouncementsService,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {}

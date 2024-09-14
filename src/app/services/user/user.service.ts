@@ -15,7 +15,6 @@ import {
   selectAuthUser,
   selectUser,
 } from '../../store/user/user.selectors';
-import {Assessment} from '../../store/assessments/assessment.model';
 import {UserFirestoreService} from '../user-firestore.service';
 import {ModalController} from '@ionic/angular';
 import {EditProfilePage} from '../../pages/edit-profile/edit-profile.page';
@@ -68,14 +67,6 @@ export class UserService implements IUserService {
       const fileRef = ref(storage, filePath);
       uploadTask = uploadBytesResumable(fileRef, blob, metadata);
     });
-    // console.log("await task"); // (5) -> error
-    // await task.then(
-    //   (snapshot) => {
-    //     console.log("task > onFulfilled snapshot", snapshot);
-    //   },
-    //   (error) => {
-    //     console.log("task > onRejected error", error);
-    //   });
     console.log("register state_changed methods");
     const unsubscribe = uploadTask.on("state_changed",
       function (snap) {

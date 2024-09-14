@@ -1,4 +1,4 @@
-<ion-fab>
+<ion-fab slot="fixed" vertical="top" horizontal="end">
   <ion-fab-button>
     <ion-icon name="ellipsis-horizontal"></ion-icon>
   </ion-fab-button>
@@ -8,6 +8,12 @@
     </ion-fab-button>
     <ion-fab-button (click)="announcementService.openAnnouncements($event)">
       <ion-icon name="megaphone"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="announcementService.openDiscord()">
+      <ion-img color="dark" src="assets/icon/logo-discord.png"></ion-img>
+    </ion-fab-button>
+    <ion-fab-button (click)="authService.promptLogout()">
+      <ion-icon name="log-out"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
 </ion-fab>

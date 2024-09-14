@@ -40,18 +40,16 @@
   height: var(--ion-safe-area-top);
 }
 ion-fab[vertical="top"] {
+  aspect-ratio: 1 / 1;
+  height: 56px;
   margin-top: var(--ion-safe-area-top);
-}
-ion-button[shape="circle"] {
-  --background-activated: rgba(var(--ion-color-light-rgb), 0.25);
-  --border-radius: 50%;
-  // --box-shadow: 1px 1px 12px -6px rgb(87, 86, 86);
-  --box-shadow: 0 2px 6px 0 rgba(var(--ion-color-light-contrast-rgb), 0.25);
-  --border-color: rgba(var(--ion-color-light-rgb), 0.25);
-  --border-style: solid;
-  --border-width: 0.5px;
-  // width: 44px;
-  height: 44px;
+  ion-button[shape="circle"] {
+    --background-activated: rgba(var(--ion-color-light-rgb), 0.25);
+    --border-radius: 50%;
+    --box-shadow: 0 2px 6px 0 rgba(var(--ion-color-light-contrast-rgb), 0.25);
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .custom-popover {
@@ -75,9 +73,7 @@ ion-datetime {
 button.alert-button.logout-button-confirm {
   color: var(--ion-color-danger);
 }
-// ion-picker-column {
-//   background: var(--ion-color-primary) !important;
-// }
+
 .picker-above-highlight {
   background: linear-gradient(to bottom, var(--background, var(--ion-background-color, #fff)) 5%, rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.5) 100%) !important;
 }
@@ -87,19 +83,13 @@ button.alert-button.logout-button-confirm {
 .picker-wrapper {
   border-radius: 10px !important;
 }
-// .inline-picker {
-//   --height: 50%;
-// }
+
 .arrow_box {
   color: var(--ion-color-primary);
-  // color: black;
-  // background: #def;
-  // color: rgba(var(--foreground-rgb, var(--ion-foreground-color-rgb, 255, 255, 255)), 0.5);
   background-color: rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.5);
   font-size: large;
   font-weight: bold;
   padding: 0 6px;
-  // border: 2px solid rgba(var(--background-rgb, var(--ion-background-color-rgb, 255, 255, 255)), 0.5);
 }
 .image-modal {
   --backdrop-opacity: 0.5;

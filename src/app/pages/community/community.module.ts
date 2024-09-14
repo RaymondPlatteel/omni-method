@@ -7,7 +7,8 @@ import {IonicModule} from '@ionic/angular';
 import {CommunityPageRoutingModule} from './community-routing.module';
 
 import {CommunityPage} from './community.page';
-import {UserAvatarComponent} from 'src/app/component/user-avatar/user-avatar.component';
+import {UserAvatarComponent} from '../../component/user-avatar/user-avatar.component';
+import {FloatingMenuComponent} from '../../component/floating-menu/floating-menu.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {UserAvatarComponent} from 'src/app/component/user-avatar/user-avatar.com
     IonicModule,
     CommunityPageRoutingModule,
     UserAvatarComponent,
+    FloatingMenuComponent
   ],
   declarations: [CommunityPage]
 })

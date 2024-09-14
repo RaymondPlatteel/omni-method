@@ -39,24 +39,11 @@ ion-avatar {
   ion-icon {
     aspect-ratio:  1 / 1;
     color: var(--ion-color-medium);
-    // min-height: 24px;
     height: 18px;
     width: 100%;
     vertical-align: bottom;
-    // height: 80%;
-    // text-align: center;
   }
 }
 .score {
   color: var(--ion-color-secondary);
 }
-.video-content {
-  background: linear-gradient(#b8dfff, #5eb3f9);
-  border-radius: 20px;
-  border: 2px solid #8CA1B6;
-  margin-bottom: 5px;
-  max-width: 100%;
-}
-// video[poster] {
-//   object-fit: cover;
-// }
