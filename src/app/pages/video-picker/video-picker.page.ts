@@ -27,7 +27,7 @@ export class VideoPickerPage implements OnInit {
   getMedias() {
     console.log("call Media.getMedias()");
     Media.getMedias({
-      quantity: 36,
+      quantity: 72,
       thumbnailQuality: 60,
       types: "videos",
       sort: "creationDate"
