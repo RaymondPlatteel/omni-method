@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {AnnouncementsService} from '../../services/announcements/announcements.service';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +11,8 @@ import {Router} from '@angular/router';
 export class HomePage {
 
   constructor(
+    public userService: UserService,
+    public announcementService: AnnouncementsService,
     private router: Router
   ) {}
 

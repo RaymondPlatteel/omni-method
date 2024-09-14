@@ -101,8 +101,4 @@ export class CommunityPage implements OnInit {
     console.log("getVideoLink", filePath);
     return this.storageService.getFileUrl(filePath);
   }
-
-  async openDiscord() {
-    await Browser.open({url: environment.discordLink});
-  }
 }

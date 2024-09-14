@@ -173,8 +173,9 @@ export class UserService implements IUserService {
     );
   }
 
-  async openEditProfile(event, user) {
+  async openEditProfile(event) {
     event?.stopPropagation();
+    const user = await this.getUser();
     const modal = await this.modalCtrl.create({
       component: EditProfilePage,
       componentProps: {

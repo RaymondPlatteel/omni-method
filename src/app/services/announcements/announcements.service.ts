@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {Announcement} from '../../store/models/announcement.model';
 import {ModalController} from '@ionic/angular';
 import {AnnouncementsPage} from '../../pages/announcements/announcements.page';
+import {Browser} from '@capacitor/browser';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +23,10 @@ export class AnnouncementsService {
     return collectionData(announcementCollection) as Observable<Announcement[]>;
   }
 
-  async openAnnouncements(event, user) {
+  async openAnnouncements(event) {
     event?.stopPropagation();
     const modal = await this.modalCtrl.create({
       component: AnnouncementsPage,
-      componentProps: {
-        user: user,
-      },
       cssClass: 'edit-user-modal',
       // presentingElement: document.querySelector('ion-router-outlet'),
       canDismiss: true,
@@ -36,6 +35,10 @@ export class AnnouncementsService {
     modal.onDidDismiss().then(() => {
       // this.loadUserData();
     });
+  }
+
+  async openDiscord() {
+    await Browser.open({url: environment.discordLink});
   }
 
 }

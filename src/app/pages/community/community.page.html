@@ -1,30 +1,35 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-title>Community</ion-title>
     <ion-button slot="end" (click)="openDiscord()">
-      <!-- <ion-icon slot="icon-only" name="logo-discord"></ion-icon> -->
       <ion-img slot="icon-only" src="assets/icon/logo-discord.png"></ion-img>
     </ion-button>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<!-- <ion-fab slot="fixed" vertical="top" horizontal="end">
-  <ion-fab-button>
-    <ion-icon name="ellipsis-horizontal"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-list side="bottom">
-    <ion-fab-button (click)="userService.openEditProfile($event, userService.getUser())">
-      <ion-icon name="settings-sharp"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button (click)="announcementService.openAnnouncements($event, userService.getUser())">
-      <ion-icon name="megaphone"></ion-icon>
-    </ion-fab-button>
-  </ion-fab-list>
-</ion-fab> -->
+<ion-content class="ion-padding">
+  <ion-header class="ion-no-border safe-area"> </ion-header>
+  <div class="ion-text-center">
+    <ion-card-title class="center" color="dark">Community</ion-card-title>
+  </div>
 
-<ion-content [fullscreen]="false">
-  <!-- <ion-header class="safe-area">
-  </ion-header> -->
+  <!-- <ion-fab slot="fixed" vertical="top" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="ellipsis-horizontal"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button (click)="userService.openEditProfile($event, userService.getUser())">
+        <ion-icon name="settings-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="announcementService.openAnnouncements($event, userService.getUser())">
+        <ion-icon name="megaphone"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="announcementService.openDiscord()">
+        <ion-img color="dark" src="assets/icon/logo-discord.png"></ion-img>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab> -->
+
   <!-- (ionChange)="segmentChange($event)" -->
   <!-- <ion-segment value="rankings" [(ngModel)]="type" mode="md">
     <ion-segment-button value="home">

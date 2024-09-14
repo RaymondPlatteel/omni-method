@@ -45,7 +45,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       text: 'Edit Profile',
       handler: () => {
         console.log('Edit profile');
-        this.userService.openEditProfile(undefined, this.user)
+        this.userService.openEditProfile(undefined)
       },
     },
     {
