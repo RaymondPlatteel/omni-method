@@ -1,14 +1,28 @@
 <ion-content color="default">
   <ion-header class="ion-no-border safe-area"> </ion-header>
- 
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-button
+      (click)="previous()"
+      routerDirection="back"
+      type="button"
+      size="default"
+      shape="circle"
+      color="primary"
+      [disabled]="step == 1"
+    >
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-fab>
+
   <form [formGroup]="formData" (ngSubmit)="onSubmit()">
     <div>
       <ion-list style="padding: 15px;">
         <ion-item lines="none">
-          <ion-button type="button" shape="circle" size="large"
+          <ion-text slot="start">&nbsp;</ion-text>
+          <!-- <ion-button type="button" shape="circle" size="large"
             (click)="previous()" [disabled]="step == 1">
             <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-          </ion-button>
+          </ion-button> -->
           <ion-progress-bar class="progress" [value]="step / 6"></ion-progress-bar>
         </ion-item>
         <!-- <div *ngIf="step == 1"> -->
