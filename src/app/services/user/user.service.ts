@@ -20,6 +20,7 @@ import {ModalController} from '@ionic/angular';
 import {EditProfilePage} from '../../pages/edit-profile/edit-profile.page';
 import {UploadMetadata, UploadTask, getDownloadURL, getStorage, ref, uploadBytesResumable} from '@angular/fire/storage';
 import {Capacitor} from '@capacitor/core';
+import {ShowToastService} from '../show-toast.service';
 
 export const usernameMinLength = 5;
 export const usernameMaxLength = 20;
@@ -33,6 +34,7 @@ export class UserService implements IUserService {
     private store: Store<AppState>,
     private firestoreService: UserFirestoreService,
     private modalCtrl: ModalController,
+    private toastService: ShowToastService
   ) {}
 
   // get user from store
@@ -135,6 +137,23 @@ export class UserService implements IUserService {
   saveScore(score: Score) {
     console.log("dispatch saveNewScore event", score);
     this.store.dispatch(UserActions.saveNewScore({score}));
+  }
+
+  saveScoreWithVideo(thumbnailUrl: string, videoPath: string, score: Score) {
+    if (typeof Worker !== undefined) {
+      console.log("send request to worker");
+      const worker = new Worker(new URL('../../workers/save-new-score.worker.ts', import.meta.url));
+      worker.onmessage = ({data}) => {
+        // handle respone from worker
+        console.log("UI received data:", data);
+        this.toastService.showToast("Score video saved", "success");
+      };
+      // send request to worker
+      worker.postMessage({thumbnailUrl, videoPath, score});
+    } else {
+      console.log("No worker just save score without video");
+      this.saveScore(score);
+    }
   }
 
   // trigger delete score event

@@ -30,7 +30,7 @@ export class NewScorePage implements OnInit, OnDestroy {
   public today = new Date().toISOString();
   public user$ = this.userService.getUser();
   private user: User;
-  scoreDate: string;
+  // scoreDate: string;
   // rawScore: number;
   bodyWeight: number;
   numberPickerSubscription: Subscription;
@@ -155,38 +155,8 @@ export class NewScorePage implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    // const scoreDate = OmniScoreService.scoreDate(this.newScore.scoreDate);
-    // console.log('save scoreDate: ', scoreDate);
-
-    // show loading
-    const loading = await this.loadingCtrl.create({
-      message: 'Uploading video...'
-    });
-
-    // upload file and get video link
-    if (this.localVideoPath) {
-      loading.present();
-      // save thumbnail
-      const thumbDest = this.storageService.remoteScoreVideoPath(this.newScore, 'jpg');
-      // wait for thumbnail url
-      await this.storageService.uploadFile(this.videoThumbnailUrl, thumbDest, 'image/jpg').then((url) => {
-        console.log("upload thumbnail return url", url);
-        this.newScore.videoThumbnailUrl = url;
-      });
-      // save video
-      const dest = this.storageService.remoteScoreVideoPath(this.newScore);
-      // wait for video url
-      await this.storageService.uploadFile(this.localVideoPath, dest).then((url) => {
-        console.log("uploadFile return download url", url);
-        this.newScore.videoUrl = url;
-        loading.dismiss();
-      });
-    }
-
-    // save score with video link
-    console.log("save new score with videoUrl", this.newScore.videoUrl);
-    this.userService.saveScore(this.newScore);
-
+    this.userService.saveScoreWithVideo(this.videoThumbnailUrl,
+      this.localVideoPath, this.newScore);
     this.dismiss();
   }
 
