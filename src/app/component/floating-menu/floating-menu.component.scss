@@ -3,4 +3,9 @@
     ion-fab {
         position: fixed;
     }
+
+    ion-fab-button ion-img {
+        width: 21px;  // Adjust this value as needed
+        height: 21px; // Adjust this value as needed
+    }
 }
