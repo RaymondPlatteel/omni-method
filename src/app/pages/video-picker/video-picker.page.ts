@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Media, MediaAsset} from '@capacitor-community/media';
-import {ModalController} from '@ionic/angular';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Media, MediaAsset } from '@capacitor-community/media';
+import { ModalController, IonInfiniteScroll } from '@ionic/angular';
+import { OmniScoreService } from 'src/app/services/omni-score.service';
 
 @Component({
   selector: 'app-video-picker',
@@ -9,32 +9,45 @@ import {OmniScoreService} from 'src/app/services/omni-score.service';
   styleUrls: ['./video-picker.page.scss'],
 })
 export class VideoPickerPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @Output() pickerValueChange = new EventEmitter<MediaAsset>();
   public medias: MediaAsset[] = [];
+  private offset = 0;
+  private batchSize = 36;
 
   constructor(
     private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
-    this.getMedias();
+    this.loadMedias();
   }
 
   cancel() {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  getMedias() {
+  loadMedias(event?: any) {
     console.log("call Media.getMedias()");
     Media.getMedias({
-      quantity: 72,
+      quantity: this.batchSize,
       thumbnailQuality: 60,
       types: "videos",
       sort: "creationDate"
-    }).then((medias) => {
-      this.medias = medias.medias;
+    }).then((result) => {
+      this.medias = [...this.medias, ...result.medias.slice(this.offset, this.offset + this.batchSize)];
+      this.offset += result.medias.length;
       console.log("got medias.length", this.medias.length);
-      if (this.medias.length == 0) {
+      
+      if (event) {
+        event.target.complete();
+      }
+      
+      if (result.medias.length < this.batchSize) {
+        this.infiniteScroll.disabled = true;
+      }
+
+      if (this.medias.length === 0) {
         // no videos available
         alert("No videos found on device.");
         this.cancel();
@@ -44,21 +57,15 @@ export class VideoPickerPage implements OnInit {
         console.log("video creation date", OmniScoreService.scoreDate(this.medias[0].creationDate));
       }
     });
+  }
 
-    // this.storageService.recordVideo();
+  loadMore(event: any) {
+    this.loadMedias(event);
   }
 
   selectVideo(video: MediaAsset) {
     this.modalCtrl.dismiss(video, 'select');
     console.log("selectVideo", video.identifier);
-    // Media.getMediaByIdentifier({identifier: video.identifier}).then(
-    //   (path) => {
-    //     console.log("video path", path.path);
-    //   },
-    //   (err) => {
-    //     console.log("getMediaByIdentifier error", err);
-    //   }
-    // );
     this.pickerValueChange.emit(video);
   }
 }
