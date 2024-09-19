@@ -5,14 +5,19 @@ ion-toolbar {
   }
 }
 ion-button {
-  --border-radius: 12pt;
+  --border-radius: 50%; // This makes the button fully rounded
   padding: 10px;
-  height: 217px;
+  height: 120px; // Reduced height to make it more horizontal
+  width: 120px; // Added width to make it square
+  margin: 10px; // Added margin for spacing between buttons
   ion-label {
-    font-size: 24px;
-    position: fixed;
-    left: 50px;
-    bottom: 20px;
+    font-size: 16px; // Reduced font size to fit better
+    position: absolute; // Changed from fixed to absolute
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); // Center the label
+    width: 100%; // Ensure the label takes full width of the button
+    text-align: center; // Center the text
   }
 }
 .blue-button {
@@ -25,10 +30,256 @@ ion-button {
 }
 .training-swiper, .swiper-wrapper {
   text-align: center;
-  // width: 100%;
+  height: auto; // Allow the height to adjust based on content
 }
 .training-slide, .swiper-slide {
   display: flex;
-  flex-direction: column;
-  // width: 100%;
+  flex-direction: row; // Changed to row to align buttons horizontally
+  justify-content: center; // Center the buttons horizontally
+  align-items: center; // Center the buttons vertically
+  padding: 20px 0; // Add some vertical padding
+}
+
+// New styles for the action buttons
+.action-button {
+  --border-radius: 8px; // Slightly rounded corners
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin: 8px 0;
+  height: 48px; // Fixed height
+  width: 100%; // Full width of the container
+  
+  ion-label {
+    font-size: 16px;
+    text-transform: none; // Prevents all-caps
+  }
+}
+
+// Primary color for most buttons
+.add-set-button,
+.add-exercise-button {
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --color: var(--ion-color-primary-contrast);
+}
+
+// Green color for the save button
+.save-workout-button {
+  --background: #70ec74; // Green color
+  --background-activated: #45a049; // Darker green for activated state
+  --color: #
+  ; // White text
+}
+
+.workout-container {
+  padding: 0 16px !important; // Force horizontal padding only
+}
+
+.workout-title {
+  font-weight: bold !important;
+  font-size: 24px !important;
+  margin-top: 8px !important; // Small top margin
+  margin-bottom: 16px !important;
+}
+
+ion-content {
+  --padding-top: 0 !important; // Force remove top padding from content
+}
+
+ion-content::part(scroll) {
+  padding-top: 0 !important; // Ensure no padding on the scroll container
+}
+
+.set-header, .set-inputs {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 40px;
+  gap: 8px;
+  padding: 4px 12px;
+  background-color: #e6f2ff; // Light blue background
+  align-items: center;
+}
+
+.set-header {
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.set-header > span,
+.set-number,
+.reps-input,
+.weight-input,
+.set-checkbox {
+  text-align: center;
+}
+
+.set-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.set-inputs {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.reps-input,
+.weight-input {
+  --background: white;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --border-radius: 14px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.set-checkbox {
+  --size: 30px; // Increased from 20px
+  --checkbox-background-checked: var(--ion-color-primary);
+  --border-color: var(--ion-color-primary);
+  --border-color-checked: var(--ion-color-primary);
+  margin: 0 auto;
+}
+
+.add-set-icon {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0;
+  background-color: #e6f2ff; // Light blue background
+  
+  ion-icon {
+    font-size: 32px;
+    color: var(--ion-color-primary);
+  }
+}
+
+// Remove any other unnecessary styles
+
+// Add this new selector
+ion-checkbox::part(container) {
+  margin: auto;
+}
+
+.checkbox-container {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.exercise-container {
+  margin-bottom: 12px;
+  background-color: #e6f2ff; // Light blue background
+  border-radius: 8px;
+  overflow: hidden; // This will ensure the header doesn't overflow
+}
+
+.exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--ion-color-primary);
+  padding: 4px 12px;
+  height: 36px;
+
+  h3 {
+    margin: 0;
+    font-size: 22px; // Increased from 18px
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  ion-button {
+    --color: white;
+    --padding-start: 0;
+    --padding-end: 0;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.set-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-weight: bold;
+  background-color: #e6f2ff; // Slightly darker light blue
+}
+
+.set-inputs {
+  padding: 4px 12px;
+  background-color: #e6f2ff; // Light blue background
+}
+
+// ... rest of your existing styles ...
+
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 0;
+  --background: #e6f2ff;
+}
+
+ion-item.set-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+// Remove lines between sets
+ion-item-sliding {
+  background-color: #e6f2ff;
+}
+
+// Adjust the set number vertical alignment
+.set-number {
+  align-self: center;
+}
+
+.section-container {
+  margin-bottom: 20px;
+  background-color: #f0f8ff; // Light blue background
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--ion-color-secondary);
+  padding: 8px 12px;
+  height: 44px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  ion-button {
+    --color: white;
+    --padding-start: 0;
+    --padding-end: 0;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.add-exercise-button, .add-section-button {
+  margin: 10px;
 }

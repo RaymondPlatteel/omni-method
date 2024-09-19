@@ -1,22 +1,103 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-title>Training</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <!-- <ion-header class="ion-no-border safe-area">
-  </ion-header> -->
-  <!-- <ion-searchbar></ion-searchbar> -->
-  <ng-container>
 
-    <swiper-container #trainingSwiper class="training-swiper"
-      [config]="trainingSlidesOptions">
+<ion-content>
+  <ng-container *ngIf="!currentWorkout && !viewingWorkout">
+    <swiper-container #trainingSwiper class="training-swiper" [config]="trainingSlidesOptions">
       <swiper-slide *ngFor="let button of buttonList" class="training-slide">
-        <ion-button [ngClass]="button.class" expand="full" shape="round"
-          (click)="commingSoon(button.label)">
+        <ion-button [ngClass]="button.class" expand="full" shape="round" (click)="button.label === 'Workout Log' ? startNewWorkout() : commingSoon(button.label)">
           <ion-label>{{button.label}}</ion-label>
         </ion-button>
       </swiper-slide>
     </swiper-container>
+
+    <ion-list>
+      <ion-item *ngFor="let workout of workouts" (click)="viewWorkout(workout)">
+        <ion-label>
+          <h2>{{ workout.name }}</h2>
+          <p>{{ workout.date | date }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </ng-container>
+
+  <div *ngIf="currentWorkout" class="workout-container">
+    <h2 class="workout-title">{{ currentWorkout?.name }}</h2>
+    <ion-list>
+      <div *ngFor="let section of currentWorkout?.sections; let i = index" class="section-container">
+        <div class="section-header">
+          <h2>{{ section.name }}</h2>
+          <ion-button fill="clear" (click)="presentSectionOptions(section)">
+            <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+          </ion-button>
+        </div>
+        
+        <div *ngFor="let exercise of section.exercises" class="exercise-container">
+          <div class="exercise-header">
+            <h3>{{ exercise.name }}</h3>
+            <ion-button fill="clear" (click)="presentExerciseOptions(exercise)">
+              <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="set-header">
+            <span>Set</span>
+            <span>Reps</span>
+            <span>Weight</span>
+            <span>Done</span>
+          </div>
+          <ion-item-sliding *ngFor="let set of exercise.sets; let j = index">
+            <ion-item lines="none" class="set-item">
+              <div class="set-inputs">
+                <span class="set-number">{{ j + 1 }}</span>
+                <ion-input type="number" class="reps-input" placeholder="Reps" [(ngModel)]="set.reps"></ion-input>
+                <ion-input type="number" class="weight-input" placeholder="Weight" [(ngModel)]="set.weight"></ion-input>
+                <div class="checkbox-container">
+                  <ion-checkbox [(ngModel)]="set.isCompleted" class="set-checkbox"></ion-checkbox>
+                </div>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteSet(exercise, j)">Delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+        
+        <ion-button expand="block" class="action-button add-exercise-button" (click)="addExercise(section)">
+          Add Exercise
+        </ion-button>
+      </div>
+    </ion-list>
+    <ion-button expand="block" class="action-button add-section-button" (click)="addSection()">
+      Add Section
+    </ion-button>
+    <ion-button expand="block" class="action-button save-workout-button" (click)="saveWorkout()">
+      Save Workout
+    </ion-button>
+  </div>
+
+  <div *ngIf="viewingWorkout">
+    <h2>{{ viewingWorkout.name }}</h2>
+    <p>{{ viewingWorkout.date | date }}</p>
+    <ion-list>
+      <ion-item *ngFor="let exercise of viewingWorkout.exercises">
+        <ion-label>
+          <h3>{{ exercise.name }}</h3>
+          <ion-list>
+            <ion-item *ngFor="let set of exercise.sets">
+              <p>Reps: {{ set.reps }}, Weight: {{ set.weight }}, Completed: {{ set.isCompleted ? 'Yes' : 'No' }}</p>
+            </ion-item>
+          </ion-list>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="closeWorkoutView()">Close</ion-button>
+  </div>
 </ion-content>
