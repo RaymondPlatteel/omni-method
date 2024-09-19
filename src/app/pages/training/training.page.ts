@@ -7,7 +7,7 @@ interface Workout {
   date: Date;
   name: string;
   exercises: Exercise[];
-  sections: Section[]; // Add this line
+  sections: Section[];
 }
 
 interface Exercise {
@@ -34,6 +34,8 @@ interface Section {
   styleUrls: ['./training.page.scss'],
 })
 export class TrainingPage implements OnInit {
+  currentDate: Date = new Date();
+
   @ViewChild('trainingSwiper', { read: ElementRef, static: false }) trainingSwiper?: ElementRef;
 
   public trainingSlidesOptions: SwiperOptions = {
@@ -56,8 +58,8 @@ export class TrainingPage implements OnInit {
   constructor(private alertController: AlertController, private actionSheetController: ActionSheetController) {}
 
   ngOnInit() {
-    // Automatically start a new workout when the page loads
-    this.startNewWorkout();
+    // Remove or comment out the automatic workout start
+    // this.startNewWorkout();
   }
 
   startNewWorkout() {
@@ -73,7 +75,11 @@ export class TrainingPage implements OnInit {
       date: today,
       name: formattedDate,
       exercises: [],
-      sections: [] // Add this line
+      sections: [{
+        id: Date.now().toString(),
+        name: 'Resistance', // Default section name
+        exercises: []
+      }]
     };
   }
 
