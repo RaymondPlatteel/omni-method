@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 interface AccordionItem {
   expanded: boolean;
@@ -24,7 +24,7 @@ export class WorkoutLogPage implements OnInit {
     { name: 'Lower Body Power', description: 'Emphasizes squats, deadlifts, and leg presses', expanded: false },
   ];
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -34,9 +34,6 @@ export class WorkoutLogPage implements OnInit {
   }
 
   addNewWorkout() {
-    const startTime = Date.now();
-    this.navCtrl.navigateForward('/new-workout', { 
-      state: { startTime: startTime }
-    });
+    this.router.navigate(['/new-workout']);
   }
 }
