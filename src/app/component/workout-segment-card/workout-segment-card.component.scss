@@ -1,0 +1,110 @@
+:host {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.workout-segment-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  padding: 2px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h2 {
+    color: var(--ion-color-contrast);
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  ion-button {
+    --color: var(--ion-color-contrast);
+    --padding-end: 0;
+    --padding-start: 0;
+    margin-right: -8px;
+  }
+}
+
+.card-content {
+  padding: 16px;
+  
+  ion-fab-button {
+    --background: var(--ion-color-primary);
+    --background-activated: var(--ion-color-primary-shade);
+    --background-hover: var(--ion-color-primary-tint);
+    margin: 8px auto 0;
+    display: block;
+    --size: 30px; // Reduced size from the default
+  }
+}
+
+.workout-log {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+
+  th, td {
+    padding: 4px 8px; // Reduced vertical padding
+    text-align: center;
+    // border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  ion-input {
+    --padding-start: 4px;
+    --padding-end: 4px;
+    --padding-top: 2px;
+    --padding-bottom: 2px;
+    --background: #f8f8f8;
+    --border-radius: 10px;
+    --min-height: 28px;  // Changed from --height to --min-height
+  }
+
+  ion-checkbox {
+    --size: 26px;
+    --checkbox-background-checked: var(--ion-color-primary);
+  }
+
+  ion-item-sliding {
+    background: transparent;
+  }
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+  }
+
+  tr {
+    position: relative;
+    ion-item-sliding, ion-item, ion-item-options {
+      display: contents;
+    }
+  }
+
+  td.ion-no-padding {
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    overflow: visible;
+  }
+
+  ion-item-options {
+    top: 0;
+    height: 100%;
+    display: flex;
+  }
+}

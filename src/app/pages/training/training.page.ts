@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { SwiperOptions } from 'swiper/types';
+import { Router } from '@angular/router'; // Add this import
 
 interface Workout {
   id: string;
@@ -47,7 +48,7 @@ export class TrainingPage implements OnInit {
   };
 
   buttonList = [
-    { label: 'Workout Log', class: 'blue-button' },
+    { label: 'Workout Log', class: 'blue-button', action: () => this.navigateToWorkoutLog() },
     { label: 'Goals', class: 'green-button' }
   ];
 
@@ -55,7 +56,7 @@ export class TrainingPage implements OnInit {
   currentWorkout: Workout | null = null;
   viewingWorkout: Workout | null = null;
 
-  constructor(private alertController: AlertController, private actionSheetController: ActionSheetController) {}
+  constructor(private alertController: AlertController, private actionSheetController: ActionSheetController, private router: Router) {}
 
   ngOnInit() {
     // Remove or comment out the automatic workout start
@@ -112,7 +113,7 @@ export class TrainingPage implements OnInit {
 
     await alert.present();
   }
-
+s
   async addExercise(section?: Section) {
     if (this.currentWorkout) {
       const target = section ? section.exercises : this.currentWorkout.exercises;
@@ -381,4 +382,7 @@ export class TrainingPage implements OnInit {
     }
   }
 
+  navigateToWorkoutLog() {
+    this.router.navigate(['/workout-log']);
+  }
 }

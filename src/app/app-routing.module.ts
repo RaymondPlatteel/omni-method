@@ -83,6 +83,14 @@ const routes: Routes = [
     path: 'announcements',
     loadChildren: () => import('./pages/announcements/announcements.module').then( m => m.AnnouncementsPageModule)
   },
+  {
+    path: 'workout-log',
+    loadChildren: () => import('./pages/workout-log/workout-log.module').then( m => m.WorkoutLogPageModule)
+  },
+  {
+    path: 'new-workout',
+    loadChildren: () => import('./pages/new-workout/new-workout.module').then( m => m.NewWorkoutPageModule)
+  },
 ];
 @NgModule({
   imports: [

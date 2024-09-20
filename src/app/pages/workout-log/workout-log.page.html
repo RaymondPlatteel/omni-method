@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>workout-log</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1 class="sliding-title">Workout Log</h1>
+  
+  <h2>Workout History</h2>
+  <div class="accordion-container">
+    <div class="accordion-item" *ngFor="let item of workoutHistory; let i = index">
+      <ion-item (click)="toggleItem(item)" [class.expanded]="item.expanded">
+        <ion-label>{{ item.date }}</ion-label>
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-item>
+      <div class="accordion-content" [class.expanded]="item.expanded">
+        <p>{{ item.workout }}</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Workout Templates</h2>
+  <div class="accordion-container">
+    <div class="accordion-item" *ngFor="let template of workoutTemplates; let i = index">
+      <ion-item (click)="toggleItem(template)" [class.expanded]="template.expanded">
+        <ion-label>{{ template.name }}</ion-label>
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-item>
+      <div class="accordion-content" [class.expanded]="template.expanded">
+        <p>{{ template.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addNewWorkout()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

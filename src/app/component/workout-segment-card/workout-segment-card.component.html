@@ -1,0 +1,61 @@
+<div class="workout-segment-card">
+  <div class="card-header" [style.background-color]="headerColor">
+    <h2>{{ title }}</h2>
+    <ion-button fill="clear" (click)="presentActionSheet()">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="card-content">
+    <table class="workout-log">
+      <thead>
+        <tr>
+          <ng-container [ngSwitch]="type">
+            <ng-container *ngSwitchCase="SegmentType.Resistance">
+              <th>Sets</th>
+              <th>Reps</th>
+              <th>Lbs</th>
+            </ng-container>
+            <ng-container *ngSwitchCase="SegmentType.Cardio">
+              <th>Duration</th>
+              <th>Speed/Pace</th>
+            </ng-container>
+          </ng-container>
+          <th>Done</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let set of setLogs; let i = index">
+          <ng-container [ngSwitch]="type">
+            <ng-container *ngSwitchCase="SegmentType.Resistance">
+              <td>{{ set.set }}</td>
+              <td>
+                <ion-input type="number" [(ngModel)]="set.reps" placeholder="Reps" (ionInput)="updateFutureSets(i)"></ion-input>
+              </td>
+              <td>
+                <ion-input type="number" [(ngModel)]="set.weight" placeholder="Lbs" (ionInput)="updateFutureSets(i)"></ion-input>
+              </td>
+            </ng-container>
+            <ng-container *ngSwitchCase="SegmentType.Cardio">
+              <td>
+                <ion-input
+                  type="text"
+                  [(ngModel)]="set.duration"
+                  placeholder="Duration"
+                ></ion-input>
+              </td>
+              <td>
+                <ion-input type="number" [(ngModel)]="set.speed" placeholder="Speed/Pace"></ion-input>
+              </td>
+            </ng-container>
+          </ng-container>
+          <td>
+            <ion-checkbox [(ngModel)]="set.done" (ionChange)="toggleSetDone(set)"></ion-checkbox>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ion-fab-button size="small" (click)="addSet()" [style.--background]="headerColor">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </div>
+</div>
