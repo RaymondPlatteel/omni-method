@@ -1,0 +1,31 @@
+<ion-card (click)="cardClick()" class="score-card">
+  <ion-item lines="none" style="--inner-border-width: 0">
+    <!-- start -->
+    <div slot="start" (click)="thumbnailClick($event)" class="thumbnail-container">
+
+      <!-- if under age hide videos -->
+      <ion-img *ngIf="!showVideo" class="fit-thumbnail"
+        src="{{assessment.icon}}"></ion-img>
+
+        <!-- <div *ngIf="showVideo" class="video-block"> -->
+      <ng-container *ngIf="showVideo">
+        <!-- thumbnail -->
+        <ion-img *ngIf="score?.videoThumbnailUrl" src="{{score.videoThumbnailUrl}}"></ion-img>
+        <!-- no thumbnail -->
+        <ion-button *ngIf="!score?.videoUrl" color="medium" class="video-button">
+          <ion-icon slot="icon-only" [name]="buttonIcon"></ion-icon>
+        </ion-button>
+      </ng-container>
+
+    </div>
+    <!-- main -->
+    <ion-label style="padding-top: 14px;">
+      <h2>{{assessment.label}}</h2>
+      <p *ngIf="score">{{score.rawScore}} {{assessment.entryUnits}}</p>
+    </ion-label>
+    <!-- end -->
+    <div slot="end">
+      <span class="units">Lvl {{ score?.calculatedScore/10 | number:'1.0-0' }}</span>
+    </div>
+  </ion-item>
+</ion-card>

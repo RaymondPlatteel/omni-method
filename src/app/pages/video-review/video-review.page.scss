@@ -1,0 +1,24 @@
+.header-video {
+    aspect-ratio: 5 / 4;
+    background-color: var(--ion-color-light);
+    border-radius: 20px;
+    border: 3px solid #8CA1B6;
+    margin-top: 24px;
+    margin: 0 5px;
+    overflow: hidden;
+    video {
+      // display: block;
+      // margin: 0 auto;
+      // max-height: 200px;
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
+    ion-img::part(image) {
+      background-image: linear-gradient(to bottom, rgba(229, 243, 255, 0), rgba(207, 233, 255, 1));
+      border-radius: 20px;
+      // margin: auto;
+      max-height: 320px;
+    }
+  }
+  

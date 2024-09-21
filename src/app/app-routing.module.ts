@@ -71,6 +71,26 @@ const routes: Routes = [
     title: 'Onboarding',
     loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
   },
+  {
+    path: 'video-picker',
+    loadChildren: () => import('./pages/video-picker/video-picker.module').then( m => m.VideoPickerPageModule)
+  },
+  {
+    path: 'video-review',
+    loadChildren: () => import('./pages/video-review/video-review.module').then( m => m.VideoReviewPageModule)
+  },
+  {
+    path: 'announcements',
+    loadChildren: () => import('./pages/announcements/announcements.module').then( m => m.AnnouncementsPageModule)
+  },
+  {
+    path: 'workout-log',
+    loadChildren: () => import('./pages/workout-log/workout-log.module').then( m => m.WorkoutLogPageModule)
+  },
+  {
+    path: 'new-workout',
+    loadChildren: () => import('./pages/new-workout/new-workout.module').then( m => m.NewWorkoutPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -29,6 +29,10 @@ export const userScores = createSelector(
   selectUserState,
   (userState: UserState) => userState.scores
 );
+export const loadingStatus = createSelector(
+  selectUserState,
+  (userState: UserState) => userState.loading
+);
 export const assessmentScores = (aid: string) =>
   createSelector(userScores, (score) =>
     score.filter((s) => s.aid === aid)

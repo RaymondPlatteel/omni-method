@@ -31,10 +31,13 @@
 	},
 	"packageClassList": [
 		"InAppReviewPlugin",
+		"MediaPlugin",
 		"FirebaseAnalyticsPlugin",
 		"FirebaseCrashlyticsPlugin",
 		"AppPlugin",
+		"CAPBrowserPlugin",
 		"CAPCameraPlugin",
+		"FilesystemPlugin",
 		"HapticsPlugin",
 		"LocalNotificationsPlugin",
 		"CAPNetworkPlugin",

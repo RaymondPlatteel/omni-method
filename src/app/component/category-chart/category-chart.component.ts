@@ -25,8 +25,9 @@ export type ChartOptions = {
   imports: [NgApexchartsModule],
 })
 export class CategoryChartComponent implements OnInit, OnDestroy {
-  @Input() user: User;
-  private user$: Observable<User>;
+  // @Input() user: User;
+  @Input() athlete$: Observable<User>;
+  // private user$: Observable<User>;
   public chartOptions: Partial<ChartOptions>;
   private categories: Category[];
   private catSubscription: Subscription;
@@ -37,12 +38,6 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // const chartFillColors = [
-    //   '--ion-color-primary-tint',
-    //   '--ion-color-primary',
-    // ].map(val =>
-    //   getComputedStyle(document.documentElement).getPropertyValue(val)
-    // );
 
     this.catSubscription = this.omniScoreService.categories$.subscribe((categories) => {
       this.categories = categories;
@@ -54,9 +49,21 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
     // if (maxScore > 500) {
     //   stepSize = 250;
     // }
+    this.athlete$.subscribe((user) => {
+      this.chartOptions = this.createChartOptions(user);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.catSubscription) {
+      this.catSubscription.unsubscribe();
+    }
+  }
+
+  createChartOptions(user: User): ChartOptions {
     let stepSize = 250;
 
-    this.chartOptions = {
+    return {
       chart: {
         background: 'transparent',
         type: 'radar',
@@ -83,7 +90,7 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
       series: [
         {
           name: "Categories",
-          data: this.categoryValues(this.user.categoryScore),
+          data: this.categoryValues(user.categoryScore),
         }
       ],
       theme: {
@@ -96,7 +103,7 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         type: 'category',
-        categories: this.categoryLabels(this.user.categoryScore),
+        categories: this.categoryLabels(user.categoryScore),
         labels: {
           show: true,
           offsetY: 5,
@@ -111,13 +118,6 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
         stepSize: stepSize,
       },
     };
-
-  }
-
-  ngOnDestroy(): void {
-    if (this.catSubscription) {
-      this.catSubscription.unsubscribe();
-    }
   }
 
   categoryValues(categoryScore: Object): number[] {

@@ -3,11 +3,18 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (6.0.0):
     - Capacitor
+  - CapacitorBrowser (6.0.2):
+    - Capacitor
   - CapacitorCamera (6.0.1):
     - Capacitor
   - CapacitorCommunityInAppReview (6.0.0):
     - Capacitor
+  - CapacitorCommunityMedia (6.0.0):
+    - Capacitor
+    - SDWebImage
   - CapacitorCordova (6.1.1)
+  - CapacitorFilesystem (6.0.1):
+    - Capacitor
   - CapacitorFirebaseAnalytics (6.1.0):
     - Capacitor
     - CapacitorFirebaseAnalytics/Lite (= 6.1.0)
@@ -131,13 +138,19 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
+  - SDWebImage (5.19.6):
+    - SDWebImage/Core (= 5.19.6)
+  - SDWebImage/Core (5.19.6)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCommunityInAppReview (from `../../node_modules/@capacitor-community/in-app-review`)"
+  - "CapacitorCommunityMedia (from `../../node_modules/@capacitor-community/media`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorFirebaseAnalytics (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorFirebaseAnalytics/Analytics (from `../../node_modules/@capacitor-firebase/analytics`)"
   - "CapacitorFirebaseCrashlytics (from `../../node_modules/@capacitor-firebase/crashlytics`)"
@@ -164,18 +177,25 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
+    - SDWebImage
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
+  CapacitorBrowser:
+    :path: "../../node_modules/@capacitor/browser"
   CapacitorCamera:
     :path: "../../node_modules/@capacitor/camera"
   CapacitorCommunityInAppReview:
     :path: "../../node_modules/@capacitor-community/in-app-review"
+  CapacitorCommunityMedia:
+    :path: "../../node_modules/@capacitor-community/media"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
   CapacitorFirebaseAnalytics:
     :path: "../../node_modules/@capacitor-firebase/analytics"
   CapacitorFirebaseCrashlytics:
@@ -196,9 +216,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: 8941aba4364ba9d1b22188569001f2ce45cc2b00
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorBrowser: 83ec661a9ccd56c28a6851e4dd1ac33b181227ec
   CapacitorCamera: 3b77b3e8311b98220de65e63445c0e4d0b30ce3a
   CapacitorCommunityInAppReview: c69a9392f39a10f28092d823cfa979637f4fa079
+  CapacitorCommunityMedia: 51cc6c8782b92cf622d9644cac37ae024fafb377
   CapacitorCordova: 8f2cc8d8d3619c566e9418fe8772064a94266106
+  CapacitorFilesystem: 37fb3aa5c945b4539ab11c74a5c57925a302bf24
   CapacitorFirebaseAnalytics: 522dfd536bf9c3965781e7620fa9c7db568ccd86
   CapacitorFirebaseCrashlytics: a4c495104fbe5cb28967ae24ba1364a35d3c1173
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
@@ -221,7 +244,8 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
+  SDWebImage: a79252b60f4678812d94316c91da69ec83089c9f
 
-PODFILE CHECKSUM: 4fc63f2b9163df518c4fe39505b23cc9b46d4e15
+PODFILE CHECKSUM: 1701d8dd09e0fc19657bde30af56a750ee1a7bfe
 
 COCOAPODS: 1.15.2

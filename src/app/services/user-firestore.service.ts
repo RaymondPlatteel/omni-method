@@ -10,6 +10,8 @@ import {
   doc,
   docData,
   getDocs,
+  limit,
+  orderBy,
   query,
   setDoc,
   updateDoc,
@@ -19,6 +21,7 @@ import {User} from '../store/user/user.model';
 import {Observable, from, of} from 'rxjs';
 import {Score} from '../store/models/score.model';
 import {take} from 'rxjs/operators';
+import {OmniScoreService} from './omni-score.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +32,14 @@ export class UserFirestoreService {
 
   constructor() {}
 
-  scoreDate(score: Score): string {
-    let d = new Date(score.scoreDate);
-    let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
-    let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
-    let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
-    const scoreDate = `${ye}-${mo}-${da}`;
-    return scoreDate;
-  }
+  // scoreDate(score: Score): string {
+  //   let d = new Date(score.scoreDate);
+  //   let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+  //   let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
+  //   let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
+  //   const scoreDate = `${ye}-${mo}-${da}`;
+  //   return scoreDate;
+  // }
 
   getUserById(id: string): Observable<User> {
     console.log('getUser from firestore ', id);
@@ -108,12 +111,26 @@ export class UserFirestoreService {
     return collectionData(scoresCollection) as Observable<Score[]>;
   }
 
-  async getUserAssessmentScores(id: string, aid: string) {
+  // Under Construction
+  getUserLatestScores(id: string, aid: string): Observable<Score[]> {
+    console.log("getUserLatestScores");
+    const scoresCollection = collection(
+      this.firestore,
+      'user',
+      `${id}`,
+      'score'
+    );
+    // TODO: filter only latest from each assessment
+    const q = query(scoresCollection, where("aid", "==", aid));
+    return collectionData(scoresCollection) as Observable<Score[]>;
+  }
+
+  async getUserAssessmentScore(id: string, aid: string) {
     let res = null;
-    console.log("getUserAssessmentScores from firestore", id, aid);
+    console.log("getUserAssessmentScore from firestore", id, aid);
     const scoresCollection = collection(this.firestore, 'user', `${id}`, 'score');
     console.log("collection", scoresCollection);
-    const scoreQuery = query(scoresCollection, where("aid", "==", aid));
+    const scoreQuery = query(scoresCollection, where("aid", "==", aid), orderBy("scoreDate"), limit(1));
     console.log("scoreQuery", scoreQuery);
     let querySnapshot;
     try {
@@ -150,7 +167,8 @@ export class UserFirestoreService {
         'user',
         `${score.uid}`,
         'score',
-        `${score.aid}#${this.scoreDate(score)}`
+        // `${score.aid}#${this.scoreDate(score)}`
+        `${score.aid}#${OmniScoreService.scoreDate(score.scoreDate)}`
       ),
       score
     );
@@ -165,7 +183,8 @@ export class UserFirestoreService {
         'user',
         `${score.uid}`,
         'score',
-        `${score.aid}#${this.scoreDate(score)}`
+        // `${score.aid}#${this.scoreDate(score)}`
+        `${score.aid}#${OmniScoreService.scoreDate(score.scoreDate)}`
       )
     );
     return of(score);

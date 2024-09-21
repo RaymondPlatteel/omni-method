@@ -139,7 +139,6 @@ export class EditProfilePage implements OnInit, OnDestroy {
                 this.showToastService.showToast(err, "danger");
               });
             this.modalCtrl.dismiss(null, 'changePassword');
-            // this.authService.logout();
           }, (error) => {
             console.log("verifyPassword error", error);
             this.showToastService.showToast("failed to verify password", "danger");
@@ -227,7 +226,7 @@ export class EditProfilePage implements OnInit, OnDestroy {
             // do delete user
             this.userService.deleteUser(this.user);
             this.modalCtrl.dismiss(null, 'logout');
-            this.authService.logout();
+            this.authService.doLogout();
           }, (error) => {
             console.log("verifyPassword error", error);
             this.showToastService.showToast("failed to verify password", "danger");
@@ -249,37 +248,6 @@ export class EditProfilePage implements OnInit, OnDestroy {
         placeholder: "Password",
         type: "password"
       }],
-    });
-    await alert.present();
-  }
-
-  async logout() {
-    const confirmLogoutButtons = [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        htmlAttributes: {
-          'aria-label': 'cancel',
-        }
-      },
-      {
-        text: 'Log Out',
-        cssClass: 'logout-button-confirm',
-        role: 'confirm',
-        handler: () => {
-          this.modalCtrl.dismiss(null, 'logout');
-          this.authService.logout();
-        },
-        htmlAttributes: {
-          'aria-label': 'logout',
-        }
-      }
-    ];
-    // present logout confirmation
-    const alert = await this.alertController.create({
-      header: 'Log out of your account?',
-      id: 'logout',
-      buttons: confirmLogoutButtons,
     });
     await alert.present();
   }

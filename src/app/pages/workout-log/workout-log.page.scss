@@ -1,0 +1,70 @@
+.sliding-title {
+  font-size: 32px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 0.5s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.accordion-item {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  padding: 0 15px;
+}
+
+.accordion-content.expanded {
+  max-height: 200px; // Adjust as needed
+  transition: max-height 0.5s ease-in;
+}
+
+ion-item {
+  --padding-start: 15px;
+  --inner-padding-end: 15px;
+  --background: #f4f4f4;
+  transition: background-color 0.3s;
+}
+
+ion-item.expanded {
+  --background: #e0e0e0;
+}
+
+ion-icon {
+  transition: transform 0.3s;
+}
+
+ion-item.expanded ion-icon {
+  transform: rotate(180deg);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+ion-fab {
+  margin-top: 16px;
+  margin-right: 16px;
+}
+
+ion-fab-button {
+  --background: #3880ff;
+  --background-activated: #3171e0;
+  --background-hover: #3171e0;
+}

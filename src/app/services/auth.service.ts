@@ -9,7 +9,6 @@ import {
   signOut,
   deleteUser,
   sendPasswordResetEmail,
-  signInWithPopup,
   // GoogleAuthProvider,
   getAdditionalUserInfo,
   signInWithRedirect,
@@ -30,6 +29,7 @@ import {Store} from '@ngrx/store';
 import * as UserActions from '../store/user/user.actions';
 import {AppState} from '../store/app.state';
 import {selectAuthError} from '../store/user/user.selectors';
+import {AlertController, ModalController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,12 @@ export class AuthService implements OnDestroy {
   currUserEmail: string;
   currUser: OmniUser.User;
 
-  constructor(private router: Router, private store: Store<AppState>) {
+  constructor(
+    private modalCtrl: ModalController,
+    private alertController: AlertController,
+    private router: Router,
+    private store: Store<AppState>
+  ) {
     // angular/fire provided authState observer
     this.authStateSubscription = this.authState$.subscribe((user) => {
       if (user) {
@@ -62,7 +67,7 @@ export class AuthService implements OnDestroy {
         console.log("auth.service onAuthStateChanged User is signed out");
         this.currUserId = this.currUserEmail = undefined;
         console.log("auth.service onAuthStateChanged check user saved", this.currUserId, this.currUserEmail);
-        // this.router.navigate(['/welcome']);
+        this.router.navigate(['/welcome']);
       }
     })
   }
@@ -141,8 +146,39 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  async promptLogout() {
+    const confirmLogoutButtons = [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        htmlAttributes: {
+          'aria-label': 'cancel',
+        }
+      },
+      {
+        text: 'Log Out',
+        cssClass: 'logout-button-confirm',
+        role: 'confirm',
+        handler: () => {
+          this.modalCtrl.dismiss(null, 'logout');
+          this.doLogout();
+        },
+        htmlAttributes: {
+          'aria-label': 'logout',
+        }
+      }
+    ];
+    // present logout confirmation
+    const alert = await this.alertController.create({
+      header: 'Log out of your account?',
+      id: 'logout',
+      buttons: confirmLogoutButtons,
+    });
+    await alert.present();
+  }
+
   // logout method
-  logout() {
+  doLogout() {
     signOut(this.auth).then(
       () => {
         // localStorage.removeItem('userId');
@@ -276,7 +312,7 @@ export class AuthService implements OnDestroy {
       }
       console.log("saveUser", this.currUserId, this.currUserEmail);
     } else {
-      this.logout();
+      this.doLogout();
     }
   }
 }

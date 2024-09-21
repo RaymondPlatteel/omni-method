@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild, inject} from '@angular/core';
-import {IonAccordionGroup, IonRouterOutlet, ModalController, isPlatform} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {Assessment} from '../../store/assessments/assessment.model';
 import {Router} from '@angular/router';
 import {StatusBar, Style} from '@capacitor/status-bar';
@@ -18,8 +18,6 @@ import {delay, filter, tap} from 'rxjs/operators';
 import {OmniScoreService, oneDay} from '../../services/omni-score.service';
 import {UserService} from '../../services/user/user.service';
 import {Capacitor} from '@capacitor/core';
-// import {Analytics, logEvent} from '@angular/fire/analytics';
-// import {AssessmentDetailPage} from '../assessment-detail/assessment-detail.page';
 
 @Component({
   selector: 'app-profile',
@@ -27,9 +25,8 @@ import {Capacitor} from '@capacitor/core';
   styleUrls: ['profile.page.scss'],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  @ViewChild('accordionGroup') accordionGroup: IonAccordionGroup;
+  // @ViewChild('accordionGroup') accordionGroup: IonAccordionGroup;
   // private analytics: Analytics = inject(Analytics);
-  moreOpen: boolean = false;
   userSubscription: Subscription;
   userId: string;
   user: User;
@@ -37,25 +34,40 @@ export class ProfilePage implements OnInit, OnDestroy {
   omniScore: number = 0;
   unadjustedScore: number = 0;
 
+  public newUserGreeting = "Your scores are being estimated based on the information you provided during your account setup. Please consider configuring a profile picture.";
+  public newUser: boolean = false;
+  alertButtons = [
+    {
+      text: 'Edit Profile',
+      handler: () => {
+        console.log('Edit profile');
+        this.userService.openEditProfile(undefined)
+      },
+    },
+    {
+      text: 'Continue',
+      role: 'cancel',
+    }
+  ];
+
   // using global ngrx store
   public categories$ = this.store.select(selectAllCategories);
   public assessments$ = this.store.select(selectAllAssessments);
   public user$ = this.store.select(UserSelectors.selectUser); //.pipe(delay(5000));
   public scores$ = this.store.select(UserSelectors.userScores);
-  // public omniScore$ = this.store.select(selectOmniScore);
 
   constructor(
     private store: Store,
     private router: Router,
     private modalCtrl: ModalController,
-    public userService: UserService,
-    private routerOutlet: IonRouterOutlet
+    private userService: UserService,
+    // private routerOutlet: IonRouterOutlet
   ) {}
 
   ngOnInit(): void {
-    console.log("profile page scores$", this.scores$);
+    // console.log("profile page scores$", this.scores$);
     this.userSubscription = this.user$
-      // .pipe(filter(usr => usr !== null))
+      .pipe(filter(usr => usr !== null))
       .subscribe({
         next(user) {
           console.log("user$ next", user);
@@ -70,6 +82,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     //   firebase_screen: "profile_page",
     //   firebase_screen_class: "ProfilePage"
     // });
+
+    console.log("ngOnInit profilePage navigation extras",
+      this.router.getCurrentNavigation()?.extras);
+    const info = this.router.getCurrentNavigation().extras?.info;
+    if (info && Object.keys(info).includes("newUser")) {
+      this.newUser = true;
+    }
   }
 
   ngOnDestroy(): void {
@@ -127,19 +146,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     return OmniScoreService.scoreClass(scoreDate);
   }
 
-  getAge(user: User) {
-    var today = new Date();
-    var birthDate = new Date(user.dob);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age;
-  }
+  async openNewScore(assessment, user, curScore) {
 
-  async openNewScore(e, assessment, user, curScore) {
-    e.stopPropagation();
     if (assessment.checklist) {
       return this.openDetails(assessment);
     }
@@ -159,33 +167,4 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
   }
 
-  // async openEditProfile(e, user) {
-  //   e.stopPropagation();
-  //   const modal = await this.modalCtrl.create({
-  //     component: EditProfilePage,
-  //     componentProps: {
-  //       user: user,
-  //     },
-  //     cssClass: 'edit-user-modal',
-  //     presentingElement: document.querySelector('ion-router-outlet'),
-  //     canDismiss: true,
-  //   });
-  //   await modal.present();
-  //   modal.onDidDismiss().then(() => {
-  //     // this.loadUserData();
-  //   });
-  // }
-
-  toggleAccordion(event) {
-    const nativeEl = this.accordionGroup;
-    console.log(nativeEl);
-    console.log(event.target);
-    if (nativeEl.value === 'moreProfile') {
-      nativeEl.value = undefined;
-      this.moreOpen = false;
-    } else {
-      nativeEl.value = 'moreProfile';
-      this.moreOpen = true;
-    }
-  }
 }

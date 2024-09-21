@@ -57,6 +57,16 @@ export class OmniScoreService {
     return expire < 0 ? 0 : expire;
   }
 
+  public static scoreDate(fullDate: string): string {
+    let d = new Date(fullDate);
+    let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(d);
+    let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(d);
+    let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(d);
+    const scoreDate = `${ye}-${mo}-${da}`;
+    return scoreDate;
+  }
+
+
   calculateScores() {
     let omniScore = 0;
 

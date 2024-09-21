@@ -4,11 +4,14 @@ import {ModalController, NavController} from '@ionic/angular';
 import {Observable} from 'rxjs';
 import {filter, map, take, tap} from 'rxjs/operators';
 import {AssessmentService} from 'src/app/services/assessments/assessment.service';
-import {CommunityService} from 'src/app/services/community/community.service';
-import {OmniScoreService} from 'src/app/services/omni-score.service';
+import {CommunityService} from '../../services/community/community.service';
+import {OmniScoreService} from '../../services/omni-score.service';
 import {Assessment} from '../../store/assessments/assessment.model';
-import {Score} from 'src/app/store/models/score.model';
+import {Score} from '../../store/models/score.model';
 import {Analytics, logEvent} from '@angular/fire/analytics';
+import {UserService} from '../../services/user/user.service';
+import {Browser} from '@capacitor/browser';
+import {LocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-ranking-detail',
@@ -17,21 +20,25 @@ import {Analytics, logEvent} from '@angular/fire/analytics';
 })
 export class RankingDetailPage implements OnInit {
   private analytics: Analytics = inject(Analytics);
+  private curUser$ = this.userService.getUser();
   public athlete$ = this.communityService.getSelectedUser();
   public categories$ = this.assessmentService.getAllCategories();
   public assessments$ = this.assessmentService.getAllAssessments();
   public isLoading$ = this.communityService.isLoading();
   public scores$ = this.communityService.getSelectedUserScores();
-  showChart = false;
+  // showChart = false; // toggle chart in profile header
+  showVideo = false;
 
   constructor(
     private assessmentService: AssessmentService,
     private communityService: CommunityService,
     private navController: NavController,
+    private userService: UserService,
+    private router: Router,
   ) {}
 
   async ngOnInit() {
-    console.log("RankingDetailPage.ngOnInit athlete$", this.athlete$);
+    // console.log("RankingDetailPage.ngOnInit athlete$", this.athlete$);
     this.athlete$
       .pipe(filter(usr => usr !== undefined))
       .pipe(take(1))
@@ -40,6 +47,10 @@ export class RankingDetailPage implements OnInit {
         // log analytics event
         logEvent(this.analytics, "view_athlete", {username: athlete.username})
       });
+    // check current user's age
+    this.curUser$.subscribe((usr) => {
+      this.showVideo = UserService.getAge(usr) >= 13;
+    })
   }
 
   getCategoryAssessments(assessments: Assessment[], cid: string) {
@@ -47,7 +58,9 @@ export class RankingDetailPage implements OnInit {
   }
 
   scoreClass(scoreDate: string): string {
-    return OmniScoreService.scoreClass(scoreDate);
+    // removed expired style on community tab for now
+    // return OmniScoreService.scoreClass(scoreDate);
+    return;
   }
 
   getScore(scores: Score[], aid: string) {
@@ -60,6 +73,16 @@ export class RankingDetailPage implements OnInit {
   goBack() {
     this.navController.navigateBack('/home/community');
     // this.navController.back();
+  }
+
+  async reviewVideo(s: Score) {
+    if (this.showVideo && s.videoUrl) {
+      console.log("rankingDetail playVideo", s.videoUrl);
+      // await Browser.open({url: s.videoUrl});
+      this.router.navigate(
+        ['/home/community/athlete/review'],
+        {queryParams: {uid: s.uid, aid: s.aid}});
+    }
   }
 
 }

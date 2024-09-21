@@ -16,13 +16,31 @@ ion-accordion-group > ion-accordion:last-of-type ion-item[slot="header"] {
     font-size: small;
   }
 }
-.header-img::part(image) {
+.header-video {
+  aspect-ratio: 5 / 4;
+  background-color: var(--ion-color-light);
   border-radius: 20px;
   border: 3px solid #8CA1B6;
-  background-image: linear-gradient(to bottom, rgba(229, 243, 255, 0), rgba(207, 233, 255, 1));
-  margin:auto;
-  max-width: 97%;
-  max-height: 320px;
+  margin-top: 54px;
+  overflow: hidden;
+  video {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+.header-icon {
+  // aspect-ratio: 5 / 4;
+  background-color: var(--ion-color-light);
+  border-radius: 20px;
+  border: 3px solid #8CA1B6;
+  margin-top: 54px;
+  overflow: hidden;
+  ion-img::part(image) {
+    background-image: linear-gradient(to bottom, rgba(229, 243, 255, 0), rgba(207, 233, 255, 1));
+    border-radius: 20px;
+    max-height: 320px;
+  }
 }
 .card {
   aspect-ratio: 1 / 1;

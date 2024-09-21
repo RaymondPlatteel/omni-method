@@ -1,9 +1,12 @@
+ion-content {
+    --background: var(--ion-color-light);
+}
+ion-card {
+    box-shadow: none;
+    margin: 24px 0 0 0;
+}
 ion-card-header {
     padding: 0px 0px 0px 8px;
-}
-ion-thumbnail[slot="start"] {
-    // default is 16px
-    margin-inline-start: -13px;
 }
 ion-header ion-toolbar ion-list ion-item {
     text-align: center;
@@ -53,10 +56,6 @@ ion-badge {
 }
 .stale {
     background-color: #f12323;
-}
-.fit-thumbnail::part(image) {
-    border-radius: 5px;
-    object-fit: contain;
 }
 .cat-header {
     border-top: 0.5px solid lightgray;

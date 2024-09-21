@@ -37,6 +37,14 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraReactionEffectGesturesEnabledDefault</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Omni Method requires camera access to set profile pic and allow sharing.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Omni Method requires photos access to create profile pic and allow sharing.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Omni Method requires photos access to set profile pic and allow sharing.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -60,11 +68,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Omni Method requires camera access to set profile pic and allow sharing.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Omni Method requires photos access to create profile pic and allow sharing.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Omni Method requires photos access to set profile pic and allow sharing.</string>
 </dict>
 </plist>

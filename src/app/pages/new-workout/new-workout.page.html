@@ -1,0 +1,45 @@
+<ion-content [scrollEvents]="true" [scrollY]="true" (ionScroll)="onScroll($event)" (ionScrollEnd)="onIonScrollEnd()">
+  <div class="title-container" 
+  [style.height.px]="titleHeight" 
+  [style.transform]="'translateY(' + titleOffset + 'px)'"
+  style="transition: height 0.3s ease, transform 0.3s ease;">
+<h1>{{ workoutTitle }}</h1>
+<p *ngIf="exerciseNotes" class="subtitle exercise-notes">{{ exerciseNotes }}</p>
+<p *ngIf="!exerciseNotes" class="notes" (click)="editExerciseNotes()">
+ Add exercise notes
+ <ion-icon name="create-outline"></ion-icon>
+</p>
+<p class="date">{{ currentDate }}</p>
+<p class="duration"> {{ workoutDuration }}</p>
+</div>
+  
+  <div class="workout-segments">
+    <ion-item-sliding *ngFor="let segment of workoutSegments; let i = index">
+      <ion-item>
+        <app-workout-segment-card 
+          [title]="segment.title"
+          [headerColor]="segment.color"
+          [exerciseName]="segment.exerciseName"
+          (delete)="deleteWorkoutSegment(i)"
+          (updateTitle)="updateSegmentTitle(i, $event)"
+          (updateType)="updateSegmentType(i, $event)"
+          (updateColor)="updateSegmentColor(i, $event)">
+        </app-workout-segment-card>
+      </ion-item>
+    </ion-item-sliding>
+  </div>
+
+  <!-- Floating Action Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentActionSheet()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Updated FAB with click event -->
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button class="workout-menu-fab" (click)="showWorkoutMenu()">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

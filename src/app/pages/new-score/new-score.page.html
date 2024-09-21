@@ -12,50 +12,72 @@
       <ion-icon name="close"></ion-icon>
     </ion-button>
   </ion-fab>
+
   <div class="ion-text-center">
     <ion-card-title class="center" style="padding: 20px 0;"
       >{{assessment.label}}</ion-card-title
     >
   </div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4">
-        <div id="scoreDate" class="rounded-tab" [ngClass]="tabClass('scoreDate')" lines="none" (click)="activate('scoreDate')">
-          <ion-label position="stacked">Score Date</ion-label>
+  <!-- video thumbnail preview -->
+  <div *ngIf="videoThumbnailUrl" class="video-select" (click)="chooseVideo()">
+    <ion-img class="thumbnail" [src]="videoThumbnailUrl">
+    </ion-img>
+    <!-- <video  *ngIf="videoThumbnailUrl"
+      controlsList="nodownload" controls playsinline muted preload="auto" 
+      [src]="localVideoPath" [poster]="videoThumbnailUrl">
+    </video> -->
+  </div>
+  <div *ngIf="!videoThumbnailUrl" class="icon-select" (click)="chooseVideo()">
+    <div>
+      <ion-button shape="round" size="small">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <br/>
+      <ion-text>Choose Video</ion-text>
+    </div>
+  </div>
+
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <div id="scoreDate" class="rounded-tab" [ngClass]="tabClass('scoreDate')" lines="none" (click)="activate('scoreDate')">
+            <ion-label position="stacked">Score Date</ion-label>
+            <ion-input
+              #scoreDate
+              placeholder="YYYY-MM-DD"
+              value="{{newScore.scoreDate | date}}"
+              [readonly]="true"
+            ></ion-input>
+          </div>
+        </ion-col>
+        <ion-col size="3">
+          <div id="rawScore" class="rounded-tab" [ngClass]="tabClass('score')" lines="none" (click)="activate('score')">
+          <ion-label position="stacked">Score</ion-label>
           <ion-input
-            #scoreDate
-            placeholder="YYYY-MM-DD"
-            value="{{newScore.scoreDate | date}}"
+            placeholder="{{assessment.units}}"
             [readonly]="true"
+            [value]="newScore.rawScore"
           ></ion-input>
-        </div>
-      </ion-col>
-      <ion-col size="3">
-        <div id="rawScore" class="rounded-tab" [ngClass]="tabClass('score')" lines="none" (click)="activate('score')">
-        <ion-label position="stacked">Score</ion-label>
-        <ion-input
-          placeholder="{{assessment.units}}"
-          [readonly]="true"
-          [value]="newScore.rawScore"
-        ></ion-input>
-        </div>
-      </ion-col>
-      <ion-col size="5">
-        <div class="rounded-tab" [ngClass]="tabClass('bodyWeight')" lines="none" (click)="activate('bodyWeight')">
-          <ion-label position="stacked">Body Weight</ion-label>
-          <ion-input
-            #currentWeight
-            type="number"
-            inputmode="numeric"
-            value="{{newScore.currentWeight}}"
-            [readonly]="true"
-            [(ngModel)]="newScore.currentWeight"
-          ></ion-input>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          </div>
+        </ion-col>
+        <ion-col size="5">
+          <div class="rounded-tab" [ngClass]="tabClass('bodyWeight')" lines="none" (click)="activate('bodyWeight')">
+            <ion-label position="stacked">Body Weight</ion-label>
+            <ion-input
+              #currentWeight
+              type="number"
+              inputmode="numeric"
+              value="{{newScore.currentWeight}}"
+              [readonly]="true"
+              [(ngModel)]="newScore.currentWeight"
+            ></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
   <div style="padding-top: 30px;">
     <swiper-container #inputSwiper class="input-swiper"
@@ -86,9 +108,9 @@
         ></app-number-picker>
       </swiper-slide>
     </swiper-container>
-</div>
+  </div>
 
-  <ion-grid class="input-group" [fixed]="true">
+  <ion-grid [fixed]="true">
     <ion-row>
       <ion-col size="12">
         <ion-textarea
@@ -103,11 +125,13 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-toolbar color="default">
-    <ion-button type="submit" color="primary" shape="round" expand="block" (click)="onSubmit()">
-      Submit
-    </ion-button>
-  </ion-toolbar>
+
+  <div class="bottom-padding"></div>
 
 </ion-content>
 
+<ion-fab class="footer" vertical="bottom" horizontal="center" slot="fixed">
+  <ion-button type="submit" color="primary" shape="round" expand="block" (click)="onSubmit()">
+    Submit
+  </ion-button>
+</ion-fab>

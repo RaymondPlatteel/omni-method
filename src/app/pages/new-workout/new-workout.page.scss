@@ -1,0 +1,97 @@
+ion-content {
+  --background: #eeeeee; // Very light grey background
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.page-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title-container {
+  z-index: 1000;
+  background: var(--ion-background-color);
+  padding: 20px 16px;
+  text-align: center;
+  
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    transition: opacity 0.3s ease;
+  }
+
+  .date, .notes, .duration {
+    margin: 5px 0;
+  }
+
+  .notes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      margin-left: 5px;
+    }
+  }
+}
+
+.content-container {
+  padding-top: 16px;
+  
+}
+
+ion-content::part(scroll) {
+  padding-bottom: 60px; // Add padding to the scrollable area
+}
+
+app-workout-segment-card {
+  display: block;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+ion-fab {
+  margin-bottom: 20px; // Adjust this value to position the FAB higher if needed
+  margin-right: 20px; // Adjust this value to position the FAB further from the right edge if needed
+}
+
+ion-fab-button {
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --background-hover: var(--ion-color-primary-tint);
+}
+
+.workout-segments {
+  padding: 16px;
+}
+
+.workout-segment {
+  background-color: var(--ion-color-light);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent; // Remove default background
+  --border-style: none; // Remove the line under each item
+}
+
+ion-item-sliding {
+  background: transparent; // Ensure sliding item background is also transparent
+}
+
+.workout-menu-fab {
+  --background: transparent;
+  --box-shadow: none;
+  --color: black;
+}
+
+.workout-menu-fab::part(native) {
+  background-color: transparent;
+}

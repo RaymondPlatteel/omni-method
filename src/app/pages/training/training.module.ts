@@ -10,7 +10,7 @@ import {TrainingPage} from './training.page';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, TrainingPageRoutingModule],
-  // declarations: [TrainingPage],
+  declarations: [TrainingPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrainingPageModule {}

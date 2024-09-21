@@ -26,7 +26,14 @@
       </ion-button>
     </ion-fab>
 
-    <ion-img class="header-img" src="{{assessment.icon}}"></ion-img>
+    <div *ngIf="curScore?.videoUrl" class="header-video">
+      <video controlsList="nodownload" controls playsinline muted preload="auto" 
+        src="{{curScore.videoUrl}}" poster="{{curScore.videoThumbnailUrl}}">
+      </video>
+    </div>
+    <div *ngIf="!curScore?.videoUrl" class="header-icon">
+      <ion-img class="header-img" src="{{assessment.icon}}"></ion-img>
+    </div>
 
     <ion-item lines="full">
       <ion-label>

@@ -195,40 +195,8 @@ export class AssessmentDetailPage implements OnInit {
   }
 
   async goBack() {
-    // if (this.checklistChanged) {
-    //   await this.promptToSave();
-    //   console.log("finished promptToSave");
-    // }
     this.navController.navigateBack('/home/profile');
     // this.navController.back();
   }
-
-  // promptToSave(): Promise<boolean> {
-  //   return new Promise((resolve, reject) => {
-  //     let alert = this.alertController.create({
-  //       header: 'Unsaved changes',
-  //       // subHeader: 'Warning',
-  //       message: "Are you sure?",
-  //       buttons: [
-  //         {
-  //           text: 'Leave without saving',
-  //           handler: () => {
-  //             this.navController.back();
-  //             return true;
-  //           }
-  //         },
-  //         {
-  //           text: 'Save',
-  //           handler: () => {
-  //             this.saveChecklist();
-  //             return true;
-  //           }
-  //         }
-  //       ],
-  //     }).then((res) => {
-  //       res.present();
-  //     });
-  //   });
-  // }
 
 }

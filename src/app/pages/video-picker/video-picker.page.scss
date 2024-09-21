@@ -1,0 +1,23 @@
+ion-grid {
+    --ion-grid-column-padding: 2px;
+}
+ion-img::part(image) {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+ion-content {
+    --padding-start: 0;
+    --padding-end: 0;  
+}
+.thumbnail-container {
+    position: relative;
+}
+.video-overlay {
+    background-color: rgba(var(--ion-color-primary-rgb), 0.5);
+    border-radius: 5px;
+    float: right;
+    padding: 0 5px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}

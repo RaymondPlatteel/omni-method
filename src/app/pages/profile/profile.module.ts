@@ -9,6 +9,8 @@ import {NewScorePageModule} from '../new-score/new-score.module';
 import {EditProfilePageModule} from '../edit-profile/edit-profile.module';
 import {UserAvatarComponent} from 'src/app/component/user-avatar/user-avatar.component';
 import {ProfileHeaderComponent} from 'src/app/component/profile-header/profile-header.component';
+import {ScoreCardComponent} from "../../component/score-card/score-card.component";
+import {FloatingMenuComponent} from 'src/app/component/floating-menu/floating-menu.component';
 
 @NgModule({
   declarations: [ProfilePage],
@@ -20,7 +22,9 @@ import {ProfileHeaderComponent} from 'src/app/component/profile-header/profile-h
     NewScorePageModule,
     EditProfilePageModule,
     UserAvatarComponent,
-    ProfileHeaderComponent
+    ProfileHeaderComponent,
+    ScoreCardComponent,
+    FloatingMenuComponent
   ],
 })
 export class ProfilePageModule {}

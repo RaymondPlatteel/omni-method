@@ -29,6 +29,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {CommunityEffects} from './store/community/community.effect';
 import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
 import {loggingInterceptor} from './services/storage/storage.service';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -60,7 +61,8 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    // Remove WorkoutSegmentCardComponent from here
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
@@ -80,6 +82,8 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
       traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
       connectInZone: true
     }),
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
     provideHttpClient(
@@ -105,6 +109,7 @@ export const metaReducers: MetaReducer<any>[] = []; // [clearState, debug];
     DatePipe,
     ScreenTrackingService,
     provideHttpClient(withInterceptorsFromDi()),
+    provideNgxMask()
   ]
 })
 export class AppModule {}

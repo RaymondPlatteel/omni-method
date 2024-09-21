@@ -1,0 +1,35 @@
+<ion-content class="ion-padding" color="default">
+  <ion-header class="ion-no-border safe-area"> </ion-header>
+  <div class="ion-text-center">
+    <ion-card-title class="center" color="dark">Select Video</ion-card-title>
+  </div>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-button
+      (click)="cancel()"
+      routerDirection="back"
+      type="button"
+      size="default"
+      shape="circle"
+      color="primary"
+    >
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="thumbnail-container" *ngFor="let video of medias" (click)="selectVideo(video)" size="4">
+          <ion-img id="{{video.identifier}}" src="data:image/jpeg;base64,{{video.data}}"/>
+          <ion-text class="video-overlay">{{video.creationDate | date}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more videos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

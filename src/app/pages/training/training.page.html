@@ -1,22 +1,30 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
-    <ion-title>Training</ion-title>
+  <ion-toolbar color="primary" class="custom-toolbar">
+    <ion-title class="large-bold-title">
+      Training - {{ currentDate | date:'M/d/yyyy' }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <!-- <ion-header class="ion-no-border safe-area">
-  </ion-header> -->
-  <!-- <ion-searchbar></ion-searchbar> -->
-  <ng-container>
 
-    <swiper-container #trainingSwiper class="training-swiper"
-      [config]="trainingSlidesOptions">
+<ion-content>
+  <ng-container *ngIf="!currentWorkout && !viewingWorkout">
+    <swiper-container #trainingSwiper class="training-swiper" [config]="trainingSlidesOptions">
       <swiper-slide *ngFor="let button of buttonList" class="training-slide">
-        <ion-button [ngClass]="button.class" expand="full" shape="round"
-          (click)="commingSoon(button.label)">
-          <ion-label>{{button.label}}</ion-label>
+        <ion-button 
+          [class]="button.class"
+          (click)="button.action ? button.action() : commingSoon(button.label)"
+        >
+          {{ button.label }}
         </ion-button>
       </swiper-slide>
     </swiper-container>
+
+    <ion-list>
+      <ion-item *ngFor="let workout of workouts" (click)="viewWorkout(workout)">
+        <ion-label>
+          <h2>{{ workout.name }}</h2>
+          <p>{{ workout.date | date }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </ng-container>
-</ion-content>

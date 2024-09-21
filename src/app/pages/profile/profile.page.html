@@ -2,80 +2,58 @@
   <div class="safe-area"></div>
   <ion-refresher slot="fixed" pullMin="999999">
     <ion-refresher-content pullingIcon="none" refreshingSpinner="none">
-  </ion-refresher-content>
+    </ion-refresher-content>
   </ion-refresher>
 
-  <ion-fab vertical="top" horizontal="start" slot="fixed">
-    <ion-button
-      type="button"
-      size="default"
-      shape="circle"
-      color="light"
-      (click)="userService.openEditProfile($event, user)"
-    >
-      <ion-icon name="settings-sharp"></ion-icon>
-    </ion-button>
-  </ion-fab>
-
+  <app-floating-menu></app-floating-menu>
+  
   <app-profile-header [athlete$]="user$" [scores$]="scores$"></app-profile-header>
 
-  <ion-card class="contentCard">
+  <div class="contentCard">
     <ion-item lines="none">
       <ion-card-title>All Assessments</ion-card-title>
     </ion-item>
-    <ng-container
-      class="card cardStyle"
-      *ngFor="let category of categories$ | async"
-    >
+
+    <ng-container class="card cardStyle"
+      *ngFor="let category of categories$ | async">
       <ion-item class="cat-header" lines="none">
         <ion-text>
-          {{category.label}}
+          <h6>{{category.label}}</h6>
         </ion-text>
         <ion-text slot="end">
-          Level: {{(user$ | async)?.categoryScore[category.cid] / 10 | number:'1.0-0'}}
+          <h6>
+            Level: {{(user$ | async)?.categoryScore[category.cid] / 10 | number:'1.0-0'}}
+          </h6>
         </ion-text>
       </ion-item>
+
       <ng-container *ngFor="let assessment of assessments$ | async">
         <ng-container *ngIf="assessment.cid == category.cid">
-          <ion-item
-            (click)="openDetails(assessment)"
-            button
-            style="--inner-border-width: 0"
-          >
-            <ion-thumbnail slot="start">
-              <ion-img
-                class="fit-thumbnail"
-                src="{{assessment.icon}}"
-              ></ion-img>
-            </ion-thumbnail>
-            <ion-label>{{assessment.label}}</ion-label>
-            <div slot="end">
-              <span class="units">{{assessment.units}}</span>
-              <br />
-              <span
-                *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore"
-              >
-                <ion-badge
-                  class="score"
-                  ngClass="{{scoreClass(score.scoreDate)}}"
-                  slot="end"
-                  (click)="openNewScore($event, assessment, user, score)"
-                  >{{score.rawScore || 0}}</ion-badge
-                >
-              </span>
-              <ng-template #zeroScore>
-                <ion-badge
-                  class="score"
-                  slot="end"
-                  (click)="openNewScore($event, assessment, user, 0)"
-                  >0</ion-badge
-                >
-              </ng-template>
-            </div>
-          </ion-item>
+          <ng-container *ngIf="(getScores$(assessment) | async)[0] as score; else zeroScore">
+            <app-score-card [showVideo]="(true)" [assessment]="(assessment)" [score]="(score)"
+              buttonIcon="add-circle"
+              (cardClicked)="openDetails(assessment)"
+              (thumbnailClicked)="openNewScore(assessment, user, score)">
+            </app-score-card>
+          </ng-container>
+          <ng-template #zeroScore>
+            <app-score-card [showVideo]="(true)" [assessment]="(assessment)"
+              buttonIcon="add-circle"
+              (cardClicked)="openDetails(assessment)"
+              (thumbnailClicked)="openNewScore(assessment, user, undefined)">
+            </app-score-card>
+          </ng-template>
         </ng-container>
       </ng-container>
     </ng-container>
-  </ion-card>
+  </div>
   <div class="bottom-padding"></div>
 </ion-content>
+
+<ion-alert
+  [isOpen]="newUser"
+  header="Welcome to Omni Method"
+  subHeader=""
+  [message]="newUserGreeting"
+  [buttons]="alertButtons"
+></ion-alert>

@@ -11,15 +11,16 @@ import * as UserActions from '../../store/user/user.actions';
 import {
   assessmentScores,
   currentScore,
+  loadingStatus,
   selectAuthUser,
   selectUser,
 } from '../../store/user/user.selectors';
-import {Assessment} from '../../store/assessments/assessment.model';
 import {UserFirestoreService} from '../user-firestore.service';
 import {ModalController} from '@ionic/angular';
-import {EditProfilePage} from 'src/app/pages/edit-profile/edit-profile.page';
+import {EditProfilePage} from '../../pages/edit-profile/edit-profile.page';
 import {UploadMetadata, UploadTask, getDownloadURL, getStorage, ref, uploadBytesResumable} from '@angular/fire/storage';
 import {Capacitor} from '@capacitor/core';
+import {ShowToastService} from '../show-toast.service';
 
 export const usernameMinLength = 5;
 export const usernameMaxLength = 20;
@@ -33,6 +34,7 @@ export class UserService implements IUserService {
     private store: Store<AppState>,
     private firestoreService: UserFirestoreService,
     private modalCtrl: ModalController,
+    private toastService: ShowToastService
   ) {}
 
   // get user from store
@@ -44,6 +46,10 @@ export class UserService implements IUserService {
     this.store.select(selectAuthUser).subscribe((authUser) => {
       this.store.dispatch(UserActions.loadUserAction({uid: authUser?.user.uid}));
     });
+  }
+
+  getLoadingStatus() {
+    return this.store.select(loadingStatus);
   }
 
   async saveAvatarFile(blob: Blob, filename: string): Promise<string> {
@@ -63,14 +69,6 @@ export class UserService implements IUserService {
       const fileRef = ref(storage, filePath);
       uploadTask = uploadBytesResumable(fileRef, blob, metadata);
     });
-    // console.log("await task"); // (5) -> error
-    // await task.then(
-    //   (snapshot) => {
-    //     console.log("task > onFulfilled snapshot", snapshot);
-    //   },
-    //   (error) => {
-    //     console.log("task > onRejected error", error);
-    //   });
     console.log("register state_changed methods");
     const unsubscribe = uploadTask.on("state_changed",
       function (snap) {
@@ -141,6 +139,23 @@ export class UserService implements IUserService {
     this.store.dispatch(UserActions.saveNewScore({score}));
   }
 
+  saveScoreWithVideo(thumbnailUrl: string, videoPath: string, score: Score) {
+    if (typeof Worker !== undefined) {
+      console.log("send request to worker");
+      const worker = new Worker(new URL('../../workers/save-new-score.worker.ts', import.meta.url));
+      worker.onmessage = ({data}) => {
+        // handle respone from worker
+        console.log("UI received data:", data);
+        this.toastService.showToast("Score video saved", "success");
+      };
+      // send request to worker
+      worker.postMessage({thumbnailUrl, videoPath, score});
+    } else {
+      console.log("No worker just save score without video");
+      this.saveScore(score);
+    }
+  }
+
   // trigger delete score event
   deleteScore(score: Score) {
     this.store.dispatch(UserActions.deleteAssessmentScore({score}));
@@ -168,8 +183,9 @@ export class UserService implements IUserService {
     );
   }
 
-  async openEditProfile(event, user) {
-    event.stopPropagation();
+  async openEditProfile(event) {
+    event?.stopPropagation();
+    const user = await this.getUser();
     const modal = await this.modalCtrl.create({
       component: EditProfilePage,
       componentProps: {

@@ -44,7 +44,7 @@
       <swiper-container #swiper class="chart-swiper" [pagination]="true">
         <!-- [config]="chartSlidesOptions"> -->
         <swiper-slide class="chart-slide">
-          <app-category-chart [user]="user"></app-category-chart>
+          <app-category-chart [athlete$]="athlete$"></app-category-chart>
         </swiper-slide>
         <ng-container *ngIf="scores$">
           <swiper-slide class="chart-slide">
