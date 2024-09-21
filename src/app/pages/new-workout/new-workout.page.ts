@@ -17,10 +17,10 @@ export class NewWorkoutPage implements OnInit, AfterViewInit, OnDestroy {
   workoutDuration: string = 'In Progress: 00:00';
   titleHeight: number = 200; // Initial height
   titleOffset: number = 0;
-  workoutSegments: Array<{title: string, type: SegmentType, color: string}> = [
-    {title: 'Warmup', type: SegmentType.Resistance, color: '#3880ff'},
-    {title: 'Resistance', type: SegmentType.Resistance, color: '#3dc2ff'},
-    {title: 'Cooldown', type: SegmentType.Resistance, color: '#5260ff'}
+  workoutSegments: Array<{title: string, type: SegmentType, color: string, exerciseName: string}> = [
+    {title: 'Warmup', type: SegmentType.Resistance, color: '#3880ff', exerciseName: ''},
+    {title: 'Resistance', type: SegmentType.Resistance, color: '#3dc2ff', exerciseName: ''},
+    {title: 'Cooldown', type: SegmentType.Resistance, color: '#5260ff', exerciseName: ''}
   ];
   maxTitleHeight: number = 250; // New property for maximum title height
   workoutTitle: string = 'New Workout'; // Add this line
@@ -137,7 +137,8 @@ export class NewWorkoutPage implements OnInit, AfterViewInit, OnDestroy {
     this.workoutSegments.push({
       title: type, 
       type: type === 'Cardio' ? SegmentType.Cardio : SegmentType.Resistance, 
-      color: '#3880ff'
+      color: '#3880ff',
+      exerciseName: ''
     });
   }
 

@@ -16,6 +16,11 @@ export interface SetLog {
   speed?: number | null;
 }
 
+export interface Exercise {
+  name: string;
+  setLogs: SetLog[];
+}
+
 @Component({
   selector: 'app-workout-segment-card',
   templateUrl: './workout-segment-card.component.html',
@@ -25,6 +30,8 @@ export class WorkoutSegmentCardComponent {
   @Input() title: string = 'Workout Segment';
   @Input() headerColor: string = '#3880ff';
   @Input() type: SegmentType = SegmentType.Resistance;
+  @Input() exerciseName: string = ''; // Modified this line
+
   @Output() delete = new EventEmitter<void>();
   @Output() updateTitle = new EventEmitter<string>();
   @Output() updateType = new EventEmitter<SegmentType>();
@@ -44,16 +51,24 @@ export class WorkoutSegmentCardComponent {
   SegmentType = SegmentType; // Make enum available in template
 
   setLogs: SetLog[] = [];
+  exercises: Exercise[] = [];
 
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController
   ) {
-    this.initializeSetLogs();
+    this.initializeExercises();
   }
 
-  private initializeSetLogs() {
-    this.setLogs = this._type === SegmentType.Resistance
+  private initializeExercises() {
+    this.exercises = [{
+      name: this.exerciseName,
+      setLogs: this.initializeSetLogs()
+    }];
+  }
+
+  private initializeSetLogs(): SetLog[] {
+    return this.type === SegmentType.Resistance
       ? [{ set: 1, reps: null, weight: null, done: false }]
       : [{ duration: null, speed: null, done: false }];
   }
@@ -214,18 +229,79 @@ export class WorkoutSegmentCardComponent {
     await actionSheet.present();
   }
 
-  addSet() {
+  async editExerciseName() {
+    const alert = await this.alertController.create({
+      header: 'Edit Exercise Name',
+      inputs: [
+        {
+          name: 'exerciseName',
+          type: 'text',
+          placeholder: 'Enter exercise name',
+          value: this.exerciseName
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            if (data.exerciseName) {
+              this.exerciseName = data.exerciseName.trim();
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async addExercise() {
+    const alert = await this.alertController.create({
+      header: 'Add New Exercise',
+      inputs: [
+        {
+          name: 'exerciseName',
+          type: 'text',
+          placeholder: 'Enter exercise name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Add',
+          handler: (data) => {
+            if (data.exerciseName && data.exerciseName.trim() !== '') {
+              this.exercises.push({
+                name: data.exerciseName.trim(),
+                setLogs: this.initializeSetLogs()
+              });
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  addSet(exerciseIndex: number) {
+    const exercise = this.exercises[exerciseIndex];
     if (this.type === SegmentType.Resistance) {
-      const lastSet = this.setLogs[this.setLogs.length - 1];
+      const lastSet = exercise.setLogs[exercise.setLogs.length - 1];
       const newSet = {
-        set: this.setLogs.length + 1,
+        set: exercise.setLogs.length + 1,
         reps: lastSet.reps,
         weight: lastSet.weight,
         done: false
       };
-      this.setLogs.push(newSet);
+      exercise.setLogs.push(newSet);
     } else {
-      this.setLogs.push({ duration: null, speed: null, done: false });
+      exercise.setLogs.push({ duration: null, speed: null, done: false });
     }
   }
 

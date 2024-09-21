@@ -19,6 +19,7 @@
         <app-workout-segment-card 
           [title]="segment.title"
           [headerColor]="segment.color"
+          [exerciseName]="segment.exerciseName"
           (delete)="deleteWorkoutSegment(i)"
           (updateTitle)="updateSegmentTitle(i, $event)"
           (updateType)="updateSegmentType(i, $event)"
